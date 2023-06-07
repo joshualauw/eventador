@@ -13,9 +13,9 @@
                 <p>Lets Bing Chilling Guys~</p>
             </div>
             <div class="mt-5 flex w-full justify-end">
-                <button class="btn btn-ghost btn-sm"><Icon name="fa:heart" class="text-gray-500 mr-2" /> 10</button>
-                <button class="btn btn-ghost btn-sm"><Icon name="fa:comment" class="text-gray-500 mr-2" /> 5</button>
-                <button class="btn btn-ghost btn-sm"><Icon name="fa:eye" class="text-gray-500 mr-2" /> 29</button>
+                <button class="btn btn-ghost btn-sm text-gray-500"><Icon name="fa:heart" class="mr-2" /> 10</button>
+                <button class="btn btn-ghost btn-sm text-gray-500"><Icon name="fa:comment" class="mr-2" /> 5</button>
+                <button class="btn btn-ghost btn-sm text-gray-500"><Icon name="fa:eye" class="mr-2" /> 29</button>
             </div>
         </div>
     </div>

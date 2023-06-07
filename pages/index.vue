@@ -1,7 +1,7 @@
 <template>
     <div class="flex relative w-full">
-        <PostFeed class="w-2/3 mr-16" />
-        <PostTag class="w-1/3" />
+        <PostFeed class="w-full lg:w-2/3 lg:mr-16" />
+        <PostTag class="w-1/3 hidden lg:block" />
     </div>
 </template>
 
