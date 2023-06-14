@@ -4,22 +4,19 @@
             <div class="flex-center space-x-5 lg:space-x-12 text-center lg:text-left">
                 <div class="flex space-x-3 text-sm cursor-pointer">
                     <div class="avatar avatar-md lg:avatar-lg avatar-ring">
-                        <img src="images/default-user.png" alt="avatar" />
+                        <img src="/images/default-user.png" alt="avatar" />
                     </div>
                     <div class="hidden lg:block">
                         <p class="font-bold text-lg">Joshua William</p>
-                        <p class="text-gray-500">joshualauw@gmail.com</p>
+                        <p class="text-content2">joshualauw@gmail.com</p>
                     </div>
                 </div>
-                <span class="font-bold text-base lg:text-lg">8 Posts</span>
-                <span class="font-bold text-base lg:text-lg">101 Followers</span>
-                <span class="font-bold text-base lg:text-lg">9 Following</span>
-                <span class="font-bold text-base lg:text-lg">8 Events</span>
+                <span class="font-semibold text-base lg:text-lg">8 Posts</span>
+                <span class="font-semibold text-base lg:text-lg">101 Followers</span>
+                <span class="font-semibold text-base lg:text-lg">9 Following</span>
+                <span class="font-semibold text-base lg:text-lg">8 Events</span>
             </div>
-            <!-- <button class="btn btn-sm lg:btn-md btn-primary">Follow</button> -->
-            <button class="btn btn-sm lg:btn-md btn-success flex-center">
-                Edit <Icon name="material-symbols:settings" class="ml-2 w-4 h-4" />
-            </button>
+            <button class="btn btn-sm w-full lg:w-fit lg:btn-md btn-primary">Follow</button>
         </div>
         <div class="card hover:scale-100 mt-8">
             <div class="card-body p-6">
@@ -27,7 +24,7 @@
                     <div
                         v-for="(tab, i) in tabs"
                         @click="activeTab = i"
-                        class="tab tab-bordered px-6"
+                        class="tab tab-bordered px-4 lg:px-8"
                         :class="{ 'tab-active': i == activeTab }"
                     >
                         {{ tab.name }}

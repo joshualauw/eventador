@@ -1,8 +1,12 @@
 <template>
     <div>
-        <PostCreate />
-        <div class="mt-8 flex-between">
-            <h2 class="text-xl font-semibold">All Posts</h2>
+        <div class="flex-between">
+            <div class="flex-center space-x-4">
+                <h2 class="text-xl font-semibold">All Posts</h2>
+                <label for="edit-post-modal" class="btn px-3 btn-primary">
+                    Create <Icon name="material-symbols:add" class="w-5 h-5 ml-1" />
+                </label>
+            </div>
             <select class="select w-40">
                 <option>Latest</option>
                 <option>Trending</option>
@@ -11,9 +15,9 @@
         </div>
         <div class="mt-8 space-y-5">
             <div v-for="i in 5">
-                <PostItem />
-                <div class="divider divider-horizontal"></div>
+                <PostItem class="py-4 border-b-2 border-gray-6" />
             </div>
         </div>
+        <ModalPostEdit />
     </div>
 </template>

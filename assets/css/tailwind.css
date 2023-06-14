@@ -9,38 +9,56 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent;
+  background-color: rgb(var(--backgroundSecondary) / var(--tw-bg-opacity));
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
+  background-color: #69717451;
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
+  background-color: #303a3b2c;
 }
 
 @layer components {
     .nav-link {
-        @apply px-6 py-3 w-full flex items-center tracking-wider hover:bg-gray-200 hover:text-black rounded-lg transition-all duration-100
+        @apply px-6 py-3 w-full flex items-center tracking-wider hover:bg-border hover:text-content2 rounded-lg transition-all duration-100
     }
     .form-label {
         @apply font-semibold
     }
+    .btn-squared {
+      @apply rounded-none
+    }
     .card {
-      @apply hover:scale-[1.02] transition-all duration-200 rounded-lg max-w-full
+      @apply hover:scale-[1.02] transition-all duration-200 max-w-full shadow-md rounded-xl
     }
     .card-body {
-      @apply bg-white
+      @apply bg-backgroundSecondary
+    }
+    .textarea{
+      @apply max-w-full
+    }
+    .select {
+      @apply max-w-full
+    }
+    .dropdown-menu {
+      @apply p-2 border-none bg-backgroundSecondary
+    }
+    .dropdown-item {
+      @apply py-1.5 px-3 hover:bg-border text-content2
     }
 }
 
 @layer utilities {
     .flex-between {
         @apply flex justify-between items-center
+    }
+    .flex-end {
+      @apply flex justify-end items-center
     }
     .flex-center {
         @apply flex items-center
@@ -49,6 +67,10 @@
         @apply flex justify-center items-center
     }
     .text-mute {
-        @apply text-sm text-gray-500
+        @apply text-sm text-content2
     }
+    .web-container {
+      @apply px-8 xl:px-24 pt-28 pb-8 xl:pb-16 xl:pt-36
+    }
+ 
 }

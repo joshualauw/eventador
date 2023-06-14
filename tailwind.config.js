@@ -7,6 +7,22 @@ module.exports = {
         "./plugins/**/*.{js,ts}",
         "./nuxt.config.{js,ts}",
     ],
+    /** @type {import('rippleui').Config} */
+    rippleui: {
+        themes: [
+            {
+                themeName: "light",
+                colorScheme: "light",
+                colors: {
+                    backgroundPrimary: "#f8fafc",
+                    backgroundSecondary: "#ffffff",
+                    warning: "#f59e0b",
+                    error: "#e11d48",
+                    "blue-3": "#1f2937",
+                },
+            },
+        ],
+    },
     theme: {
         extend: {},
     },

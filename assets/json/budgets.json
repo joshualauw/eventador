@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Food",
+        "current": 150000,
+        "limit": 250000,
+        "expenses": [1, 2, 3, 4, 5]
+    },
+    {
+        "name": "Beverages",
+        "current": 24000,
+        "limit": 80000,
+        "expenses": [1, 2, 3, 4]
+    },
+    {
+        "name": "Charity",
+        "current": 25000,
+        "limit": 150000,
+        "expenses": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+        "name": "Lighting & Effects",
+        "current": 430000,
+        "limit": 500000,
+        "expenses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    {
+        "name": "Fee",
+        "current": 32000,
+        "limit": 100000,
+        "expenses": [1, 2, 3]
+    }
+]

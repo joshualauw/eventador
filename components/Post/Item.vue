@@ -1,22 +1,35 @@
 <template>
     <div class="flex space-x-3">
-        <div>
-            <div class="avatar avatar-lg">
-                <img src="images/default-user.png" alt="avatar" />
+        <div @click="navigateTo('/profile/123')" class="cursor-pointer">
+            <div class="avatar avatar-md lg:avatar-lg">
+                <img src="/images/default-user.png" alt="avatar" />
             </div>
         </div>
         <div>
-            <p class="font-bold">Joshua William <span class="text-gray-400">- @joshualauw - 1h</span></p>
+            <div class="flex-between w-full">
+                <p @click="navigateTo('/profile/123')" class="font-bold hover:underline cursor-pointer">
+                    Joshua William <span class="text-gray-400 font-medium ml-2">23/10/23</span>
+                </p>
+                <div class="dropdown">
+                    <label class="btn btn-circle btn-ghost"><Icon name="mdi:dots-horizontal" tabindex="0" /></label>
+                    <div class="dropdown-menu mt-1 w-20 border dropdown-menu-bottom-left">
+                        <a class="dropdown-item text-sm">Report</a>
+                    </div>
+                </div>
+            </div>
             <p>Bing & Chilling</p>
-            <div class="mt-5 space-y-3">
-                <img src="images/default-post.png" class="rounded-xl" />
+            <div @click="navigateTo('/post/123')" class="mt-5 space-y-3 cursor-pointer">
+                <img src="/images/default-post.png" class="rounded-xl" />
                 <p>Lets Bing Chilling Guys~</p>
             </div>
             <div class="mt-5 flex w-full justify-end">
-                <button class="btn btn-ghost btn-sm text-gray-500"><Icon name="fa:heart" class="mr-2" /> 10</button>
-                <button class="btn btn-ghost btn-sm text-gray-500"><Icon name="fa:comment" class="mr-2" /> 5</button>
-                <button class="btn btn-ghost btn-sm text-gray-500"><Icon name="fa:eye" class="mr-2" /> 29</button>
+                <button class="btn btn-ghost text-red-400 text-base"><Icon name="fa:heart" class="mr-2" /> 10</button>
+                <label for="post-comments-modal" class="btn btn-ghost text-green-400 text-base">
+                    <Icon name="fa:comment" class="mr-2" /> 5
+                </label>
+                <button class="btn btn-ghost text-blue-400 text-base"><Icon name="fa:eye" class="mr-2" /> 29</button>
             </div>
         </div>
+        <ModalPostComment />
     </div>
 </template>

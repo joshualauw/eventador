@@ -3,7 +3,10 @@
         <button class="btn btn-md lg:btn-lg btn-primary popover-trigger">
             <Icon name="material-symbols:filter-alt" />
         </button>
-        <div class="popover-content bg-white popover-bottom-left w-[350px] lg:w-[400px] mt-1" tabindex="0">
+        <div
+            class="popover-content bg-backgroundSecondary shadow-md border popover-bottom-left w-[350px] lg:w-[400px] mt-1"
+            tabindex="0"
+        >
             <div class="p-3 text-sm space-y-3">
                 <h2 class="text-lg font-semibold">Filter & Search</h2>
                 <div class="rounded-full flex-center">

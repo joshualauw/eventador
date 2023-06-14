@@ -1,7 +1,7 @@
 <template>
     <UIModal v-slot="{ setOpen }" modal-id="login-modal">
-        <div class="flex flex-col gap-2">
-            <h2 class="text-center text-2xl font-semibold">{{ isLogin ? "Login" : "Register" }}</h2>
+        <div class="flex flex-col gap-2 mb-6">
+            <h2 class="text-center text-2xl text-content1 font-semibold">{{ isLogin ? "Login" : "Register" }}</h2>
             <p class="mx-auto max-w-xs text-sm text-content2">
                 {{ isLogin ? "Login to your account to continue" : "Create a new account" }}
             </p>
@@ -23,8 +23,8 @@
                 <div class="form-field">
                     <div class="form-control justify-between">
                         <div>
-                            <input type="checkbox" class="checkbox mr-1" />
-                            Remember me
+                            <input type="checkbox" class="checkbox mr-2" />
+                            <span class="text-content2">Remember me</span>
                         </div>
                         <label class="form-label">
                             <a class="link link-underline-hover link-primary text-sm">Forgot your password?</a>
@@ -39,7 +39,7 @@
             </div>
             <div class="divider divider-horizontal"></div>
             <div class="items-center justify-center text-xs dark:text-gray-5 sm:px-6 flex gap-2">
-                <span>Doesn't have an account?</span>
+                <span class="text-content2">Doesn't have an account?</span>
                 <span @click="isLogin = false" class="link link-primary text-xs">Register</span>
             </div>
         </section>
@@ -77,7 +77,7 @@
             </div>
             <div class="divider divider-horizontal"></div>
             <div class="items-center justify-center text-xs dark:text-gray-5 sm:px-6 flex gap-2">
-                <span>Already have an account?</span>
+                <span class="text-content2">Already have an account?</span>
                 <span @click="isLogin = true" class="link link-primary text-xs">login</span>
             </div>
         </section>

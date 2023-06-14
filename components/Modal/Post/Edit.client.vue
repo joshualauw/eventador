@@ -1,7 +1,7 @@
 <template>
-    <UIModal size="large" modal-id="edit-post-modal">
+    <UIModal classes="max-w-[800px]" modal-id="edit-post-modal">
         <div class="flex flex-col gap-2">
-            <h2 class="text-center text-2xl font-semibold">Create Post</h2>
+            <h2 class="text-center text-2xl font-semibold text-content1">Create Post</h2>
             <p class="mx-auto max-w-xs text-sm text-content2">Tell your thoughts to the public</p>
         </div>
         <div class="form-group space-y-4">
@@ -26,8 +26,8 @@
                 <label class="form-label">Post Tags</label>
                 <div>
                     <span class="badge badge-lg badge-flat-secondary inline-flex w-fit m-1.5">#test</span>
-                    <span class="badge badge-lg badge-outline relative">
-                        <input type="text" class="outline-none h-full w-40 text-sm text-gray-500" placeholder="tag" />
+                    <span class="badge badge-lg badge-outline relative h-full w-40">
+                        <input type="text" class="outline-none text-sm bg-backgroundPrimary" placeholder="tag" />
                         <button class="btn btn-sm btn-solid-secondary btn-rounded absolute right-2">
                             <Icon name="material-symbols:add" />
                         </button>

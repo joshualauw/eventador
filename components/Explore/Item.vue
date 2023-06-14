@@ -1,13 +1,14 @@
 <template>
     <div class="card card-image-cover">
         <img
-            src="images/default-event.jpg"
+            @click="navigateTo('/event/123')"
+            src="/images/default-post.png"
             alt="card_image"
             class="cursor-pointer hover:brightness-75"
             style="height: 175px"
         />
         <div class="card-body pt-2 px-6">
-            <h2 class="card-header text-lg font-bold cursor-pointer hover:underline">
+            <h2 @click="navigateTo('/event/123')" class="card-header text-lg font-bold cursor-pointer hover:underline">
                 Maximizing Your Productivity at Work
             </h2>
             <div class="space-y-0.5 text-sm font-semibold">

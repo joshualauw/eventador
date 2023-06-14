@@ -1,6 +1,7 @@
 <template>
-    <Navbar />
-    <main class="min-h-screen bg-slate-50">
-        <slot />
-    </main>
+    <Html :data-theme="$colorMode.value || $colorMode.preference">
+        <main class="min-h-screen bg-backgroundPrimary">
+            <slot />
+        </main>
+    </Html>
 </template>
