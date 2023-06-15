@@ -13,7 +13,7 @@
                 <input type="number" class="input max-w-full" placeholder="budget limit.." />
             </div>
             <div class="form-group pt-6">
-                <button type="button" class="btn btn-primary btn-rounded w-full">Save</button>
+                <button type="button" class="btn btn-primary w-full">Save</button>
             </div>
         </form>
     </UIModal>

@@ -1,7 +1,6 @@
 <template>
     <ClientOnly>
-        <div v-if="colorMode.unknown">...</div>
-        <div v-else @click="setColorMode" class="btn btn-circle btn-ghost text-content3">
+        <div @click="setColorMode" class="btn btn-circle btn-ghost text-content3">
             <Icon v-if="colorMode.value == 'light'" name="material-symbols:light-mode-outline" class="w-5 h-5" />
             <Icon v-else name="material-symbols:dark-mode-outline" class="w-5 h-5" />
         </div>

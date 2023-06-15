@@ -4,7 +4,13 @@
             <p class="font-semibold text-lg">{{ name }}</p>
             <progress class="progress" :class="progressColor" :value="progressPercent" max="100"></progress>
             <span class="text-mute">Rp. {{ formatNumber(current) }} / Rp. {{ formatNumber(limit) }}</span>
-            <p class="hover:underline cursor-pointer w-fit">{{ expense_count }} Expenses</p>
+            <label
+                for="edit-expense-modal"
+                @click="emits('expensing', id)"
+                class="hover:underline cursor-pointer w-fit"
+            >
+                {{ expense_count }} Expenses <Icon name="icon-park-solid:transaction" />
+            </label>
             <div class="flex-end space-x-1.5">
                 <label for="edit-budget-modal" @click="emits('editing', id)" class="btn btn-sm btn-outline-warning">
                     Edit
@@ -25,7 +31,11 @@ const props = defineProps<{
     limit: number;
     expense_count: number;
 }>();
-const emits = defineEmits<{ (e: "editing", id: string): void; (e: "deleting", id: string, label: string): void }>();
+const emits = defineEmits<{
+    (e: "editing", id: string): void;
+    (e: "deleting", id: string, label: string): void;
+    (e: "expensing", id: string): void;
+}>();
 
 const progressPercent = computed(() => calcPercent(props.current, props.limit));
 

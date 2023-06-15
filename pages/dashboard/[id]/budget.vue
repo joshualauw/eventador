@@ -6,6 +6,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         <OrganizerBudgetItem
             v-for="budget in budgets"
+            @expensing="setAction"
             @editing="handleUpdating"
             @deleting="handleDeleting"
             :id="budget.name"
@@ -17,6 +18,7 @@
     </div>
     <OrganizerModalBudgetEdit :context="actionContext" :update-id="actionId" />
     <OrganizerModalBudgetDelete :label="actionLabel" :id="actionId" />
+    <OrganizerModalBudgetExpense :update-id="actionId" />
 </template>
 
 <script setup lang="ts">
@@ -26,5 +28,6 @@ definePageMeta({
     layout: "dashboard",
 });
 
-const { actionContext, actionId, actionLabel, handleCreating, handleDeleting, handleUpdating } = useCrudManager();
+const { actionContext, actionId, actionLabel, setAction, handleCreating, handleDeleting, handleUpdating } =
+    useCrudManager();
 </script>
