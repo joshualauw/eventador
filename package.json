@@ -16,13 +16,7 @@
         "nuxt-icon": "^0.4.1"
     },
     "dependencies": {
-        "@vueup/vue-quill": "^1.2.0",
-        "class-variance-authority": "^0.6.0",
-        "clsx": "^1.2.1",
-        "quill-blot-formatter": "^1.0.5",
         "rippleui": "^1.12.1",
-        "sass": "^1.62.1",
-        "tailwind-merge": "^1.13.0",
-        "tailwindcss-animate": "^1.0.5"
+        "sass": "^1.62.1"
     }
 }

@@ -12,14 +12,7 @@
             <div class="form-field">
                 <label class="form-label">Post Content</label>
                 <div class="form-control flex-col">
-                    <QuillEditor
-                        v-model:content="content"
-                        theme="snow"
-                        toolbar="full"
-                        :modules="modules"
-                        class="input max-w-full"
-                        style="height: 275px"
-                    />
+                    <textarea class="textarea h-40 resize-none"></textarea>
                 </div>
             </div>
             <div class="form-field">
@@ -36,26 +29,11 @@
             </div>
             <div class="form-field pt-5">
                 <div class="form-control justify-between">
-                    <button @click="handleSubmit" type="button" class="btn btn-primary btn-rounded w-full">
-                        Create Post
-                    </button>
+                    <button type="button" class="btn btn-primary btn-rounded w-full">Create Post</button>
                 </div>
             </div>
         </div>
     </UIModal>
 </template>
 
-<script setup lang="ts">
-import { QuillEditor } from "@vueup/vue-quill";
-import BlotFormatter from "quill-blot-formatter";
-
-const content = ref();
-const modules = {
-    name: "blotformatter",
-    module: BlotFormatter,
-};
-
-function handleSubmit() {
-    console.log(content.value);
-}
-</script>
+<script setup lang="ts"></script>
