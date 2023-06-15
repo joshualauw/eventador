@@ -3,11 +3,11 @@
         <div class="flex-between">
             <div class="flex-center space-x-4">
                 <h2 class="text-xl font-semibold">All Posts</h2>
-                <label for="edit-post-modal" class="btn px-3 btn-primary">
+                <label for="edit-post-modal" class="btn btn-sm md:btn-md btn-primary">
                     Create <Icon name="material-symbols:add" class="w-5 h-5 ml-1" />
                 </label>
             </div>
-            <select class="select w-40">
+            <select class="select select-sm md:select-md w-36">
                 <option>Latest</option>
                 <option>Trending</option>
                 <option>Most Liked</option>

@@ -21,6 +21,14 @@ module.exports = {
                     "blue-3": "#1f2937",
                 },
             },
+            {
+                themeName: "dark",
+                colorScheme: "dark",
+                colors: {
+                    // "blue-3": "#282828",
+                    "blue-3": "#001c38",
+                },
+            },
         ],
     },
     theme: {

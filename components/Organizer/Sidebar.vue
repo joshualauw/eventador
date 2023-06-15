@@ -1,9 +1,9 @@
 <template>
     <div class="w-full max-w-[18rem]">
-        <aside class="sidebar bg-gray-3 border border-gray-4 text-content1 sidebar-fixed-left justify-start">
-            <section class="sidebar-title items-center space-x-3 p-4">
+        <aside class="sidebar bg-blue-3 text-gray-200 sidebar-fixed-left justify-start">
+            <section class="sidebar-title text-gray-200 items-center space-x-3 p-4">
                 <ClientOnly>
-                    <img :src="logoColor" class="w-9 h-9" />
+                    <img src="/images/logo/eventador-light.png" class="w-9 h-9" />
                 </ClientOnly>
                 <div class="flex flex-col">
                     <span class="tracking-wider text-lg">Eventador</span>
@@ -20,7 +20,7 @@
                                 v-for="menu in menus"
                                 @click="navigateTo(menu.link)"
                                 :class="getBordered(menu.link)"
-                                class="menu-item text-base"
+                                class="menu-item text-base text-gray-200 hover:bg-neutral"
                             >
                                 <Icon :name="menu.icon" /><span class="ml-2">{{ menu.name }}</span>
                             </li>
@@ -30,15 +30,15 @@
             </section>
             <section class="sidebar-footer h-full justify-end pt-2">
                 <div class="divider my-0"></div>
-                <div class="dropdown z-50 flex h-fit w-full cursor-pointer hover:bg-gray-4">
-                    <label class="whites mx-2 flex h-fit w-full cursor-pointer p-0 hover:bg-gray-4" tabindex="0">
+                <div class="dropdown z-50 flex h-fit w-full cursor-pointer">
+                    <label class="mx-2 flex h-fit w-full cursor-pointer p-0" tabindex="0">
                         <div class="flex flex-row gap-4 p-4">
                             <div class="avatar avatar-ring avatar-md">
                                 <img src="/images/default-user.png" alt="avatar" />
                             </div>
                             <div class="flex flex-col">
-                                <span>Joshua William</span>
-                                <span class="text-xs font-normal text-content2">@joshualauw</span>
+                                <span class="text-white">Joshua William</span>
+                                <span class="text-xs font-normal text-gray-200">@joshualauw</span>
                             </div>
                         </div>
                     </label>
@@ -54,17 +54,12 @@
 </template>
 
 <script setup lang="ts">
-const colorMode = useColorMode();
-
-const logoColor = computed(() =>
-    colorMode.value == "light" ? "/images/logo/eventador-dark.png" : "/images/logo/eventador-light.png"
-);
 const route = useRoute();
 
 function getBordered(link: string) {
     const splitLink = route.path.split("/");
     const splitRoute = link.split("/");
-    return splitLink[splitLink.length - 1] == splitRoute[splitRoute.length - 1] ? "bg-border" : "";
+    return splitLink[splitLink.length - 1] == splitRoute[splitRoute.length - 1] ? "bg-neutral" : "";
 }
 
 const menus = [

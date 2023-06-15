@@ -20,6 +20,6 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ context: "update" | "create"; updateId?: string }>();
+defineProps<{ context: "update" | "create"; updateId: string }>();
 defineEmits<{ (e: "saved"): void }>();
 </script>

@@ -9,14 +9,14 @@
             <div class="h-36 lg:h-[500px] flex lg:block overflow-y-auto">
                 <img
                     v-for="i in 4"
-                    src="/images/default-event.jpg"
+                    src="/images/default-logo.png"
                     class="w-1/3 h-28 lg:h-1/3 lg:w-full border border-backgroundSecondary"
                 />
             </div>
         </div>
         <h1 class="text-xl lg:text-3xl font-extrabold mt-8">Maximizing Your Productivity at Work</h1>
-        <div class="mt-8 flex flex-col lg:flex-row w-full lg:space-x-24">
-            <div class="w-full lg:w-[60%] space-y-8 lg:space-y-10">
+        <div class="mt-8 flex flex-col lg:flex-row w-full lg:space-x-16">
+            <div class="w-full lg:w-[60%] space-y-8 lg:space-y-10 lg:border-r-2 border-gray-4 lg:pr-16">
                 <div class="card hover:scale-100">
                     <div class="card-body flex-row flex-between p-5">
                         <div @click="navigateTo('/profile/123')" class="flex-center space-x-4 cursor-pointer">
@@ -28,7 +28,7 @@
                                 <p class="text-content2 text-sm mt-1">101 followers</p>
                             </div>
                         </div>
-                        <button class="btn btn-primary">Follow +</button>
+                        <button class="btn btn-solid-secondary">Follow +</button>
                     </div>
                 </div>
                 <h2 class="text-lg lg:text-xl font-semibold">Description</h2>
@@ -70,17 +70,17 @@
                     referrerpolicy="no-referrer-when-downgrade"
                 ></iframe>
             </div>
-            <div class="w-full lg:w-[40%] space-y-8">
+            <div class="w-full lg:w-[40%] space-y-8 mt-8 lg:mt-0">
                 <div class="card hover:scale-100 text-center">
                     <div class="card-body">
                         <p class="text-3xl text-success font-bold">Rp. 25.000,00</p>
                         <p>98 Slots Left</p>
-                        <button class="btn btn-error mt-3">Register Now</button>
+                        <button class="btn btn-primary mt-3">Register Now</button>
                     </div>
                 </div>
                 <h2 class="text-xl font-semibold">Sponsored By</h2>
                 <div class="flex flex-wrap">
-                    <img v-for="i in 3" src="/images/default-post.png" class="w-24 h-24 m-3" />
+                    <img v-for="i in 3" src="/images/default-logo.png" class="w-28 lg:w-36 h-24 rounded-lg m-2" />
                 </div>
                 <h2 class="text-xl font-semibold">Share Now</h2>
                 <div class="flex space-x-3">

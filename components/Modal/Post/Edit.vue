@@ -7,12 +7,12 @@
         <div class="form-group space-y-4">
             <div class="form-field">
                 <label class="form-label">Post Title</label>
-                <input placeholder="title here" type="text" class="input max-w-full" />
+                <input placeholder="post title.." type="text" class="input max-w-full" />
             </div>
             <div class="form-field">
                 <label class="form-label">Post Content</label>
                 <div class="form-control flex-col">
-                    <textarea class="textarea h-40 resize-none"></textarea>
+                    <textarea placeholder="post content.." class="textarea h-40 resize-none"></textarea>
                 </div>
             </div>
             <div class="form-field">

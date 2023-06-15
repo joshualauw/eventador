@@ -5,5 +5,5 @@ export default defineNuxtConfig({
             title: "Eventador",
         },
     },
-    modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@nuxtjs/color-mode"],
+    modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@nuxtjs/color-mode", "nuxt-lodash"],
 });

@@ -4,8 +4,8 @@
             <label for="drawer-left" class="flex md:hidden btn btn-sm btn-ghost btn-circle text-white hover:text-black">
                 <Icon name="material-symbols:menu" class="w-6 h-6" />
             </label>
-            <img src="/images/logo/eventador-light.png" class="w-7 h-7 md:w-10 md:h-10" />
-            <h2 class="text-lg md:text-xl font-bold tracking-widest">Eventador</h2>
+            <img src="/images/logo/eventador-light.png" class="w-10 h-10" />
+            <h2 class="hidden md:block md:text-xl font-bold tracking-widest">Eventador</h2>
         </div>
         <div class="flex-center space-x-4">
             <DarkMode />

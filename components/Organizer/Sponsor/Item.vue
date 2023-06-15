@@ -1,0 +1,42 @@
+<template>
+    <div class="card max-h-fit hover:scale-100">
+        <div class="card-body p-6 relative">
+            <div class="flex-box flex-col mb-2">
+                <img :src="logo ?? '/images/default-logo.png'" class="rounded-lg mb-6 w-28 h-28" />
+                <p class="font-semibold text-base md:text-lg">{{ name }}</p>
+            </div>
+            <div class="flex-end space-x-1.5">
+                <label for="edit-sponsor-modal" @click="emits('editing', id)" class="btn btn-sm btn-solid-secondary">
+                    Edit
+                </label>
+                <label
+                    for="delete-sponsor-modal"
+                    @click="emits('deleting', id, name)"
+                    class="btn btn-sm btn-solid-error"
+                >
+                    Delete
+                </label>
+            </div>
+            <label
+                @click="emits('detailing', id)"
+                for="detail-sponsor-modal"
+                class="btn btn-sm btn-ghost absolute top-3 right-3"
+            >
+                <Icon name="fa:external-link" class="text-content2 font-semibold" />
+            </label>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+const props = defineProps<{
+    id: string;
+    name: string;
+    logo: string | null;
+}>();
+const emits = defineEmits<{
+    (e: "detailing", id: string): void;
+    (e: "editing", id: string): void;
+    (e: "deleting", id: string, label: string): void;
+}>();
+</script>

@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Yashiro Commision",
+        "logo": "https://res.cloudinary.com/joshualauw/image/upload/v1683794370/zonakuy/sponsor/645ca9be18afd4150f688e7a.png",
+        "description": "The Yashiro Commission (Japanese: 社奉行 Sha-bugyou) is an organization in Inazuma and one of the three organizations that comprise the Tri-Commission. They are in charge of managing shrines, festivals, and cultural events. Due to this, they do not have as much influence compared to the Kanjou and Tenryou Commissions."
+    },
+    {
+        "id": 2,
+        "name": "Sakoku Decree",
+        "description": "The Sakoku Decree (Japanese: 鎖国令 Sakoku-rei),[1] was an order issued by Ei's puppet, the Shogun, to shut down the borders of Inazuma as part of the Vision Hunt Decree.[2]",
+        "logo": "https://res.cloudinary.com/joshualauw/image/upload/v1684298911/zonakuy/sponsor/645f4dd8ba4d0ce30aefd126.png"
+    },
+    {
+        "id": 3,
+        "name": "Crux Alcor",
+        "description": "It is the flagship of The Crux and, while it is normally helmed by Captain Beidou, she has returned to Liyue Harbor for business and left the ship to her men.",
+        "logo": "https://res.cloudinary.com/joshualauw/image/upload/v1684898238/zonakuy/sponsor/646d81bdc49aea5c0291bf63.png"
+    },
+    {
+        "id": 4,
+        "name": "The Eremites",
+        "description": "The Eremites are a group of people who hail from Sumeru's desert region. Most of them are mercenaries by trade and conduct business across Teyvat.[1][2].",
+        "logo": "https://firebasestorage.googleapis.com/v0/b/eventure-4f408.appspot.com/o/The_Eremites_Banner.webp?alt=media&token=dc476582-288b-44cb-8cdd-593b9adaec5c"
+    }
+]

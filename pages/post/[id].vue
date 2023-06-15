@@ -1,9 +1,9 @@
 <template>
     <div class="w-full flex space-x-12 mb-12">
         <div class="w-full lg:w-2/3">
-            <PostItem />
+            <PostItem show-tags />
             <div class="divider"></div>
-            <div class="w-[calc(100%-3rem)] ml-[3rem] mt-8">
+            <div class="w-full md:w-[calc(100%-3rem)] md:ml-[2rem] mt-8">
                 <div class="relative">
                     <textarea
                         class="input max-w-full textarea resize-none h-24"

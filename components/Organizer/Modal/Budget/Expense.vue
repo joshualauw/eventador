@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ updateId?: string }>();
+defineProps<{ updateId: string }>();
 
 const expenses = ref([{ key: genId(4), name: "", price: 0 }]);
 

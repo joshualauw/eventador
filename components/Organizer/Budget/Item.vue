@@ -12,10 +12,14 @@
                 {{ expense_count }} Expenses <Icon name="icon-park-solid:transaction" />
             </label>
             <div class="flex-end space-x-1.5">
-                <label for="edit-budget-modal" @click="emits('editing', id)" class="btn btn-sm btn-outline-warning">
+                <label for="edit-budget-modal" @click="emits('editing', id)" class="btn btn-sm btn-solid-secondary">
                     Edit
                 </label>
-                <label for="delete-budget-modal" @click="emits('deleting', id, name)" class="btn btn-sm btn-error">
+                <label
+                    for="delete-budget-modal"
+                    @click="emits('deleting', id, name)"
+                    class="btn btn-sm btn-solid-error"
+                >
                     Delete
                 </label>
             </div>

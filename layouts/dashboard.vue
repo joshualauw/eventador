@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col px-6 md:px-10 py-6 md:py-8 w-full bg-backgroundPrimary">
+            <div class="flex flex-col px-6 md:px-12 py-6 md:py-8 w-full bg-backgroundPrimary">
                 <label for="organizer-drawer-left" class="flex lg:hidden btn btn-sm btn-ghost btn-circle mb-3">
                     <Icon name="material-symbols:menu" class="w-6 h-6" />
                 </label>

@@ -3,12 +3,8 @@ export default function useCrudManager() {
     const actionId = ref("");
     const actionLabel = ref("");
 
-    function setAction(id: string) {
-        actionId.value = id;
-    }
-
     function handleDeleting(id: string, label: string) {
-        setAction(id);
+        actionId.value = id;
         actionLabel.value = label;
     }
 
@@ -18,7 +14,7 @@ export default function useCrudManager() {
     }
 
     function handleUpdating(id: string) {
-        setAction(id);
+        actionId.value = id;
         actionContext.value = "update";
     }
 
@@ -26,7 +22,6 @@ export default function useCrudManager() {
         actionContext,
         actionId,
         actionLabel,
-        setAction,
         handleDeleting,
         handleCreating,
         handleUpdating,
