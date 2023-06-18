@@ -1,6 +1,7 @@
 <template>
     <div class="flex-between mb-8">
         <h1 class="font-semibold text-lg">Itinenaries</h1>
+        <span class="text-sm text-content3">Last updated: 24/07/2023 16:54</span>
         <label @click="handleCreating" for="edit-itinenary-modal" class="btn btn-primary">+ Create Itinenary</label>
     </div>
     <div class="flex h-[80vh] overflow-x-auto space-x-5 w-full pb-6">

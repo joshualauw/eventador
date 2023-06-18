@@ -1,0 +1,2 @@
+- Untuk dashboard organizer, buat middleware untuk mengecek apakah user termasuk partisipan pada event tersebut. Lalu tambahkan
+meta (jenis access) untuk menentukan apakah dia dapat masuk ke dalam dashboard

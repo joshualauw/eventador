@@ -1,0 +1,92 @@
+[
+    {
+        "email": "johndoe@example.com",
+        "name": "John Doe",
+        "type": "reguler",
+        "joinedAt": "12-06-2022"
+    },
+    {
+        "email": "janedoe@example.com",
+        "name": "Jane Doe",
+        "type": "invited",
+        "joinedAt": "15-08-2022"
+    },
+    {
+        "email": "alexsmith@example.com",
+        "name": "Alex Smith",
+        "type": "organizer",
+        "joinedAt": "21-03-2023"
+    },
+    {
+        "email": "laurawilliams@example.com",
+        "name": "Laura Williams",
+        "type": "reguler",
+        "joinedAt": "03-07-2022"
+    },
+    {
+        "email": "michaelbrown@example.com",
+        "name": "Michael Brown",
+        "type": "invited",
+        "joinedAt": "19-01-2023"
+    },
+    {
+        "email": "sarahjohnson@example.com",
+        "name": "Sarah Johnson",
+        "type": "reguler",
+        "joinedAt": "11-05-2022"
+    },
+    {
+        "email": "chrismiller@example.com",
+        "name": "Chris Miller",
+        "type": "reguler",
+        "joinedAt": "02-09-2022"
+    },
+    {
+        "email": "amandadavis@example.com",
+        "name": "Amanda Davis",
+        "type": "organizer",
+        "joinedAt": "27-11-2022"
+    },
+    {
+        "email": "matthewwilson@example.com",
+        "name": "Matthew Wilson",
+        "type": "invited",
+        "joinedAt": "14-10-2022"
+    },
+    {
+        "email": "emilythomas@example.com",
+        "name": "Emily Thomas",
+        "type": "reguler",
+        "joinedAt": "05-12-2022"
+    },
+    {
+        "email": "danieljackson@example.com",
+        "name": "Daniel Jackson",
+        "type": "organizer",
+        "joinedAt": "28-02-2023"
+    },
+    {
+        "email": "olivertaylor@example.com",
+        "name": "Oliver Taylor",
+        "type": "reguler",
+        "joinedAt": "09-04-2022"
+    },
+    {
+        "email": "sophiawhite@example.com",
+        "name": "Sophia White",
+        "type": "invited",
+        "joinedAt": "17-07-2022"
+    },
+    {
+        "email": "williammartin@example.com",
+        "name": "William Martin",
+        "type": "reguler",
+        "joinedAt": "23-08-2022"
+    },
+    {
+        "email": "victoriaanderson@example.com",
+        "name": "Victoria Anderson",
+        "type": "organizer",
+        "joinedAt": "08-11-2022"
+    }
+]

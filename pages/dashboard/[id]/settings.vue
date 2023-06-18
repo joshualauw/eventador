@@ -13,12 +13,15 @@
                 <p class="text-mute">this event and all data related to it will be deleted permanently</p>
             </div>
             <div class="hidden md:block md:w-1/3">
-                <p class="font-semibold text-lg">Delete Event</p>
+                <p class="font-semibold text-lg">Danger Zone</p>
                 <p class="text-content3">this event and all data related to it will be deleted permanently</p>
             </div>
-            <form class="w-full md:w-2/3 form-group space-y-4">
+            <form class="w-full flex-row flex-center md:w-2/3 form-group space-x-2">
                 <label for="delete-event-modal" type="button" class="btn btn-error w-fit">
                     <Icon name="solar:danger-triangle-bold" class="w-5 h-5 mr-2" /> Delete Event
+                </label>
+                <label type="button" class="btn btn-warning w-fit">
+                    <Icon name="solar:eye-bold" class="w-5 h-5 mr-2" /> Publish Event
                 </label>
             </form>
         </div>

@@ -1,6 +1,7 @@
 <template>
     <div class="flex-between mb-8">
         <h1 class="font-semibold text-lg">Sponsors</h1>
+        <span class="text-sm text-content3">Last updated: 24/07/2023 16:54</span>
         <label @click="handleCreating" for="edit-sponsor-modal" class="btn btn-primary">+ Create Sponsor</label>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-8">

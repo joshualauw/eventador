@@ -18,8 +18,12 @@
         "nuxt-lodash": "^2.4.1"
     },
     "dependencies": {
+        "chart.js": "^3.9.1",
+        "dayjs": "^1.11.8",
         "leaflet": "^1.9.4",
         "rippleui": "^1.12.1",
-        "sass": "^1.62.1"
+        "sass": "^1.62.1",
+        "vue-chart-3": "^3.1.8",
+        "vue3-easy-data-table": "^1.5.45"
     }
 }
