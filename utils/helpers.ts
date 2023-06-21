@@ -12,10 +12,8 @@ export function formatNumber(num: number) {
 }
 
 export function genId(length: number = 6) {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const randomChar = characters.charAt(Math.floor(Math.random() * characters.length));
-
-    return Array.from(Array(length), () => randomChar).join("");
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    return Array.from(Array(length), () => chars.charAt(Math.floor(Math.random() * chars.length))).join("");
 }
 
 export function getWeekDays() {

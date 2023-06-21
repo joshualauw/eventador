@@ -1,7 +1,6 @@
 <template>
     <div class="flex-between mb-8">
         <h1 class="font-semibold text-lg">Participants</h1>
-        <span class="text-sm text-content3">Last updated: 24/07/2023 16:54</span>
         <label for="invite-participant-modal" class="btn btn-primary">+ Invite Participant</label>
     </div>
     <div class="flex flex-center flex-col md:flex-row gap-3 mb-8">

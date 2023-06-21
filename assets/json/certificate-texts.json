@@ -1,0 +1,17 @@
+[
+    {
+        "color": "transparent",
+        "state": {
+            "x": 100,
+            "y": 500,
+            "width": 400,
+            "height": 50
+        },
+        "content": "Hello, world!",
+        "options": {
+            "fontStyle": "bold",
+            "fontSize": 16,
+            "fontColor": "black"
+        }
+    }
+]

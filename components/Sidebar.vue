@@ -12,7 +12,7 @@
 const items = [
     { name: "Home", link: "/", icon: "fa:home" },
     { name: "Explore", link: "/explore", icon: "fa:hashtag" },
-    { name: "Manage Events", link: "/manage", icon: "material-symbols:event" },
+    { name: "Events", link: "/manage", icon: "material-symbols:event" },
     { name: "Following", link: "/following", icon: "fa:user" },
     { name: "Notifications", link: "/notification", icon: "fa:bell" },
     { name: "Settings", link: "/settings", icon: "material-symbols:settings" },

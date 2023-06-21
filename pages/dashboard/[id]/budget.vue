@@ -1,7 +1,6 @@
 <template>
     <div class="flex-between mb-8">
         <h1 class="font-semibold text-lg">Budgets</h1>
-        <span class="text-sm text-content3">Last updated: 24/07/2023 16:54</span>
         <label @click="handleCreating" for="edit-budget-modal" class="btn btn-primary">+ Create Budget</label>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">

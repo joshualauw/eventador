@@ -26,6 +26,13 @@
                     <div class="col-span-1">Type</div>
                     <div class="col-span-2" :class="getTypeColor('reguler')">Reguler</div>
                 </div>
+                <div class="grid grid-cols-3">
+                    <div class="col-span-1">Role</div>
+                    <div class="col-span-2 space-x-2">
+                        <input type="text" class="input input-sm w-44" placeholder="custom role.." />
+                        <button class="btn btn-primary btn-sm">Save</button>
+                    </div>
+                </div>
             </div>
             <div class="flex flex-center space-x-4 mt-8">
                 <button class="btn btn-sm md:btn-md btn-success">
@@ -35,7 +42,10 @@
             </div>
         </div>
     </div>
-    <OrganizerParticipantAccess class="mt-8" />
+    <div class="mt-6">
+        <h1 class="font-semibold text-lg mb-6">Organizer Access</h1>
+        <OrganizerParticipantAccess />
+    </div>
     <OrganizerModalParticipantBan :id="$route.params.pid as string" label="joshualauw" />
 </template>
 

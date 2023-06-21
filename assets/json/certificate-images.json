@@ -1,0 +1,18 @@
+[
+    {
+        "color": "#FF5733",
+        "x": 100,
+        "y": 50,
+        "width": 200,
+        "height": 100,
+        "imageUrl": "/images/default-logo.png"
+    },
+    {
+        "color": "#5733FF",
+        "x": 200,
+        "y": 250,
+        "width": 300,
+        "height": 200,
+        "imageUrl": "/images/default-post.png"
+    }
+]

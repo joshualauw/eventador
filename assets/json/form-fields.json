@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Field 1",
+        "type": "text",
+        "options": []
+    },
+    {
+        "name": "Field 2",
+        "type": "textarea",
+        "options": []
+    },
+    {
+        "name": "Field 3",
+        "type": "radio",
+        "options": ["Option 1", "Option 2", "Option 3"]
+    },
+    {
+        "name": "Field 4",
+        "type": "checkbox",
+        "options": ["Option 1", "Option 2", "Option 3", "Option 4"]
+    },
+    {
+        "name": "Field 5",
+        "type": "text",
+        "options": []
+    },
+    {
+        "name": "Field 6",
+        "type": "radio",
+        "options": ["Option 1", "Option 2"]
+    }
+]

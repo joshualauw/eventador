@@ -1,25 +1,22 @@
 <template>
-    <div>
-        <h1 class="font-semibold text-lg mb-6">Organizer Access</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Grant</th>
-                    <th>Access Name</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="acc in access">
-                    <th>
-                        <input type="checkbox" class="checkbox checkbox-bordered-secondary checkbox-secondary" />
-                    </th>
-                    <td>{{ acc.name }}</td>
-                    <td>{{ acc.description }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Grant</th>
+                <th>Access Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="acc in access">
+                <th>
+                    <input type="checkbox" class="checkbox checkbox-bordered-secondary checkbox-secondary" />
+                </th>
+                <td>{{ acc.name }}</td>
+                <td>{{ acc.description }}</td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script setup lang="ts">

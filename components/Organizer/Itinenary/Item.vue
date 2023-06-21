@@ -1,7 +1,7 @@
 <template>
-    <div class="flex-shrink-0 p-4 rounded-sm bg-backgroundSecondary shadow-md">
+    <div class="flex-shrink-0 p-4 h-fit rounded-sm bg-backgroundSecondary shadow-md">
         <p class="font-bold mb-4">{{ day }}</p>
-        <div v-for="schedule in schedules" class="py-1.5 px-6 mb-2 rounded-lg bg-gray-2">
+        <div v-for="schedule in schedules" class="py-1.5 px-6 mb-2 rounded-lg bg-backgroundPrimary">
             <p class="font-semibold">{{ schedule.name }}</p>
             <p class="text-mute">{{ schedule.time }}</p>
         </div>
