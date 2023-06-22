@@ -1,5 +1,5 @@
 <template>
-    <div class="card hover:scale-100 h-fit w-3/4 mx-auto">
+    <div class="card hover:scale-100 h-fit w-full lg:w-3/4 mx-auto">
         <div class="card-body h-full">
             <div v-for="run in rundown.slice(0, 3)" class="p-4 h-fit bg-backgroundSecondary">
                 <p class="font-bold mb-4">{{ run.day }}</p>

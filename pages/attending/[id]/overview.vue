@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col lg:flex-row h-full gap-10">
-        <div class="card h-fit hover:scale-100 w-3/4 mx-auto">
+        <div class="card h-fit hover:scale-100 w-full lg:w-3/4 mx-auto">
             <img src="/images/default-post.png" alt="" class="w-full h-68" />
             <div class="card-body space-y-4">
                 <h2 class="card-header">Maximizing Your Productivity at Work</h2>
