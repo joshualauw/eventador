@@ -32,7 +32,19 @@
                 </div>
                 <div class="mt-4">
                     <div v-if="activeTab == 0">
-                        <PostItem v-for="i in 3" />
+                        <PostItem
+                            v-for="post in posts"
+                            :id="post.id"
+                            :title="post.title"
+                            :content="post.content"
+                            :image-url="post.imageUrl"
+                            :tags="post.tags"
+                            :author="post.author"
+                            :likes="post.likes"
+                            :comments="post.comments"
+                            :created-at="post.createdAt"
+                            class="py-4 border-b-2 border-gray-6"
+                        />
                     </div>
                     <div v-if="activeTab == 1">
                         <FollowItem v-for="i in 5" class="shadow-none hover:bg-gray-200 hover:scale-100" />
@@ -52,11 +64,12 @@
 </template>
 
 <script setup lang="ts">
+import posts from "@/assets/json/posts.json";
+
 definePageMeta({
     layout: "home",
 });
 
 const tabs = [{ name: "Posts" }, { name: "Followers" }, { name: "Followings" }, { name: "Events" }];
-
 const activeTab = ref(0);
 </script>

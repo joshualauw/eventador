@@ -1,0 +1,42 @@
+[
+    {
+        "commenter": {
+            "id": "101",
+            "name": "John Doe",
+            "avatar": null
+        },
+        "content": "Great post!",
+        "createdAt": "22/06/23",
+        "likes": 10
+    },
+    {
+        "commenter": {
+            "id": "202",
+            "name": "Jane Smith",
+            "avatar": null
+        },
+        "content": "Interesting article. Thanks for sharing!",
+        "createdAt": "22/06/23",
+        "likes": 5
+    },
+    {
+        "commenter": {
+            "id": "303",
+            "name": "Robert Johnson",
+            "avatar": null
+        },
+        "content": "I have a question. Can you please elaborate?",
+        "createdAt": "22/06/23",
+        "likes": 2
+    },
+    {
+        "commenter": {
+            "id": "404",
+            "name": "Emily Davis",
+            "avatar": null
+        },
+        "content": "Well written. I enjoyed reading it!",
+        "createdAt": "22/06/23",
+        "likes": 8
+    }
+]

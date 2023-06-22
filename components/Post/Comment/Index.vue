@@ -9,5 +9,17 @@
             </div>
         </div>
     </div>
-    <PostCommentItem v-for="i in 3" />
+    <PostCommentItem
+        v-for="comment in comments"
+        :commenter="comment.commenter"
+        :content="comment.content"
+        :created-at="comment.createdAt"
+        :likes="comment.likes"
+    />
 </template>
+
+<script setup lang="ts">
+import comments from "@/assets/json/comments.json";
+
+defineProps<{ postId: string }>();
+</script>

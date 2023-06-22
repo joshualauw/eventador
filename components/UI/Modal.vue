@@ -1,6 +1,6 @@
 <template>
     <input class="modal-state" :id="modalId" v-model="isOpen" type="checkbox" />
-    <div class="modal">
+    <div class="modal z-50">
         <label class="modal-overlay" :for="modalId"></label>
         <div class="modal-content w-full max-w-[475px]" :class="classes">
             <label :for="modalId" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>

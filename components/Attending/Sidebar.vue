@@ -50,6 +50,7 @@
                 </div>
             </section>
         </aside>
+        <AttendingModalStreamJoin @joining="navigateTo('/attending/123/stream')" />
     </div>
 </template>
 
@@ -65,7 +66,7 @@ function getBordered(link: string) {
 const menus = [
     {
         icon: "material-symbols:chat-outline",
-        name: "Group Chat",
+        name: "Discussion",
         link: `/attending/123`,
     },
     {
@@ -74,9 +75,14 @@ const menus = [
         link: `/attending/123/overview`,
     },
     {
+        icon: "material-symbols:calendar-month",
+        name: "Rundown",
+        link: `/attending/123/rundown`,
+    },
+    {
         icon: "material-symbols:live-tv",
         name: "Livestream",
-        link: `/attending/123/stream`,
+        link: `/attending/123/prestream`,
     },
 ];
 </script>

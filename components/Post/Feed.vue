@@ -14,10 +14,29 @@
             </select>
         </div>
         <div class="mt-8 space-y-5">
-            <div v-for="i in 5">
-                <PostItem class="py-4 border-b-2 border-gray-6" />
+            <div v-for="post in posts">
+                <PostItem
+                    @commenting="(id) => (actionId = id)"
+                    :id="post.id"
+                    :title="post.title"
+                    :content="post.content"
+                    :image-url="post.imageUrl"
+                    :tags="post.tags"
+                    :author="post.author"
+                    :likes="post.likes"
+                    :comments="post.comments"
+                    :created-at="post.createdAt"
+                    class="py-4 border-b-2 border-gray-6"
+                />
             </div>
         </div>
+        <ModalPostComment :id="actionId" />
         <ModalPostEdit />
     </div>
 </template>
+
+<script setup lang="ts">
+import posts from "@/assets/json/posts.json";
+
+const { actionId } = useCrudManager();
+</script>

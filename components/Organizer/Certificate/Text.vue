@@ -1,5 +1,5 @@
 <template>
-    <div @click="emits('selected', id)" class="absolute group select-none flex-box z-30" :style="styles">
+    <div @click="emits('selected', text)" class="absolute group select-none flex-box z-30" :style="styles">
         <div
             @mousedown="dragMouseDown"
             class="hidden group-hover:flex absolute -top-2 -left-2 h-6 w-6 cursor-move items-center justify-center rounded-full btn-solid-primary text-sm"
@@ -11,37 +11,18 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+interface TextState {
     id: string;
     color: string;
     content: string;
     options: { fontStyle: string; fontSize: number; fontColor: string };
     state: { x: number; y: number; width: number; height: number };
-}>();
-const emits = defineEmits<{ (e: "selected", id: string): void }>();
+}
 
-const text = reactive({
-    color: "#FFFFFF",
-    content: "<blank>",
-    options: {
-        fontStyle: "none",
-        fontSize: 16,
-        fontColor: "#FFFFFF",
-    },
-    state: {
-        x: 25,
-        y: 25,
-        width: 50,
-        height: 50,
-    },
-});
+const props = defineProps<TextState>();
+const emits = defineEmits<{ (e: "selected", id: TextState): void }>();
 
-onMounted(() => {
-    if (props.color) text.color = props.color;
-    if (props.content) text.content = props.content;
-    if (props.options) text.options = props.options;
-    if (props.state) text.state = props.state;
-});
+const text = reactive(props);
 
 const styles = computed(() => {
     let styleString = "border: 1px solid gray;";

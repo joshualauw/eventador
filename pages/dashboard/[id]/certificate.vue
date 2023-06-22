@@ -12,10 +12,10 @@
                     <Icon name="material-symbols:add" class="w-6 h-6" />
                 </label>
                 <div class="dropdown-menu dropdown-menu-right ml-2">
-                    <p class="dropdown-item text-sm">
+                    <p @click="addImage" class="dropdown-item text-sm">
                         <span class="flex-center"><Icon name="fa:image" class="mr-2" /> Add Image</span>
                     </p>
-                    <p class="dropdown-item text-sm">
+                    <p @click="addText" class="dropdown-item text-sm">
                         <span class="flex-center">
                             <Icon name="material-symbols:text-fields" class="mr-2" /> Add Text
                         </span>
@@ -29,6 +29,7 @@
             <img :src="activeTemplate" class="absolute top-0 left-0 w-full h-full z-10" />
             <OrganizerCertificateText
                 v-for="text in texts"
+                @selected="(text) => (overlayText = text)"
                 :id="genId()"
                 :color="text.color"
                 :content="text.content"
@@ -38,15 +39,38 @@
             <div v-for="i in 60" class="bg-transparent z-20"></div>
         </div>
     </div>
+    <OrganizerCertificateOverlayText v-if="false" />
     <OrganizerCertificateTemplate @applied="handleApplied" />
 </template>
 
 <script setup lang="ts">
-import texts from "@/assets/json/certificate-texts.json";
+import _texts from "@/assets/json/certificate-texts.json";
 
+const texts = toRef(_texts);
 const activeTemplate = ref("/images/certificate/white.jpg");
+const overlayText = ref();
 
 function handleApplied(img: string) {
     activeTemplate.value = img;
+}
+
+function addImage() {}
+
+function addText() {
+    texts.value.push({
+        color: "transparent",
+        state: {
+            x: 200,
+            y: 300,
+            width: 400,
+            height: 50,
+        },
+        content: "Hello, world!",
+        options: {
+            fontStyle: "bold",
+            fontSize: 16,
+            fontColor: "black",
+        },
+    });
 }
 </script>
