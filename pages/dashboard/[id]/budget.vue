@@ -18,7 +18,6 @@
     </div>
     <OrganizerModalBudgetEdit :context="actionContext" :update-id="actionId" />
     <OrganizerModalBudgetDelete :label="actionLabel" :id="actionId" />
-    <OrganizerModalBudgetExpense :update-id="actionId" />
 </template>
 
 <script setup lang="ts">

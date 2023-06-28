@@ -69,13 +69,20 @@
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"
                 ></iframe>
+                <h2 class="text-lg lg:text-xl font-semibold">Event Rundown</h2>
+                <EventRundown />
             </div>
             <div class="w-full lg:w-[40%] space-y-8 mt-8 lg:mt-0">
                 <div class="card hover:scale-100 text-center">
                     <div class="card-body">
                         <p class="text-3xl text-success font-bold">Rp. 25.000,00</p>
                         <p>98 Slots Left</p>
-                        <button class="btn btn-primary mt-3">Register Now</button>
+                        <label for="payment-modal" class="btn btn-primary mt-3">Register Now</label>
+                        <div class="divider">-or-</div>
+                        <div class="flex">
+                            <input class="input max-w-full rounded-r-none" placeholder="invitational code.." />
+                            <button type="button" class="btn btn-solid-primary rounded-l-none">Apply</button>
+                        </div>
                     </div>
                 </div>
                 <h2 class="text-xl font-semibold">Sponsored By</h2>
@@ -93,6 +100,16 @@
             </div>
         </div>
     </div>
+    <ModalPayment>
+        <div class="flex space-x-4">
+            <img src="/images/default-post.png" class="w-32 h-20 rounded-md" />
+            <div class="text-left">
+                <p class="font-semibold">Maximizing Productivity At Work</p>
+                <p class="text-warning text-lg">Rp. 25.000</p>
+                <p class="text-content2">Amount: x1</p>
+            </div>
+        </div>
+    </ModalPayment>
 </template>
 
 <script setup lang="ts">

@@ -5,6 +5,7 @@
             <div class="form-group">
                 <label class="form-label">User Email</label>
                 <input type="text" class="input max-w-full" placeholder="user email.." />
+                <textarea class="h-24 w-full textarea resize-none" placeholder="greetings.."></textarea>
                 <p class="text-mute">*participant will be sent invitational code</p>
             </div>
             <p><input type="checkbox" class="checkbox" /><span class="text-mute ml-2">Invite as organizer</span></p>

@@ -5,8 +5,6 @@
             <span class="space-x-5">
                 <input type="checkbox" class="checkbox-primary checkbox-solid checkbox mr-1" />
                 Wishlist
-                <input type="checkbox" class="checkbox-primary checkbox-solid checkbox mr-1" />
-                Registered
             </span>
             <ExploreFilter />
         </div>

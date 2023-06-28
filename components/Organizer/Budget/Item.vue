@@ -4,13 +4,7 @@
             <p class="font-semibold text-lg">{{ name }}</p>
             <progress class="progress" :class="progressColor" :value="progressPercent" max="100"></progress>
             <span class="text-mute">Rp. {{ formatNumber(current) }} / Rp. {{ formatNumber(limit) }}</span>
-            <label
-                for="edit-expense-modal"
-                @click="emits('expensing', id)"
-                class="hover:underline cursor-pointer w-fit"
-            >
-                {{ expense_count }} Expenses <Icon name="icon-park-solid:transaction" />
-            </label>
+            <p>{{ expense_count }} Expenses <Icon name="icon-park-solid:transaction" /></p>
             <div class="flex-end space-x-1.5">
                 <label for="edit-budget-modal" @click="emits('editing', id)" class="btn btn-sm btn-solid-secondary">
                     Edit

@@ -10,6 +10,10 @@
                 <input placeholder="Event name" type="text" class="input max-w-full" />
             </div>
             <div class="form-field">
+                <label class="form-label">Start Date</label>
+                <input type="date" class="input max-w-full" />
+            </div>
+            <div class="form-field">
                 <label class="form-label">Category</label>
                 <select class="select max-w-full">
                     <option value="seminar">Seminar</option>

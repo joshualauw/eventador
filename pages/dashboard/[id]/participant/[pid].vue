@@ -35,8 +35,9 @@
                 </div>
             </div>
             <div class="flex flex-center space-x-4 mt-8">
-                <button class="btn btn-sm md:btn-md btn-success">
-                    <Icon name="material-symbols:mail" class="mr-2" /> Email Certificate
+                <button class="btn btn-sm md:btn-md btn-success relative">
+                    <input type="file" class="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer" />
+                    <Icon name="fa:mail-forward" class="mr-2" /> Email Certificate
                 </button>
                 <label for="ban-participant-modal" class="btn btn-sm md:btn-md btn-solid-error">Ban Participant</label>
             </div>

@@ -6,7 +6,7 @@
         </div>
         <div class="hidden md:block md:w-1/3">
             <p class="font-semibold text-lg">Personal Information</p>
-            <p class="text-content3">Use a permanent address where you can receive email</p>
+            <p class="text-content3">Use a permanent email address where you can receive email</p>
         </div>
         <form class="w-full md:w-2/3 form-group space-y-4">
             <div class="form-group">
@@ -37,10 +37,8 @@
                 <input placeholder="mail@example.com" type="email" class="input max-w-full" />
             </div>
             <div class="form-field">
-                <label class="form-label">Timezone</label>
-                <select class="select">
-                    <option value="all">Pacific Standard Time</option>
-                </select>
+                <label class="form-label">Phone Number</label>
+                <input placeholder="phone number.." type="text" class="input max-w-full" />
             </div>
             <button type="button" class="btn btn-primary w-fit">Save</button>
         </form>

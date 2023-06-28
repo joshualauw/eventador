@@ -47,7 +47,7 @@
 import _texts from "@/assets/json/certificate-texts.json";
 
 const texts = toRef(_texts);
-const activeTemplate = ref("/images/certificate/white.jpg");
+const activeTemplate = ref("/images/certificate/blue.jpg");
 const overlayText = ref();
 
 function handleApplied(img: string) {

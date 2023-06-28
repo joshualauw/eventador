@@ -28,7 +28,7 @@
                     <td>Joshualauw</td>
                     <td>Rp. 250.000</td>
                     <td><span class="text-success">Success</span></td>
-                    <td><button class="btn btn-sm btn-solid-secondary">Detail</button></td>
+                    <td><button class="btn btn-sm btn-solid-secondary">Accept</button></td>
                 </tr>
             </tbody>
         </table>
