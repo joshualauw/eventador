@@ -50,7 +50,6 @@
                 </div>
             </section>
         </aside>
-        <AttendingModalStreamJoin @joining="navigateTo('/attending/123/stream')" />
     </div>
 </template>
 

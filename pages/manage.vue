@@ -9,7 +9,6 @@
                 <span class="badge badge-flat-secondary">public</span>
                 <h2 class="card-header text-lg font-bold">Maximizing Your Productivity at Work</h2>
                 <p class="text-content2">10/29 people attended</p>
-                <p class="text-success">Rp. 100.000 Profited</p>
             </div>
         </div>
     </div>

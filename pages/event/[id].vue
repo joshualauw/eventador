@@ -4,15 +4,8 @@
         <div class="flex flex-col lg:flex-row">
             <img
                 src="/images/default-post.png"
-                class="max-h-72 lg:max-h-[500px] w-full rounded-lg border border-backgroundSecondary"
+                class="max-h-72 lg:max-h-[525px] w-full rounded-lg border border-backgroundSecondary"
             />
-            <div class="h-36 lg:h-[500px] flex lg:block overflow-y-auto">
-                <img
-                    v-for="i in 4"
-                    src="/images/default-logo.png"
-                    class="w-1/3 h-28 lg:h-1/3 lg:w-full border border-backgroundSecondary"
-                />
-            </div>
         </div>
         <h1 class="text-xl lg:text-3xl font-extrabold mt-8">Maximizing Your Productivity at Work</h1>
         <div class="mt-8 flex flex-col lg:flex-row w-full lg:space-x-16">

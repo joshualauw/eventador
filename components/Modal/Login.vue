@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-const AuthLogin = resolveComponent("AuthLogin");
-const AuthRegister = resolveComponent("AuthRegister");
-const AuthVerify = resolveComponent("AuthVerify");
+const AuthLogin = shallowRef(resolveComponent("AuthLogin"));
+const AuthRegister = shallowRef(resolveComponent("AuthRegister"));
+const AuthVerify = shallowRef(resolveComponent("AuthVerify"));
 
 const tabs = [
     {

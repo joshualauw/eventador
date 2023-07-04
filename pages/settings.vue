@@ -2,6 +2,8 @@
     <div class="space-y-12">
         <SettingsPersonal />
         <div class="divider"></div>
+        <SettingsPreference />
+        <div class="divider"></div>
         <SettingsPassword />
         <div class="divider"></div>
         <SettingsBalance />

@@ -16,9 +16,10 @@
                 <p class="text-gray-500">iSTTS, East Java, Surabaya</p>
                 <p class="text-gray-500">20 Slots remaining</p>
             </div>
-            <div class="card-footer justify-end space-x-2 mt-4">
+            <div class="badge badge-primary w-fit">Webinar</div>
+            <div class="card-footer justify-end space-x-2 mt-2">
                 <button class="btn btn-solid-error"><Icon name="fa:heart-o" /></button>
-                <button class="btn btn-solid-success">Rp. 25.000</button>
+                <button class="btn btn-solid-success btn-no-animation">Rp. 25.000</button>
             </div>
         </div>
     </div>
