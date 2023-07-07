@@ -9,7 +9,4 @@
 definePageMeta({
     layout: "home",
 });
-
-const res = await getAllEvents();
-console.log(res.data.value?.data);
 </script>

@@ -9,7 +9,7 @@
         </div>
         <div class="flex-center space-x-4">
             <DarkMode />
-            <label v-if="!signedIn" for="login-modal" class="btn btn-sm md:btn-md btn-primary">Sign In</label>
+            <label v-if="!loggedUser" for="login-modal" class="btn btn-sm md:btn-md btn-primary"> Sign In </label>
             <div v-else class="dropdown">
                 <label class="flex-center space-x-3 text-sm cursor-pointer" tabindex="0">
                     <div class="avatar avatar-sm avatar-ring">
@@ -31,5 +31,5 @@
 </template>
 
 <script setup lang="ts">
-const signedIn = false;
+const { loggedUser } = useAuthStore();
 </script>

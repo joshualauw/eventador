@@ -5,5 +5,10 @@ export default defineNuxtConfig({
             title: "Eventador",
         },
     },
+    runtimeConfig: {
+        public: {
+            baseURL: process.env.BASE_API || "",
+        },
+    },
     modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@nuxtjs/color-mode", "nuxt-lodash"],
 });
