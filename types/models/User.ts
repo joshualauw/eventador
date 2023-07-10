@@ -2,11 +2,12 @@ interface IUser {
     _id: string;
     username: string;
     password: string;
+    email: string;
     role: "admin" | "user";
     profile?: string;
     preferences: {
         theme: "dark" | "light";
-        notifications: "user:following" | "user:new_event" | "user:transaction" | "user:event_join"[];
+        notifications: ("user:following" | "user:new_event" | "user:transaction" | "user:event_join")[];
     };
     notifications: {
         type: "info" | "success" | "warning" | "error";

@@ -1,0 +1,38 @@
+[
+    {
+        "key": "webinar",
+        "name": "Webinar"
+    },
+    {
+        "key": "workshop",
+        "name": "Workshop"
+    },
+    {
+        "key": "conference",
+        "name": "Conference"
+    },
+    {
+        "key": "seminar",
+        "name": "Seminar"
+    },
+    {
+        "key": "exhibition",
+        "name": "Exhibition"
+    },
+    {
+        "key": "networking",
+        "name": "Networking"
+    },
+    {
+        "key": "panel_discussion",
+        "name": "Panel Discussion"
+    },
+    {
+        "key": "competition",
+        "name": "Competition"
+    },
+    {
+        "key": "others",
+        "name": "Others"
+    }
+]

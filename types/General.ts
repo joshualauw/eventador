@@ -9,3 +9,5 @@ interface ApiError {
     errors?: string[];
     stack: string;
 }
+
+type UnwrapApiResponse<T> = T extends ApiResponse<infer U> ? U : never;

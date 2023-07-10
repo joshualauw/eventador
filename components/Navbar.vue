@@ -8,22 +8,21 @@
             <h2 class="hidden md:block md:text-xl font-bold tracking-widest">Eventador</h2>
         </div>
         <div class="flex-center space-x-4">
-            <DarkMode />
             <label v-if="!loggedUser" for="login-modal" class="btn btn-sm md:btn-md btn-primary"> Sign In </label>
-            <div v-else class="dropdown">
-                <label class="flex-center space-x-3 text-sm cursor-pointer" tabindex="0">
-                    <div class="avatar avatar-sm avatar-ring">
-                        <img src="/images/default-user.png" alt="avatar" />
+            <div v-else>
+                <label
+                    @click="navigateTo('/settings')"
+                    class="flex-center space-x-3 text-sm cursor-pointer"
+                    tabindex="0"
+                >
+                    <div class="avatar avatar-sm lg:avatar-md avatar-ring">
+                        <img :src="loggedUser.profile ?? '/images/default-user.png'" alt="avatar" />
                     </div>
                     <div class="hidden md:block">
-                        <p class="font-bold">Joshua William</p>
-                        <p class="text-gray-300">joshualauw@gmail.com</p>
+                        <p class="font-bold">{{ loggedUser.username }}</p>
+                        <p class="text-gray-300">{{ loggedUser.email }}</p>
                     </div>
                 </label>
-                <div class="dropdown-menu bg-white mt-3 w-40 md:w-full text-black dropdown-menu-bottom-left">
-                    <a class="dropdown-item text-sm">Profile</a>
-                    <a class="dropdown-item text-sm">Log Out</a>
-                </div>
             </div>
         </div>
         <ModalLogin />

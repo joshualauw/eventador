@@ -9,7 +9,6 @@
                     <span class="tracking-wider text-lg">Eventador</span>
                     <span class="font-normal">Event Lounge</span>
                 </div>
-                <DarkMode />
             </section>
             <div class="divider"></div>
             <section class="sidebar-content h-full overflow-visible">

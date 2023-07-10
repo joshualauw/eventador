@@ -29,5 +29,27 @@ export default function useAuthStore() {
         return res;
     }
 
-    return { loggedUser, register, getMe, activate, login };
+    async function savePersonal(body: ISavePersonal.Body) {
+        const formData = new FormData();
+        if (body.profile) formData.append("profile", body.profile);
+        formData.append("username", body.username);
+        formData.append("email", body.email);
+        formData.append("phone_number", body.phone_number);
+
+        const res = await executeRequest<ISavePersonal.Data>("/auth/save/personal", { method: "PUT", body: formData });
+        if (res.status && res.data) {
+            loggedUser.value = res.data.data;
+        }
+        return res;
+    }
+
+    async function savePreferences(body: ISavePreferences.Body) {
+        const res = await executeRequest<ISavePreferences.Data>("/auth/save/preferences", { method: "PUT", body });
+        if (res.status && res.data) {
+            loggedUser.value = res.data.data;
+        }
+        return res;
+    }
+
+    return { loggedUser, register, getMe, activate, login, savePersonal, savePreferences };
 }

@@ -25,7 +25,7 @@
             <div class="form-field">
                 <label class="form-label">Actions</label>
                 <div class="flex space-x-4">
-                    <button type="button" class="btn btn-success w-fit">Top Up</button>
+                    <button type="button" class="btn btn-solid-secondary w-fit">Top Up</button>
                     <button type="button" class="btn btn-solid-secondary w-fit">Withdraw</button>
                 </div>
             </div>

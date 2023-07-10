@@ -1,5 +1,4 @@
-import { useToast, POSITION, TYPE } from "vue-toastification";
-import { ToastOptions } from "vue-toastification/dist/types/types";
+import { TYPE } from "vue-toastification";
 
 interface FetchOptions {
     method?: "POST" | "PUT" | "GET" | "PATCH" | "DELETE";
@@ -31,6 +30,7 @@ export async function executeRequest<T>(url: string, options: FetchOptions, toas
         if (toasted && options.method != "GET") createToast(data.message || "", TYPE.SUCCESS);
     } catch (e) {
         const err = errorHandler(e);
+        status = false;
         error = err;
         errors = [];
         errors.push(...(err.errors ?? []));
@@ -44,26 +44,4 @@ export function errorHandler(error: any) {
     const err = error as { data: ApiError };
     console.error(err);
     return err.data;
-}
-
-function createToast(message: string, type: TYPE) {
-    const toast = useToast();
-
-    const options: ToastOptions = {
-        type,
-        position: POSITION.TOP_RIGHT,
-        timeout: 3000,
-        closeOnClick: true,
-        pauseOnFocusLoss: true,
-        pauseOnHover: true,
-        draggable: true,
-        draggablePercent: 0.6,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: true,
-        rtl: false,
-    };
-
-    toast(message, options);
 }

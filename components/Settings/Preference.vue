@@ -11,7 +11,7 @@
         <form class="w-full md:w-2/3 form-group space-y-4">
             <div class="form-field">
                 <label class="form-label">Theme</label>
-                <select v-model="colorMode.value" class="select max-w-full">
+                <select v-model="preferenceState.theme" class="select max-w-full">
                     <option value="light">Light</option>
                     <option value="dark">Dark</option>
                 </select>
@@ -19,17 +19,61 @@
             <div class="form-field">
                 <label class="form-label">Notifications</label>
                 <div class="flex flex-col">
-                    <span> <input type="checkbox" class="mr-1" /> New Follower</span>
-                    <span> <input type="checkbox" class="mr-1" /> Followed users new event</span>
-                    <span> <input type="checkbox" class="mr-1" /> User joined event</span>
-                    <span> <input type="checkbox" class="mr-1" /> Track Transaction History</span>
+                    <span v-for="notf in notificationsType">
+                        <input v-model="notf.selected" type="checkbox" class="mr-1" />
+                        {{ notf.name }}
+                    </span>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary w-fit">Save</button>
+            <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />
+            <button
+                @click="mutate(preferenceState)"
+                type="button"
+                class="btn btn-primary w-fit"
+                :class="{ 'btn-loading': pending }"
+            >
+                Save
+            </button>
         </form>
     </div>
 </template>
 
 <script setup lang="ts">
-const colorMode = useColorMode();
+const { savePreferences, loggedUser } = useAuthStore();
+
+const { mutate, error, pending, errors } = useMutate(savePreferences);
+const userNotifications = computed(() => loggedUser.value?.preferences.notifications ?? []);
+
+const notificationsType = reactive([
+    {
+        key: "user:following",
+        name: "New Follower",
+        selected: userNotifications.value.includes("user:following") || false,
+    },
+    {
+        key: "user:new_event",
+        name: "Followed users new event",
+        selected: userNotifications.value.includes("user:new_event") || false,
+    },
+    {
+        key: "user:event_join",
+        name: "User joined event",
+        selected: userNotifications.value.includes("user:event_join") || false,
+    },
+    {
+        key: "user:transaction",
+        name: "Track Transaction",
+        selected: userNotifications.value.includes("user:transaction") || false,
+    },
+]);
+
+const preferenceState = reactive({
+    theme: loggedUser.value?.preferences.theme || ("light" as "light" | "dark"),
+    notifications: userNotifications.value || ([] as string[]),
+});
+
+watch(notificationsType, (state) => {
+    //@ts-ignore
+    preferenceState.notifications = state.filter((notf) => notf.selected).map((notf) => notf.key);
+});
 </script>

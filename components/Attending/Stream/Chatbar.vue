@@ -3,7 +3,6 @@
         <h1 class="text-lg text-white font-bold flex-center justify-center">
             <Icon name="material-symbols:android-messages" class="mr-2 w-6 h-6" />
             <span class="mr-4">Live Chat</span>
-            <DarkMode />
         </h1>
         <div class="mt-8 h-[615px] px-4 overflow-y-auto">
             <p class="badge badge-sm mb-4">joshualauw has joined the stream</p>

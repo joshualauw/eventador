@@ -15,13 +15,14 @@
                     <div class="shrink-0">
                         <img
                             class="object-cover w-20 h-20 rounded-full"
-                            src="/images/default-camera.png"
+                            :src="preview ?? '/images/default-camera.png'"
                             alt="profile_photo"
                         />
                     </div>
                     <label class="block">
                         <span class="sr-only">Choose File</span>
                         <input
+                            @change="handleFileChange"
                             type="file"
                             class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:btn-solid-primary"
                         />
@@ -30,17 +31,62 @@
             </div>
             <div class="form-field">
                 <label class="form-label">Username</label>
-                <input placeholder="username" type="text" class="input max-w-full" />
+                <input v-model="personalState.username" placeholder="username" type="text" class="input max-w-full" />
             </div>
             <div class="form-field">
                 <label class="form-label">Email Address</label>
-                <input placeholder="mail@example.com" type="email" class="input max-w-full" />
+                <input
+                    v-model="personalState.email"
+                    placeholder="mail@example.com"
+                    type="email"
+                    class="input max-w-full"
+                />
             </div>
             <div class="form-field">
                 <label class="form-label">Phone Number</label>
-                <input placeholder="phone number.." type="text" class="input max-w-full" />
+                <input
+                    v-model="personalState.phone_number"
+                    placeholder="phone number.."
+                    type="text"
+                    class="input max-w-full"
+                />
             </div>
-            <button type="button" class="btn btn-primary w-fit">Save</button>
+            <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />
+            <button
+                @click="mutate(personalState)"
+                type="button"
+                class="btn btn-primary w-fit"
+                :class="{ 'btn-loading': pending }"
+            >
+                Save
+            </button>
         </form>
     </div>
 </template>
+
+<script setup lang="ts">
+import { TYPE } from "vue-toastification";
+
+const { loggedUser, savePersonal } = useAuthStore();
+
+const preview = ref<string | null>(loggedUser.value?.profile || null);
+
+const personalState = reactive({
+    profile: null as File | null,
+    username: loggedUser.value?.username || "",
+    email: loggedUser.value?.email || "",
+    phone_number: loggedUser.value?.phone_number || "",
+});
+
+const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+    if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
+        personalState.profile = file;
+        preview.value = URL.createObjectURL(file);
+    } else {
+        createToast("file should be an image!", TYPE.ERROR);
+    }
+};
+
+const { mutate, pending, error, errors } = useMutate(savePersonal);
+</script>

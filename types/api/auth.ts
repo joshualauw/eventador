@@ -23,3 +23,22 @@ namespace ILogin {
 
     export type Data = ApiResponse<Omit<IUser, "password"> & { token: string }>;
 }
+
+namespace ISavePersonal {
+    export interface Body {
+        profile: File | null;
+        username: string;
+        email: string;
+        phone_number: string;
+    }
+
+    export type Data = ApiResponse<IUser>;
+}
+
+namespace ISavePreferences {
+    export interface Body {
+        theme: "light" | "dark";
+        notifications: string[];
+    }
+    export type Data = ApiResponse<IUser>;
+}

@@ -1,6 +1,6 @@
 export default defineNuxtPlugin(async () => {
-    const { getMe } = useAuthStore();
+    const { getMe, loggedUser } = useAuthStore();
     const token = useCookie("token");
 
-    if (token.value) await getMe();
+    if (token.value && !loggedUser.value) await getMe();
 });
