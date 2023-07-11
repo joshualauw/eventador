@@ -7,7 +7,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label">Field Type</label>
-                <select v-model="type" @input="emitUpdate" class="select">
+                <select v-model="type" @change="emitUpdate" class="select">
                     <option value="text">Text</option>
                     <option value="textarea">Text Area</option>
                     <option value="radio">Radio Button</option>
@@ -39,20 +39,17 @@
 
 <script setup lang="ts">
 const props = defineProps<{ id: string; name?: string; type?: string; options?: string[] }>();
-const emits = defineEmits<{ (e: "updated", item: any): void; (e: "deleting", id: string, label: string): void }>();
+const emits = defineEmits<{
+    (e: "updated", item: IFormField): void;
+    (e: "deleting", id: string, label: string): void;
+}>();
 
-const name = ref("");
-const type = ref("text");
-const options = ref<{ name: string }[]>([]);
-const isOptionsField = ref(false);
+const name = ref(props.name || "");
+const type = ref(props.type || "text");
+const options = ref<{ name: string }[]>(props.options?.map((o) => ({ name: o })) || []);
+const isOptionsField = ref(["radio", "checkbox"].includes(props.type ?? "text") || false);
 
-onMounted(() => {
-    name.value = props.name || "";
-    type.value = props.type || "text";
-    props.options?.forEach((opt) => {
-        options.value.push({ name: opt });
-    });
-});
+console.log(isOptionsField.value);
 
 watch(type, (newType) => {
     isOptionsField.value = ["radio", "checkbox"].includes(newType);
@@ -76,6 +73,4 @@ function addOption() {
     options.value.push({ name: "" });
     emitUpdate();
 }
-
-emitUpdate();
 </script>

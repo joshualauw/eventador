@@ -9,6 +9,7 @@ export default function useEventStore() {
         end_date: null,
         wishlist: false,
     }));
+    const eventDashboardId = useState<string>("eventDashboardId", () => "");
 
     async function getExploreEvents(query?: IExploreEvent.Query) {
         const res = await executeRequest<IExploreEvent.Data>("/event/explore", { method: "GET", query });
@@ -25,5 +26,5 @@ export default function useEventStore() {
         return res;
     }
 
-    return { getExploreEvents, exploreEventQuery, getUserEvents, createEvent };
+    return { getExploreEvents, exploreEventQuery, eventDashboardId, getUserEvents, createEvent };
 }

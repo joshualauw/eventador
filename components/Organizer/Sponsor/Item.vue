@@ -17,13 +17,6 @@
                     Delete
                 </label>
             </div>
-            <label
-                @click="emits('detailing', id)"
-                for="detail-sponsor-modal"
-                class="btn btn-sm btn-ghost absolute top-3 right-3"
-            >
-                <Icon name="fa:external-link" class="text-content2 font-semibold" />
-            </label>
         </div>
     </div>
 </template>
@@ -32,10 +25,9 @@
 const props = defineProps<{
     id: string;
     name: string;
-    logo: string | null;
+    logo?: string;
 }>();
 const emits = defineEmits<{
-    (e: "detailing", id: string): void;
     (e: "editing", id: string): void;
     (e: "deleting", id: string, label: string): void;
 }>();

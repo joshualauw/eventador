@@ -19,6 +19,7 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard",
+    middleware: "event-dashboard",
 });
 
 const stats = [

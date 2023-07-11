@@ -3,29 +3,33 @@
         <h1 class="font-semibold text-lg">Budgets</h1>
         <label @click="handleCreating" for="edit-budget-modal" class="btn btn-primary">+ Create Budget</label>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+    <p v-if="budgets && budgets.data.length == 0" class="text-center font-semibold text-lg text-content2 mt-8">
+        -no budgets-
+    </p>
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         <OrganizerBudgetItem
-            v-for="budget in budgets"
-            @expensing="(id) => (actionId = id)"
+            v-for="budget in budgets?.data"
             @editing="handleUpdating"
             @deleting="handleDeleting"
-            :id="budget.name"
+            :id="budget._id"
             :name="budget.name"
-            :current="budget.current"
             :limit="budget.limit"
-            :expense_count="budget.expenses.length"
+            :expenses="budget.expenses"
         />
     </div>
-    <OrganizerModalBudgetEdit :context="actionContext" :update-id="actionId" />
-    <OrganizerModalBudgetDelete :label="actionLabel" :id="actionId" />
+    <OrganizerModalBudgetEdit @saved="refresh" :context="actionContext" :update-id="actionId" />
+    <OrganizerModalBudgetDelete @deleted="refresh" :label="actionLabel" :id="actionId" />
 </template>
 
 <script setup lang="ts">
-import budgets from "@/assets/json/budgets.json";
-
 definePageMeta({
     layout: "dashboard",
+    middleware: "event-dashboard",
 });
 
 const { actionContext, actionId, actionLabel, handleCreating, handleDeleting, handleUpdating } = useCrudManager();
+const { getAllBudget } = useBudgetStore();
+const { eventDashboardId } = useEventStore();
+
+const { data: budgets, refresh } = await useAsyncData("getAllBudget", () => getAllBudget(eventDashboardId.value));
 </script>

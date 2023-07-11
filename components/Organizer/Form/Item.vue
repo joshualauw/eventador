@@ -14,7 +14,10 @@
                     Delete
                 </label>
             </div>
-            <div @click="navigateTo(`/dashboard/123/form/${id}`)" class="btn btn-sm btn-ghost absolute top-3 right-3">
+            <div
+                @click="navigateTo(`/dashboard/${eventDashboardId}/form/${id}`)"
+                class="btn btn-sm btn-ghost absolute top-3 right-3"
+            >
                 <Icon name="fa:external-link" class="text-content2 font-semibold" />
             </div>
         </div>
@@ -28,6 +31,8 @@ const props = defineProps<{
     fields_length: number;
     response_length: number;
 }>();
+
+const { eventDashboardId } = useEventStore();
 
 const emits = defineEmits<{
     (e: "editing", id: string): void;

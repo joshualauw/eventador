@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const { eventDashboardId } = useEventStore();
 
 function getBordered(link: string) {
     const splitLink = route.path.split("/");
@@ -65,42 +66,42 @@ const menus = [
     {
         icon: "material-symbols:bar-chart",
         name: "Overview",
-        link: `/dashboard/123`,
+        link: `/dashboard/${eventDashboardId.value}`,
     },
     {
         icon: "majesticons:user-group",
         name: "Participant",
-        link: `/dashboard/123/participant`,
+        link: `/dashboard/${eventDashboardId.value}/participant`,
     },
     {
         icon: "uis:schedule",
         name: "Itinenary",
-        link: `/dashboard/123/itinenary`,
+        link: `/dashboard/${eventDashboardId.value}/itinenary`,
     },
     {
         icon: "material-symbols:account-balance-wallet",
         name: "Budget",
-        link: `/dashboard/123/budget`,
+        link: `/dashboard/${eventDashboardId.value}/budget`,
     },
     {
         icon: "mdi:hand-heart",
         name: "Sponsor",
-        link: `/dashboard/123/sponsor`,
+        link: `/dashboard/${eventDashboardId.value}/sponsor`,
     },
     {
         icon: "material-symbols:edit-document-rounded",
         name: "Form Builder",
-        link: `/dashboard/123/form`,
+        link: `/dashboard/${eventDashboardId.value}/form`,
     },
     {
         icon: "mdi:certificate",
         name: "Certificate Builder",
-        link: `/dashboard/123/certificate`,
+        link: `/dashboard/${eventDashboardId.value}/certificate`,
     },
     {
         icon: "material-symbols:settings",
         name: "Settings",
-        link: `/dashboard/123/settings`,
+        link: `/dashboard/${eventDashboardId.value}/settings`,
     },
 ];
 </script>

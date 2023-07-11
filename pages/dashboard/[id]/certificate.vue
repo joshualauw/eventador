@@ -46,6 +46,10 @@
 <script setup lang="ts">
 import _texts from "@/assets/json/certificate-texts.json";
 
+definePageMeta({
+    middleware: "event-dashboard",
+});
+
 const texts = toRef(_texts);
 const activeTemplate = ref("/images/certificate/blue.jpg");
 const overlayText = ref();

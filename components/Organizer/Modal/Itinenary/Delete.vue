@@ -1,5 +1,5 @@
 <template>
-    <UIModal modal-id="delete-itinenary-modal">
+    <UIModal v-slot="{ setOpen }" modal-id="delete-itinenary-modal">
         <div class="flex flex-col text-center gap-2">
             <div class="flex-box rounded-full w-14 h-14 p-4 btn btn-solid-error btn-no-animation self-center mb-4">
                 <Icon name="fa:trash" class="w-7 h-7" />
@@ -8,12 +8,25 @@
             <p class="mx-auto max-w-xs text-sm text-content2">
                 Are you sure you want to delete <span class="font-bold">{{ label }}?</span> this action cannot be undone
             </p>
-            <button @click="$emit('deleted')" class="btn btn-error mt-4">Yes, Delete</button>
+            <button @click="doDeleteItinenary(setOpen)" class="btn btn-error mt-4" :class="{ 'btn-loading': pending }">
+                Yes, Delete
+            </button>
         </div>
     </UIModal>
 </template>
 
 <script setup lang="ts">
-defineProps<{ id: string; label: string }>();
-defineEmits<{ (e: "deleted"): void }>();
+const props = defineProps<{ id: string; label: string }>();
+const emits = defineEmits<{ (e: "deleted"): void }>();
+
+const { deleteItinenary } = useItinenaryStore();
+const { mutate, pending } = useMutate(deleteItinenary);
+
+async function doDeleteItinenary(setOpen: (state: boolean) => void) {
+    const res = await mutate(props.id);
+    if (res.status) {
+        emits("deleted");
+        setOpen(false);
+    }
+}
 </script>
