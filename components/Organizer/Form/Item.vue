@@ -15,7 +15,7 @@
                 </label>
             </div>
             <div
-                @click="navigateTo(`/dashboard/${eventDashboardId}/form/${id}`)"
+                @click="navigateTo(`/dashboard/${route.params.id}/form/${id}`)"
                 class="btn btn-sm btn-ghost absolute top-3 right-3"
             >
                 <Icon name="fa:external-link" class="text-content2 font-semibold" />
@@ -32,7 +32,7 @@ const props = defineProps<{
     response_length: number;
 }>();
 
-const { eventDashboardId } = useEventStore();
+const route = useRoute();
 
 const emits = defineEmits<{
     (e: "editing", id: string): void;

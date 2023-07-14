@@ -28,7 +28,7 @@
                 :price="event.price"
                 :category="event.category"
                 :slot="event.capacity"
-                :location_name="event.location.name"
+                :location_name="event.location.venue"
                 :banner="event.banner"
                 :date="event.start_date"
             />

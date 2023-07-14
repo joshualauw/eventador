@@ -9,10 +9,15 @@ export default function useEventStore() {
         end_date: null,
         wishlist: false,
     }));
-    const eventDashboardId = useState<string>("eventDashboardId", () => "");
+    const eventDetail = useState<IEvent | null>("eventDetail", () => null);
 
     async function getExploreEvents(query?: IExploreEvent.Query) {
         const res = await executeRequest<IExploreEvent.Data>("/event/explore", { method: "GET", query });
+        return res.data;
+    }
+
+    async function getEventDetail(id: string) {
+        const res = await executeRequest<IGetEventDetail.Data>(`/event/${id}/detail`, { method: "GET" });
         return res.data;
     }
 
@@ -26,5 +31,57 @@ export default function useEventStore() {
         return res;
     }
 
-    return { getExploreEvents, exploreEventQuery, eventDashboardId, getUserEvents, createEvent };
+    async function updateEventDetail(id: string, body: IUpdateEventDetail.Body) {
+        const formData = new FormData();
+
+        if (body.banner) formData.append("banner", body.banner);
+        formData.append("name", body.name);
+        formData.append("description", body.description);
+        formData.append("category", body.category);
+        formData.append("price", body.price.toString());
+        formData.append("start_date", body.start_date);
+        formData.append("capacity", body.capacity.toString());
+
+        const res = await executeRequest<IUpdateEventDetail.Data>(`/event/${id}/details`, {
+            method: "PUT",
+            body: formData,
+        });
+        return res;
+    }
+
+    async function updateEventLocation(id: string, body: IUpdateEventLocation.Body) {
+        const res = await executeRequest<IUpdateEventLocation.Data>(`/event/${id}/location`, { method: "PUT", body });
+        return res;
+    }
+
+    async function updateEventGallery(id: string, body: IUpdateEventGallery.Body) {
+        const formData = new FormData();
+        body.gallery.forEach((gal) => {
+            formData.append("gallery", gal);
+        });
+
+        const res = await executeRequest<IUpdateEventGallery.Data>(`/event/${id}/gallery`, {
+            method: "PUT",
+            body: formData,
+        });
+        return res;
+    }
+
+    async function toogleEventPublicity(id: string) {
+        const res = await executeRequest<IToogleEventPublicity.Data>(`/event/${id}/publicity`, { method: "PATCH" });
+        return res;
+    }
+
+    return {
+        eventDetail,
+        getExploreEvents,
+        exploreEventQuery,
+        getEventDetail,
+        getUserEvents,
+        createEvent,
+        updateEventDetail,
+        updateEventGallery,
+        updateEventLocation,
+        toogleEventPublicity,
+    };
 }

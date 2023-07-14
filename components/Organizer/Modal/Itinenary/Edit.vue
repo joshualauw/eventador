@@ -55,7 +55,7 @@ const { value: itinenaryState, reset } = useStateHandler({
 });
 const schedules = ref([{ key: genId(4), name: "", start_time: "", end_time: "" }]);
 
-const { eventDashboardId } = useEventStore();
+const route = useRoute();
 const { getOneItinenary, createItinenary, updateItinenary } = useItinenaryStore();
 const { mutate: createMutate, error, errors, pending } = useMutate(createItinenary);
 const { mutate: updateMutate } = useMutate(updateItinenary);
@@ -81,7 +81,7 @@ watch(
 
 async function saveItinenary(setOpen: (state: boolean) => void) {
     if (props.context == "create") {
-        const res = await createMutate(eventDashboardId.value, { ...itinenaryState });
+        const res = await createMutate(route.params.id as string, { ...itinenaryState });
         if (res.status) {
             emits("saved");
             reset();

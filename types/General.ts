@@ -10,4 +10,10 @@ interface ApiError {
     stack: string;
 }
 
+interface OSMResponse {
+    display_name: string;
+    lat: string;
+    lon: string;
+}
+
 type UnwrapApiResponse<T> = T extends ApiResponse<infer U> ? U : never;

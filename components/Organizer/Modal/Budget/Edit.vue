@@ -52,7 +52,7 @@
 const props = defineProps<{ context: "update" | "create"; updateId: string }>();
 const emits = defineEmits<{ (e: "saved"): void }>();
 
-const { eventDashboardId } = useEventStore();
+const route = useRoute();
 const { createBudget, updateBudget, getOneBudget } = useBudgetStore();
 const { mutate: createMutate, error, errors, pending } = useMutate(createBudget);
 const { mutate: updateMutate } = useMutate(updateBudget);
@@ -86,7 +86,7 @@ watch(
 
 async function saveBudget(setOpen: (open: boolean) => void) {
     if (props.context == "create") {
-        const res = await createMutate(eventDashboardId.value, budgetState);
+        const res = await createMutate(route.params.id as string, budgetState);
         if (res.status) {
             emits("saved");
             reset();

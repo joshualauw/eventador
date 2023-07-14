@@ -4,8 +4,7 @@
             @click="navigateTo(`/event/${id}`)"
             :src="banner ?? '/images/default-post.png'"
             alt="card_image"
-            class="cursor-pointer hover:brightness-75"
-            style="height: 175px"
+            class="cursor-pointer hover:brightness-75 min-h-[175px]"
         />
         <div class="card-body h-full pt-2 px-6">
             <h2

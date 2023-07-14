@@ -54,7 +54,8 @@
 
 <script setup lang="ts">
 const route = useRoute();
-const { eventDashboardId } = useEventStore();
+const router = useRouter();
+const eventId = computed(() => router.currentRoute.value.params.id);
 
 function getBordered(link: string) {
     const splitLink = route.path.split("/");
@@ -66,42 +67,42 @@ const menus = [
     {
         icon: "material-symbols:bar-chart",
         name: "Overview",
-        link: `/dashboard/${eventDashboardId.value}`,
+        link: `/dashboard/${eventId.value}`,
     },
     {
         icon: "majesticons:user-group",
         name: "Participant",
-        link: `/dashboard/${eventDashboardId.value}/participant`,
+        link: `/dashboard/${eventId.value}/participant`,
     },
     {
         icon: "uis:schedule",
         name: "Itinenary",
-        link: `/dashboard/${eventDashboardId.value}/itinenary`,
+        link: `/dashboard/${eventId.value}/itinenary`,
     },
     {
         icon: "material-symbols:account-balance-wallet",
         name: "Budget",
-        link: `/dashboard/${eventDashboardId.value}/budget`,
+        link: `/dashboard/${eventId.value}/budget`,
     },
     {
         icon: "mdi:hand-heart",
         name: "Sponsor",
-        link: `/dashboard/${eventDashboardId.value}/sponsor`,
+        link: `/dashboard/${eventId.value}/sponsor`,
     },
     {
         icon: "material-symbols:edit-document-rounded",
         name: "Form Builder",
-        link: `/dashboard/${eventDashboardId.value}/form`,
+        link: `/dashboard/${eventId.value}/form`,
     },
     {
         icon: "mdi:certificate",
         name: "Certificate Builder",
-        link: `/dashboard/${eventDashboardId.value}/certificate`,
+        link: `/dashboard/${eventId.value}/certificate`,
     },
     {
         icon: "material-symbols:settings",
         name: "Settings",
-        link: `/dashboard/${eventDashboardId.value}/settings`,
+        link: `/dashboard/${eventId.value}/settings`,
     },
 ];
 </script>

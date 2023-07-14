@@ -36,7 +36,14 @@
             </div>
             <div class="form-field pt-5">
                 <div class="form-control justify-between">
-                    <button @click="doLogin" type="button" class="btn btn-primary w-full">Login</button>
+                    <button
+                        @click="doLogin"
+                        type="button"
+                        class="btn btn-primary w-full"
+                        :class="{ 'btn-loading': pending }"
+                    >
+                        Login
+                    </button>
                 </div>
             </div>
         </div>
@@ -62,7 +69,7 @@ const loginState = reactive({
 });
 
 const { login } = useAuthStore();
-const { mutate, error, errors } = useMutate(login);
+const { mutate, error, errors, pending } = useMutate(login);
 
 async function doLogin() {
     const res = await mutate(loginState);

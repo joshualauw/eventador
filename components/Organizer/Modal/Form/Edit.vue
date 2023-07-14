@@ -27,7 +27,7 @@
 const props = defineProps<{ context: "update" | "create"; updateId: string }>();
 const emits = defineEmits<{ (e: "saved"): void }>();
 
-const { eventDashboardId } = useEventStore();
+const route = useRoute();
 const { getOneForm, createForm, updateForm } = useFormStore();
 const { value: formState, reset } = useStateHandler({
     name: "",
@@ -54,7 +54,7 @@ watch(
 
 async function saveForm(setOpen: (open: boolean) => void) {
     if (props.context == "create") {
-        const res = await createMutate(eventDashboardId.value, formState);
+        const res = await createMutate(route.params.id as string, formState);
         if (res.status) {
             emits("saved");
             reset();

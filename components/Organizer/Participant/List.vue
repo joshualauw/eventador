@@ -18,10 +18,10 @@
                 <td>
                     <span class="font-semibold" :class="getTypeColor(par.type)">{{ par.type }}</span>
                 </td>
-                <td>{{ par.joinedAt }}</td>
+                <td>{{ dayjs(par.joinedAt).format("DD-MM-YYYY") }}</td>
                 <td>
                     <button
-                        @click="navigateTo(`/dashboard/123/participant/${i}`)"
+                        @click="navigateTo(`/dashboard/${route.params.id}/participant/${par.id}`)"
                         class="btn btn-sm btn-solid-secondary"
                     >
                         Detail
@@ -33,5 +33,10 @@
 </template>
 
 <script setup lang="ts">
-import participants from "@/assets/json/participants.json";
+import dayjs from "dayjs";
+
+defineProps<{
+    participants: { id: string; email: string; name: string; joinedAt: string; type: IParticipantType }[];
+}>();
+const route = useRoute();
 </script>

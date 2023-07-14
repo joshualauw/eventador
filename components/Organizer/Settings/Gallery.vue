@@ -1,4 +1,5 @@
 <template>
+    <UILoader v-if="pending" />
     <div class="flex flex-col md:flex-row md:space-x-5 w-full">
         <div class="block md:hidden mb-8">
             <p class="font-semibold text-xl">Event Gallery</p>
@@ -16,14 +17,61 @@
             <div class="form-group">
                 <label class="form-label">Upload Images</label>
                 <div class="flex-center space-x-2">
-                    <input type="file" class="input-file max-w-full" />
-                    <button type="button" class="btn btn-solid-secondary w-24">+ Add</button>
+                    <input @change="handleFileChange" type="file" class="input-file max-w-full" multiple />
                 </div>
             </div>
-            <div class="grid grid-cols-2 xl:grid-cols-3 gap-5">
-                <img v-for="i in 6" src="/images/default-logo.png" class="rounded-lg" />
+            <div class="grid grid-cols-2 xl:grid-cols-3 gap-8">
+                <img
+                    @click="removeFile(img.key)"
+                    v-for="img in gallery"
+                    :src="img.preview"
+                    class="rounded-lg h-full w-full hover:brightness-50 cursor-pointer"
+                />
             </div>
-            <button type="button" class="btn btn-primary w-fit">Save</button>
+            <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />
+            <button @click="saveGallery" type="button" class="btn btn-primary w-fit">Save</button>
         </form>
     </div>
 </template>
+
+<script setup lang="ts">
+import { TYPE } from "vue-toastification";
+
+const route = useRoute();
+const { eventDetail, updateEventGallery } = useEventStore();
+const { error, errors, pending, mutate } = useMutate(updateEventGallery);
+
+const gallery = ref<{ key: string; file?: File; preview: string }[]>(
+    eventDetail.value?.gallery.map((gal) => ({ key: genId(4), preview: gal })) || []
+);
+
+const handleFileChange = (event: any) => {
+    const files = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
+            gallery.value.push({
+                key: genId(4),
+                file,
+                preview: URL.createObjectURL(file),
+            });
+        } else {
+            createToast("file should be an image!", TYPE.ERROR);
+        }
+    }
+};
+
+function removeFile(key: string) {
+    gallery.value = gallery.value.filter((gal) => gal.key !== key);
+}
+
+async function saveGallery() {
+    const galleryFiles: File[] = [];
+    gallery.value.forEach((gal) => {
+        if (gal.file) galleryFiles.push(gal.file);
+    });
+
+    await mutate(route.params.id as string, { gallery: galleryFiles });
+}
+</script>

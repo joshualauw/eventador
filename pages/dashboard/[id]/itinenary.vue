@@ -23,12 +23,13 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard",
-    middleware: "event-dashboard",
 });
 
 const { getAllItinenary } = useItinenaryStore();
-const { eventDashboardId } = useEventStore();
-const { data: itinenaries, refresh } = useAsyncData("getAllItinenary", () => getAllItinenary(eventDashboardId.value));
+const route = useRoute();
+const { data: itinenaries, refresh } = useAsyncData("getAllItinenary", () =>
+    getAllItinenary(route.params.id as string)
+);
 
 const { actionContext, actionId, actionLabel, handleCreating, handleDeleting, handleUpdating } = useCrudManager();
 </script>

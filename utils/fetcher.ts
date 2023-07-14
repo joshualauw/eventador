@@ -14,7 +14,7 @@ export function fetcher<T>(url: string, options: FetchOptions = { method: "GET" 
         options.headers = { Authorization: `Bearer ${token.value}` };
     }
 
-    return $fetch<T>(url, { baseURL: config.public.baseURL, ...options });
+    return $fetch<T>(url, { baseURL: config.public.baseAPI, ...options });
 }
 
 export async function executeRequest<T>(url: string, options: FetchOptions, toasted: boolean = true) {

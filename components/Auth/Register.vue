@@ -42,7 +42,12 @@
             </div>
             <div class="form-field pt-5">
                 <div class="form-control justify-between">
-                    <button @click="mutate(registerState)" type="button" class="btn btn-primary w-full">
+                    <button
+                        @click="mutate(registerState)"
+                        type="button"
+                        class="btn btn-primary w-full"
+                        :class="{ 'btn-loading': pending }"
+                    >
                         Register
                     </button>
                 </div>
@@ -68,5 +73,5 @@ const registerState = reactive({
 });
 
 const { register } = useAuthStore();
-const { errors, mutate, error } = useMutate(register);
+const { errors, mutate, error, pending } = useMutate(register);
 </script>

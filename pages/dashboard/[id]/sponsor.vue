@@ -25,13 +25,11 @@
 
 definePageMeta({
     layout: "dashboard",
-    middleware: "event-dashboard",
 });
 
 const { actionContext, actionId, actionLabel, handleCreating, handleDeleting, handleUpdating } = useCrudManager();
 const { getAllSponsor } = useSponsorStore();
-const { eventDashboardId } = useEventStore();
+const route = useRoute();
 
-const { data: sponsors, refresh } = await useAsyncData("getAllSponsor", () => getAllSponsor(eventDashboardId.value));
-console.log(sponsors.value);
+const { data: sponsors, refresh } = await useAsyncData("getAllSponsor", () => getAllSponsor(route.params.id as string));
 </script>

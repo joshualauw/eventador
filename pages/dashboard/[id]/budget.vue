@@ -24,12 +24,11 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard",
-    middleware: "event-dashboard",
 });
 
 const { actionContext, actionId, actionLabel, handleCreating, handleDeleting, handleUpdating } = useCrudManager();
 const { getAllBudget } = useBudgetStore();
-const { eventDashboardId } = useEventStore();
+const route = useRoute();
 
-const { data: budgets, refresh } = await useAsyncData("getAllBudget", () => getAllBudget(eventDashboardId.value));
+const { data: budgets, refresh } = await useAsyncData("getAllBudget", () => getAllBudget(route.params.id as string));
 </script>
