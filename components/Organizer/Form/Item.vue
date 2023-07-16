@@ -6,7 +6,7 @@
                 <Icon name="material-symbols:dynamic-form" class="mr-1" /> {{ fields_length }} fields
             </p>
             <p class="text-mute"><Icon name="ph:users-three-bold" class="mr-1" /> {{ response_length }} responses</p>
-            <div class="flex-end space-x-1.5">
+            <div v-if="accessible" class="flex-end space-x-1.5">
                 <label for="edit-form-modal" @click="emits('editing', id)" class="btn btn-sm btn-solid-secondary">
                     Edit
                 </label>
@@ -15,6 +15,7 @@
                 </label>
             </div>
             <div
+                v-if="accessible"
                 @click="navigateTo(`/dashboard/${route.params.id}/form/${id}`)"
                 class="btn btn-sm btn-ghost absolute top-3 right-3"
             >
@@ -33,6 +34,10 @@ const props = defineProps<{
 }>();
 
 const route = useRoute();
+const { loggedParticipant } = useParticipantStore();
+const accessible = computed(
+    () => loggedParticipant.value?.access.includes("form") || loggedParticipant.value?.type == "owner"
+);
 
 const emits = defineEmits<{
     (e: "editing", id: string): void;

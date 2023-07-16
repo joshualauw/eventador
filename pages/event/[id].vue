@@ -1,4 +1,5 @@
 <template>
+    <UILoader v-if="pending" />
     <Navbar class="px-8 xl:px-24" />
     <div v-if="eventDetail" class="web-container">
         <div class="flex flex-col lg:flex-row">
@@ -77,8 +78,14 @@
                         <label for="payment-modal" class="btn btn-primary mt-3">Register Now</label>
                         <div class="divider">-or-</div>
                         <div class="flex">
-                            <input class="input max-w-full rounded-r-none" placeholder="invitation code.." />
-                            <button type="button" class="btn btn-solid-primary rounded-l-none">Apply</button>
+                            <input
+                                v-model="code"
+                                class="input max-w-full rounded-r-none"
+                                placeholder="invitation code.."
+                            />
+                            <button @click="doApplyInvite" type="button" class="btn btn-solid-primary rounded-l-none">
+                                Apply
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -103,15 +110,16 @@
             </div>
         </div>
     </div>
-    <ModalPayment>
-        <div class="flex space-x-4">
-            <img src="/images/default-post.png" class="w-32 h-20 rounded-md" />
+    <ModalPayment @pay="doRegisterParticipant" :amount="eventDetail?.data.event.price ?? 0">
+        <div v-if="eventDetail" class="flex space-x-5">
+            <img :src="eventDetail.data.event.banner ?? '/images/default-post.png'" class="w-36 h-20 rounded-md" />
             <div class="text-left">
-                <p class="font-semibold">Maximizing Productivity At Work</p>
-                <p class="text-warning text-lg">Rp. 25.000</p>
+                <p class="font-semibold">{{ eventDetail.data.event.name }}</p>
+                <p class="text-warning text-lg">Rp. {{ formatNumber(eventDetail.data.event.price) }}</p>
                 <p class="text-content2">Amount: x1</p>
             </div>
         </div>
+        <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-4" />
     </ModalPayment>
 </template>
 
@@ -136,8 +144,26 @@ const socialMediaLinks = [
     },
 ];
 
+const code = ref("");
+
 const route = useRoute();
 const { getEventDetail } = useEventStore();
+const { registerParticipant, applyInvite } = useParticipantStore();
+const { pending, error, errors, mutate: registerMutate } = useMutate(registerParticipant);
+const { mutate: inviteMutate } = useMutate(applyInvite);
+
 const { data: eventDetail } = await useAsyncData("getEventDetail", () => getEventDetail(route.params.id as string));
-console.log(eventDetail.value);
+
+async function doRegisterParticipant() {
+    await registerMutate(route.params.id as string);
+}
+
+async function doApplyInvite() {
+    pending.value = true;
+    const res = await inviteMutate(route.params.id as string, { code: code.value });
+    if (!res.status) {
+        error.value = res.error;
+    }
+    pending.value = false;
+}
 </script>

@@ -36,6 +36,7 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard",
+    middleware: "participant",
 });
 
 const isResponse = ref(false);

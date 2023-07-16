@@ -1,7 +1,9 @@
 <template>
     <div class="flex-between mb-8">
         <h1 class="font-semibold text-lg">Sponsors</h1>
-        <label @click="handleCreating" for="edit-sponsor-modal" class="btn btn-primary">+ Create Sponsor</label>
+        <label v-if="accessible" @click="handleCreating" for="edit-sponsor-modal" class="btn btn-primary"
+            >+ Create Sponsor</label
+        >
     </div>
     <p v-if="sponsors && sponsors.data.length == 0" class="text-center font-semibold text-lg text-content2 mt-8">
         -no sponsors-
@@ -25,11 +27,17 @@
 
 definePageMeta({
     layout: "dashboard",
+    middleware: "participant",
 });
 
 const { actionContext, actionId, actionLabel, handleCreating, handleDeleting, handleUpdating } = useCrudManager();
 const { getAllSponsor } = useSponsorStore();
 const route = useRoute();
+
+const { loggedParticipant } = useParticipantStore();
+const accessible = computed(
+    () => loggedParticipant.value?.access.includes("sponsor") || loggedParticipant.value?.type == "owner"
+);
 
 const { data: sponsors, refresh } = await useAsyncData("getAllSponsor", () => getAllSponsor(route.params.id as string));
 </script>

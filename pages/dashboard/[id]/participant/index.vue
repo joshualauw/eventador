@@ -1,7 +1,9 @@
 <template>
     <div class="flex-between mb-8">
         <h1 class="font-semibold text-lg">Participants</h1>
-        <label for="invite-participant-modal" class="btn btn-primary">+ Invite Participant</label>
+        <label v-if="loggedParticipant?.type == 'owner'" for="invite-participant-modal" class="btn btn-primary">
+            + Invite Participant
+        </label>
     </div>
     <div class="flex flex-center flex-col md:flex-row gap-3 mb-8">
         <Icon name="fa:search" />
@@ -31,10 +33,12 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard",
+    middleware: "participant",
 });
 
 const route = useRoute();
 const { getAllParticipant } = useParticipantStore();
+const { loggedParticipant } = useParticipantStore();
 const participantData = ref<(IParticipant & { user_id: IUser })[]>([]);
 const searchTerm = ref("");
 const typeTerm = ref("");

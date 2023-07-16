@@ -5,7 +5,7 @@
             <p class="font-semibold">{{ schedule.name }}</p>
             <p class="text-mute">{{ schedule.start_time }} - {{ schedule.end_time }}</p>
         </div>
-        <div class="flex-box w-full mt-4 space-x-1">
+        <div v-if="accessible" class="flex-box w-full mt-4 space-x-1">
             <label
                 for="edit-itinenary-modal"
                 @click="emits('editing', id)"
@@ -34,4 +34,9 @@ const emits = defineEmits<{
     (e: "editing", id: string): void;
     (e: "deleting", id: string, label: string): void;
 }>();
+
+const { loggedParticipant } = useParticipantStore();
+const accessible = computed(
+    () => loggedParticipant.value?.access.includes("itinenary") || loggedParticipant.value?.type == "owner"
+);
 </script>

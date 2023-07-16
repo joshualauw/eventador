@@ -51,5 +51,25 @@ export default function useAuthStore() {
         return res;
     }
 
-    return { loggedUser, register, getMe, activate, login, savePersonal, savePreferences };
+    async function getUserNotifications(id: string) {
+        const res = await executeRequest<IGetNotifications.Data>(`/auth/${id}/notifications`, { method: "GET" });
+        return res.data;
+    }
+
+    async function changePassword(body: IChangePassword.Body) {
+        const res = await executeRequest<IChangePassword.Data>(`/auth/change`, { method: "PATCH", body });
+        return res;
+    }
+
+    return {
+        loggedUser,
+        register,
+        getMe,
+        activate,
+        login,
+        savePersonal,
+        savePreferences,
+        getUserNotifications,
+        changePassword,
+    };
 }

@@ -5,16 +5,8 @@ interface IUser {
     email: string;
     role: "admin" | "user";
     profile?: string;
-    preferences: {
-        theme: "dark" | "light";
-        notifications: ("user:following" | "user:new_event" | "user:transaction" | "user:event_join")[];
-    };
-    notifications: {
-        type: "info" | "success" | "warning" | "error";
-        message: string;
-        callbackUrl: string;
-        time: Date;
-    };
+    preferences: IUserPreferences;
+    notifications: IUserNotification;
     phone_number: string;
     balance: number;
     verify_code?: string;
@@ -24,6 +16,20 @@ interface IUser {
     is_deleted: boolean;
     createdAt: Date;
     updatedAt: Date;
+}
+
+type IUserNotify = "user:following" | "user:new_event" | "user:transaction" | "user:event_join";
+type IUserNotifyType = "info" | "success" | "warning" | "error";
+interface IUserPreferences {
+    theme: "dark" | "light";
+    notifications: IUserNotify[];
+}
+
+interface IUserNotification {
+    type: IUserNotifyType;
+    message: string;
+    callbackUrl?: string;
+    time: string;
 }
 
 namespace IRegister {
@@ -68,5 +74,14 @@ namespace ISavePreferences {
         theme: "light" | "dark";
         notifications: string[];
     }
+    export type Data = ApiResponse<IUser>;
+}
+
+namespace IGetNotifications {
+    export type Data = ApiResponse<IUserNotification[]>;
+}
+
+namespace IChangePassword {
+    export type Body = { old_password: string; new_password: string; confirm_password: string };
     export type Data = ApiResponse<IUser>;
 }

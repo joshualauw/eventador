@@ -2,7 +2,7 @@ interface IParticipant {
     _id: string;
     type: IParticipantType;
     role: string;
-    access: string[];
+    access: IAccess[];
     joinedDate: string;
     refundable: boolean;
     is_banned: boolean;
@@ -11,6 +11,8 @@ interface IParticipant {
     createdAt: string;
     updatedAt: string;
 }
+
+type IAccess = "budget" | "form" | "itinenary" | "sponsor";
 
 interface IInvitation {
     _id: string;
@@ -50,5 +52,23 @@ namespace IApplyInvite {
 }
 
 namespace IRegisterParticipant {
+    export type Data = ApiResponse<IParticipant>;
+}
+
+namespace IApplyRoleParticipant {
+    export type Body = {
+        role: string;
+    };
+    export type Data = ApiResponse<IParticipant>;
+}
+
+namespace IGrantAccessParticipant {
+    export type Body = {
+        access: string[];
+    };
+    export type Data = ApiResponse<IParticipant>;
+}
+
+namespace IBanParticipant {
     export type Data = ApiResponse<IParticipant>;
 }

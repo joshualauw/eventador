@@ -45,5 +45,4 @@ definePageMeta({
 
 const { getUserEvents } = useEventStore();
 const { data: events } = await useAsyncData("getUserEvents", getUserEvents);
-console.log(events.value);
 </script>

@@ -5,7 +5,7 @@
                 <img :src="logo ?? '/images/default-logo.png'" class="rounded-lg mb-6 w-28 h-28" />
                 <p class="font-semibold text-base md:text-lg">{{ name }}</p>
             </div>
-            <div class="flex-end space-x-1.5">
+            <div v-if="accessible" class="flex-end space-x-1.5">
                 <label for="edit-sponsor-modal" @click="emits('editing', id)" class="btn btn-sm btn-solid-secondary">
                     Edit
                 </label>
@@ -31,4 +31,9 @@ const emits = defineEmits<{
     (e: "editing", id: string): void;
     (e: "deleting", id: string, label: string): void;
 }>();
+
+const { loggedParticipant } = useParticipantStore();
+const accessible = computed(
+    () => loggedParticipant.value?.access.includes("sponsor") || loggedParticipant.value?.type == "owner"
+);
 </script>

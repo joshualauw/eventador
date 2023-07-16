@@ -16,7 +16,7 @@
                     <section class="menu-section px-4">
                         <ul class="menu-items space-y-2">
                             <li
-                                v-for="menu in menus"
+                                v-for="menu in menus.filter((m) => m.show)"
                                 @click="navigateTo(menu.link)"
                                 :class="getBordered(menu.link)"
                                 class="menu-item text-base text-gray-200 hover:bg-neutral"
@@ -33,17 +33,15 @@
                     <label class="mx-2 flex h-fit w-full cursor-pointer p-0" tabindex="0">
                         <div class="flex flex-row gap-4 p-4">
                             <div class="avatar avatar-ring avatar-md">
-                                <img src="/images/default-user.png" alt="avatar" />
+                                <img :src="loggedUser?.profile || '/images/default-user.png'" alt="avatar" />
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-white">Joshua William</span>
-                                <span class="text-xs font-normal text-gray-200">@joshualauw</span>
+                                <span class="text-white">{{ loggedUser?.username }}</span>
+                                <span class="text-xs font-normal text-gray-200">{{ loggedUser?.email }}</span>
                             </div>
                         </div>
                     </label>
                     <div class="dropdown-menu dropdown-menu-top-center ml-3">
-                        <NuxtLink to="/" class="dropdown-item text-sm">Profile</NuxtLink>
-                        <NuxtLink to="/" class="dropdown-item text-sm">Settings</NuxtLink>
                         <NuxtLink to="/" class="dropdown-item text-sm">Back to Home</NuxtLink>
                     </div>
                 </div>
@@ -55,7 +53,10 @@
 <script setup lang="ts">
 const route = useRoute();
 const router = useRouter();
-const eventId = computed(() => router.currentRoute.value.params.id);
+const eventId = computed(() => router.currentRoute.value.params.id as string);
+
+const { loggedParticipant } = useParticipantStore();
+const { loggedUser } = useAuthStore();
 
 function getBordered(link: string) {
     const splitLink = route.path.split("/");
@@ -68,41 +69,49 @@ const menus = [
         icon: "material-symbols:bar-chart",
         name: "Overview",
         link: `/dashboard/${eventId.value}`,
+        show: true,
     },
     {
         icon: "majesticons:user-group",
         name: "Participant",
         link: `/dashboard/${eventId.value}/participant`,
+        show: true,
     },
     {
         icon: "uis:schedule",
         name: "Itinenary",
         link: `/dashboard/${eventId.value}/itinenary`,
+        show: true,
     },
     {
         icon: "material-symbols:account-balance-wallet",
         name: "Budget",
         link: `/dashboard/${eventId.value}/budget`,
+        show: true,
     },
     {
         icon: "mdi:hand-heart",
         name: "Sponsor",
         link: `/dashboard/${eventId.value}/sponsor`,
+        show: true,
     },
     {
         icon: "material-symbols:edit-document-rounded",
         name: "Form Builder",
         link: `/dashboard/${eventId.value}/form`,
+        show: true,
     },
     {
         icon: "mdi:certificate",
         name: "Certificate Builder",
         link: `/dashboard/${eventId.value}/certificate`,
+        show: loggedParticipant.value?.type == "owner",
     },
     {
         icon: "material-symbols:settings",
         name: "Settings",
         link: `/dashboard/${eventId.value}/settings`,
+        show: loggedParticipant.value?.type == "owner",
     },
 ];
 </script>

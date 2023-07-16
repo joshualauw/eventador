@@ -21,6 +21,7 @@
                 <td>{{ dayjs(par.joinedAt).format("DD-MM-YYYY") }}</td>
                 <td>
                     <button
+                        :disabled="loggedParticipant?.type != 'owner'"
                         @click="navigateTo(`/dashboard/${route.params.id}/participant/${par.id}`)"
                         class="btn btn-sm btn-solid-secondary"
                     >
@@ -38,5 +39,7 @@ import dayjs from "dayjs";
 defineProps<{
     participants: { id: string; email: string; name: string; joinedAt: string; type: IParticipantType }[];
 }>();
+
 const route = useRoute();
+const { loggedParticipant } = useParticipantStore();
 </script>

@@ -5,7 +5,7 @@
             <progress class="progress" :class="progressColor" :value="progressPercent" max="100"></progress>
             <span class="text-mute">Rp. {{ formatNumber(current) }} / Rp. {{ formatNumber(limit) }}</span>
             <p>{{ expenses.length }} Expenses <Icon name="icon-park-solid:transaction" /></p>
-            <div class="flex-end space-x-1.5">
+            <div v-if="accessible" class="flex-end space-x-1.5">
                 <label for="edit-budget-modal" @click="emits('editing', id)" class="btn btn-sm btn-solid-secondary">
                     Edit
                 </label>
@@ -32,6 +32,11 @@ const emits = defineEmits<{
     (e: "editing", id: string): void;
     (e: "deleting", id: string, label: string): void;
 }>();
+
+const { loggedParticipant } = useParticipantStore();
+const accessible = computed(
+    () => loggedParticipant.value?.access.includes("budget") || loggedParticipant.value?.type == "owner"
+);
 
 const current = computed(() => props.expenses.reduce((sum, curr) => sum + curr.amount, 0));
 const progressPercent = computed(() => calcPercent(current.value, props.limit));

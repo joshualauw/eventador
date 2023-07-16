@@ -1,7 +1,7 @@
 <template>
     <div ref="leafletMap" class="flex-box bg-border">
-        <p v-if="props.latitude == 0 && props.longitude == 0">-no location specified-</p>
-        <div v-if="!map" class="flex-center text-center">
+        <p v-if="!map && !coordinateSafe">-no location specified-</p>
+        <div v-if="!map && coordinateSafe" class="flex-center text-center">
             <svg class="animate-spin h-8 w-8 mr-3 bg-gray-200" viewBox="0 0 24 24"></svg>
             <p>Loading...</p>
         </div>
@@ -11,6 +11,8 @@
 <script setup lang="ts">
 import { Marker, Map } from "leaflet";
 const { $leaflet: leaflet } = useNuxtApp();
+
+const coordinateSafe = computed(() => props.latitude != 0 && props.longitude != 0);
 
 const props = defineProps<{
     latitude: number;
@@ -28,7 +30,7 @@ watch(
 
 watchEffect(
     useDebounce(() => {
-        if (props.latitude != 0 && props.longitude != 0) {
+        if (coordinateSafe.value) {
             plotMap();
         }
     }, 1500)
