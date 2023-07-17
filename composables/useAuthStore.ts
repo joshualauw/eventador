@@ -1,6 +1,6 @@
 export default function useAuthStore() {
     const loggedUser = useState("loggedUser", () => null as Omit<IUser, "password"> | null);
-    const token = useCookie("token");
+    const token = useCookie("token", { maxAge: 24 * 60 * 60 });
 
     async function register(body: IRegister.Body) {
         const res = await executeRequest<IRegister.Data>("/auth/register", { method: "POST", body });
