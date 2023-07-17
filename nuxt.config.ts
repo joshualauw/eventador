@@ -11,5 +11,6 @@ export default defineNuxtConfig({
             baseURL: process.env.BASE_URL || "",
         },
     },
+    build: { transpile: ["vue-toastification"] },
     modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@nuxtjs/color-mode", "nuxt-lodash"],
 });

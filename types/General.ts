@@ -1,3 +1,10 @@
+interface FetchOptions {
+    method?: "POST" | "PUT" | "GET" | "PATCH" | "DELETE";
+    body?: any;
+    query?: any;
+    headers?: any;
+}
+
 interface ApiResponse<T> {
     data: T;
     message: string;

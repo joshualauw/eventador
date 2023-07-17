@@ -1,4 +1,4 @@
-import { useToast, POSITION, TYPE } from "vue-toastification";
+import { POSITION, TYPE } from "vue-toastification";
 import { ToastOptions } from "vue-toastification/dist/types/types";
 
 export function createToast(message: string, type: TYPE) {
