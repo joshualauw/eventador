@@ -17,8 +17,15 @@
                         <ul class="menu-items space-y-2">
                             <li
                                 v-for="menu in menus.filter((m) => m.show)"
-                                @click="navigateTo(menu.link)"
-                                :class="getBordered(menu.link)"
+                                @click="
+                                    !loggedUser?.is_premium && menu.premium
+                                        ? navigateTo('/premium')
+                                        : navigateTo(menu.link)
+                                "
+                                :class="[
+                                    getBordered(menu.link),
+                                    { 'text-warning': !loggedUser?.is_premium && menu.premium },
+                                ]"
                                 class="menu-item text-base text-gray-200 hover:bg-neutral"
                             >
                                 <Icon :name="menu.icon" /><span class="ml-2">{{ menu.name }}</span>
@@ -106,6 +113,7 @@ const menus = [
         name: "Certificate Builder",
         link: `/dashboard/${eventId.value}/certificate`,
         show: loggedParticipant.value?.type == "owner",
+        premium: true,
     },
     {
         icon: "material-symbols:settings",

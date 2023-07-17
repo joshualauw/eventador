@@ -1,5 +1,5 @@
 <template>
-    <UIModal modal-id="payment-modal">
+    <UIModal v-slot="{ setOpen }" modal-id="payment-modal">
         <div class="flex flex-col text-center gap-2">
             <div class="flex-box rounded-full w-14 h-14 p-4 btn btn-solid-primary btn-no-animation self-center mb-4">
                 <Icon name="fa:info" class="w-7 h-7" />
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <button @click="emits('pay')" :disabled="afterBalance < 0" class="btn btn-primary mt-4">
+            <button @click="doPay(setOpen)" :disabled="afterBalance < 0" class="btn btn-primary mt-4">
                 <Icon name="fa:lock" class="mr-2" /> Pay
             </button>
         </div>
@@ -39,4 +39,9 @@ const props = defineProps<{ amount: number }>();
 
 const { loggedUser } = useAuthStore();
 const afterBalance = computed(() => (loggedUser.value?.balance || 0) - props.amount);
+
+function doPay(setOpen: (state: boolean) => void) {
+    emits("pay");
+    setOpen(false);
+}
 </script>

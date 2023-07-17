@@ -48,6 +48,7 @@ namespace IGetEventDetail {
         event: IEvent & {
             slotLeft: number;
             owner: { _id: string; username: string; profile?: string; followers_count: number };
+            is_joined: boolean;
         };
         eventItinenaries: IItinenary[];
         eventSponsor: ISponsor[];
@@ -56,8 +57,17 @@ namespace IGetEventDetail {
 
 namespace IUserEvents {
     export type Data = ApiResponse<{
-        managed: (Pick<IEvent, "_id" | "name" | "capacity"> & { publicity: string; total_participants: number })[];
-        attended: (Pick<IEvent, "_id" | "name" | "capacity"> & { publicity: string; total_participants: number })[];
+        events_count: number;
+        managed: (Pick<IEvent, "_id" | "name" | "capacity"> & {
+            publicity: string;
+            total_participants: number;
+            is_organizer: boolean;
+        })[];
+        attended: (Pick<IEvent, "_id" | "name" | "capacity"> & {
+            publicity: string;
+            total_participants: number;
+            is_banned: boolean;
+        })[];
     }>;
 }
 

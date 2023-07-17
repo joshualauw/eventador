@@ -85,7 +85,7 @@ import dayjs from "dayjs";
 
 definePageMeta({
     layout: "dashboard",
-    middleware: "participant",
+    middleware: ["auth", "participant"],
     owner: true,
 });
 

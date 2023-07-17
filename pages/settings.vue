@@ -4,9 +4,9 @@
         <div class="divider"></div>
         <SettingsPreference />
         <div class="divider"></div>
-        <SettingsPassword />
-        <div class="divider"></div>
         <SettingsBalance />
+        <div class="divider"></div>
+        <SettingsPassword />
         <div class="divider"></div>
         <div class="flex flex-col md:flex-row md:space-x-5 w-full">
             <div class="block md:hidden mb-8">

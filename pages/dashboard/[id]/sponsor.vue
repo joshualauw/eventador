@@ -23,11 +23,9 @@
 </template>
 
 <script setup lang="ts">
-// import sponsors from "@/assets/json/sponsors.json";
-
 definePageMeta({
     layout: "dashboard",
-    middleware: "participant",
+    middleware: ["auth", "participant"],
 });
 
 const { actionContext, actionId, actionLabel, handleCreating, handleDeleting, handleUpdating } = useCrudManager();

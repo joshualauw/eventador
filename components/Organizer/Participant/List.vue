@@ -13,7 +13,9 @@
         <tbody>
             <tr v-for="(par, i) in participants">
                 <th>{{ i + 1 }}</th>
-                <td>{{ par.email }}</td>
+                <td>
+                    {{ userIsPremium(par.type) ? emailCensor(par.email) : par.email }}
+                </td>
                 <td>{{ par.name }}</td>
                 <td>
                     <span class="font-semibold" :class="getTypeColor(par.type)">{{ par.type }}</span>
@@ -41,5 +43,10 @@ defineProps<{
 }>();
 
 const route = useRoute();
+const { loggedUser } = useAuthStore();
 const { loggedParticipant } = useParticipantStore();
+
+function userIsPremium(type: IParticipantType) {
+    return type != "organizer" && type != "owner" && !loggedUser?.value?.is_premium;
+}
 </script>

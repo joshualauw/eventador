@@ -85,3 +85,33 @@ namespace IChangePassword {
     export type Body = { old_password: string; new_password: string; confirm_password: string };
     export type Data = ApiResponse<IUser>;
 }
+
+namespace IGetFollowableUsers {
+    export type Query = {
+        followed: boolean;
+        keyword: string;
+    };
+    export type Data = ApiResponse<(IUser & { is_followed: boolean; followers_count: number; events_count: number })[]>;
+}
+
+namespace IGetOneUser {
+    export type Data = ApiResponse<{
+        user: IUser & {
+            followers: (IUser & { followers: string[]; followings: string[] })[];
+            followings: (IUser & { followers: string[]; followings: string[] })[];
+            is_followed: boolean;
+        };
+        userEvents: Pick<
+            IEvent,
+            "_id" | "name" | "price" | "banner" | "location" | "capacity" | "category" | "start_date"
+        >[];
+    }>;
+}
+
+namespace IPremiumUser {
+    export type Data = ApiResponse<IUser>;
+}
+
+namespace IFollowUser {
+    export type Data = ApiResponse<IUser>;
+}

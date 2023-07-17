@@ -61,6 +61,26 @@ export default function useAuthStore() {
         return res;
     }
 
+    async function getFollowableUsers(query: IGetFollowableUsers.Query) {
+        const res = await executeRequest<IGetFollowableUsers.Data>(`/auth`, { method: "GET", query });
+        return res.data;
+    }
+
+    async function getOneUser(id: string) {
+        const res = await executeRequest<IGetOneUser.Data>(`/auth/${id}/detail`, { method: "GET" });
+        return res.data;
+    }
+
+    async function becomePremium() {
+        const res = await executeRequest<IPremiumUser.Data>(`/auth/premium`, { method: "PATCH" });
+        return res;
+    }
+
+    async function followUser(id: string) {
+        const res = await executeRequest<IFollowUser.Data>(`/auth/${id}/follow`, { method: "PATCH" });
+        return res;
+    }
+
     return {
         loggedUser,
         register,
@@ -71,5 +91,9 @@ export default function useAuthStore() {
         savePreferences,
         getUserNotifications,
         changePassword,
+        getFollowableUsers,
+        getOneUser,
+        becomePremium,
+        followUser,
     };
 }

@@ -1,22 +1,33 @@
 <template>
+    <UILoader v-if="pending" />
     <div>
         <div class="flex-between flex-col lg:flex-row gap-3">
             <div class="flex-center space-x-5 lg:space-x-12 text-center lg:text-left">
                 <div class="flex space-x-3 text-sm cursor-pointer">
                     <div class="avatar avatar-md lg:avatar-lg avatar-ring">
-                        <img src="/images/default-user.png" alt="avatar" />
+                        <img :src="userDetail?.data.user.profile || '/images/default-user.png'" alt="avatar" />
                     </div>
                     <div class="hidden lg:block">
-                        <p class="font-bold text-lg">Joshua William</p>
-                        <p class="text-content2">joshualauw@gmail.com</p>
+                        <p class="font-bold text-lg">{{ userDetail?.data.user.username }}</p>
+                        <p class="text-content2">{{ userDetail?.data.user.email }}</p>
                     </div>
                 </div>
-                <span class="font-semibold text-base lg:text-lg">8 Posts</span>
-                <span class="font-semibold text-base lg:text-lg">101 Followers</span>
-                <span class="font-semibold text-base lg:text-lg">9 Following</span>
-                <span class="font-semibold text-base lg:text-lg">8 Events</span>
+                <span class="font-semibold text-base lg:text-lg">{{ userDetail?.data.userEvents.length }} Events</span>
+                <span class="font-semibold text-base lg:text-lg">
+                    {{ userDetail?.data.user.followers.length }} Followers
+                </span>
+                <span class="font-semibold text-base lg:text-lg">
+                    {{ userDetail?.data.user.followings.length }} Followings
+                </span>
             </div>
-            <button class="btn btn-sm w-full lg:w-fit lg:btn-md btn-primary">Follow</button>
+            <button
+                v-if="userDetail?.data.user._id !== loggedUser?._id"
+                @click="doFollowUser"
+                class="btn btn-sm w-full lg:w-fit lg:btn-md"
+                :class="userDetail?.data.user.is_followed ? 'btn-error' : 'btn-primary'"
+            >
+                {{ userDetail?.data.user.is_followed ? "Unfollow" : "Follow" }}
+            </button>
         </div>
         <div class="card hover:scale-100 mt-8">
             <div class="card-body p-6">
@@ -32,30 +43,48 @@
                 </div>
                 <div class="mt-4">
                     <div v-if="activeTab == 0">
-                        <PostItem
-                            v-for="post in posts"
-                            :id="post.id"
-                            :title="post.title"
-                            :content="post.content"
-                            :image-url="post.imageUrl"
-                            :tags="post.tags"
-                            :author="post.author"
-                            :likes="post.likes"
-                            :comments="post.comments"
-                            :created-at="post.createdAt"
-                            class="py-4 border-b-2 border-gray-6"
-                        />
+                        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                            <ExploreItem
+                                v-for="event in userDetail?.data.userEvents"
+                                :key="event._id"
+                                :id="event._id"
+                                :name="event.name"
+                                :price="event.price"
+                                :category="event.category"
+                                :slot="event.capacity"
+                                :location_name="event.location.venue"
+                                :banner="event.banner"
+                                :date="event.start_date"
+                            />
+                        </div>
                     </div>
                     <div v-if="activeTab == 1">
-                        <FollowItem v-for="i in 5" class="shadow-none hover:bg-gray-200 hover:scale-100" />
+                        <NuxtLink
+                            v-for="follower in userDetail?.data.user.followers"
+                            :to="`/profile/${follower._id}`"
+                            class="card hover:scale-100 h-fit cursor-pointer"
+                        >
+                            <div class="card-body p-4 flex-row flex-center hover:bg-slate-3 relative">
+                                <div class="avatar avatar-ring">
+                                    <img :src="follower.profile || '/images/default-user.png'" alt="avatar" />
+                                </div>
+                                <p class="font-semibold">{{ follower.username }}</p>
+                            </div>
+                        </NuxtLink>
                     </div>
                     <div v-if="activeTab == 2">
-                        <FollowItem v-for="i in 2" class="shadow-none hover:scale-100" />
-                    </div>
-                    <div v-if="activeTab == 3">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-                            <ExploreItem v-for="i in 3" class="mb-2" />
-                        </div>
+                        <NuxtLink
+                            v-for="following in userDetail?.data.user.followings"
+                            :to="`/profile/${following._id}`"
+                            class="card hover:scale-100 h-fit cursor-pointer"
+                        >
+                            <div class="card-body p-4 flex-row flex-center hover:bg-slate-3 relative">
+                                <div class="avatar avatar-ring">
+                                    <img :src="following.profile || '/images/default-user.png'" alt="avatar" />
+                                </div>
+                                <p class="font-semibold">{{ following.username }}</p>
+                            </div>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>
@@ -64,12 +93,23 @@
 </template>
 
 <script setup lang="ts">
-import posts from "@/assets/json/posts.json";
-
 definePageMeta({
     layout: "home",
 });
 
-const tabs = [{ name: "Posts" }, { name: "Followers" }, { name: "Followings" }, { name: "Events" }];
+const tabs = [{ name: "Events" }, { name: "Followers" }, { name: "Followings" }];
 const activeTab = ref(0);
+
+const route = useRoute();
+const { getOneUser, followUser, loggedUser } = useAuthStore();
+const { pending, mutate } = useMutate(followUser);
+
+const { data: userDetail, refresh } = await useAsyncData("getOneUser", () => getOneUser(route.params.id as string));
+
+async function doFollowUser() {
+    const res = await mutate(route.params.id as string);
+    if (res.status) {
+        refresh();
+    }
+}
 </script>

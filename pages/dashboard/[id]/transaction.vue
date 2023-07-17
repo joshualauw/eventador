@@ -3,14 +3,15 @@
         <div class="flex-col lg:flex-row flex-between mb-8 gap-4">
             <div class="flex-center space-x-2">
                 <h1 class="font-semibold text-lg w-64">All Transactions</h1>
-                <select class="select">
-                    <option>Newest</option>
-                    <option>Oldest</option>
-                </select>
             </div>
-            <button class="btn btn-primary"><Icon name="fa:file-pdf-o" class="mr-2" /> Print as PDF</button>
+            <div class="flex-center space-x-3">
+                <button class="btn btn-primary"><Icon name="fa:print" class="mr-2" /> Print PDF</button>
+                <button class="btn btn-secondary">
+                    <Icon name="material-symbols:export-notes" class="mr-2" /> Export to JSON
+                </button>
+            </div>
         </div>
-        <table class="table table-compact">
+        <table class="table">
             <thead>
                 <tr>
                     <th>No</th>
@@ -18,7 +19,6 @@
                     <th>Buyer Name</th>
                     <th>Amount</th>
                     <th>Status</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +28,6 @@
                     <td>Joshualauw</td>
                     <td>Rp. 250.000</td>
                     <td><span class="text-success">Success</span></td>
-                    <td><button class="btn btn-sm btn-solid-secondary">Accept</button></td>
                 </tr>
             </tbody>
         </table>
@@ -38,6 +37,6 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard",
-    middleware: "participant",
+    middleware: ["auth", "participant"],
 });
 </script>

@@ -51,6 +51,12 @@
                     class="input max-w-full"
                 />
             </div>
+            <p>
+                Premium Status:
+                <span class="ml-2" :class="loggedUser?.is_premium ? 'text-warning' : 'text-primary'">
+                    {{ loggedUser?.is_premium ? "Premium" : "Not Premium" }}
+                </span>
+            </p>
             <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />
             <button
                 @click="mutate(personalState)"

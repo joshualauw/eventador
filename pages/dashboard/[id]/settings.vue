@@ -33,14 +33,20 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard",
-    middleware: "participant",
+    middleware: ["auth", "participant"],
     owner: true,
 });
 
-const { eventDetail, toogleEventPublicity } = useEventStore();
+const route = useRoute();
+const { eventDetail, getEventDetail, toogleEventPublicity } = useEventStore();
 const { pending, mutate } = useMutate(toogleEventPublicity);
 
-const route = useRoute();
+const { data: event } = await useAsyncData("getEventDetail", () => getEventDetail(route.params.id as string));
+
+if (event.value) {
+    eventDetail.value = event.value.data.event;
+    console.log(eventDetail.value);
+}
 
 async function tooglePublicity() {
     const res = await mutate(route.params.id as string);

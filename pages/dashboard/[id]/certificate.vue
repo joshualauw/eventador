@@ -47,7 +47,7 @@
 import _texts from "@/assets/json/certificate-texts.json";
 
 definePageMeta({
-    middleware: "participant",
+    middleware: ["auth", "participant"],
     owner: true,
 });
 

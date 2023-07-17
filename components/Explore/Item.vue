@@ -7,12 +7,9 @@
             class="cursor-pointer hover:brightness-75 min-h-[175px]"
         />
         <div class="card-body h-full pt-2 px-6">
-            <h2
-                @click="navigateTo(`/event/${id}`)"
-                class="card-header text-lg font-bold cursor-pointer hover:underline"
-            >
+            <NuxtLink :to="`/event/${id}`" class="card-header text-lg font-bold cursor-pointer hover:underline">
                 {{ name }}
-            </h2>
+            </NuxtLink>
             <div class="space-y-0.5 text-sm font-semibold">
                 <p class="text-secondary">{{ dayjs(date).format("ddd, DD MMM YYYY") }}</p>
                 <p class="text-gray-500">{{ location_name }}</p>

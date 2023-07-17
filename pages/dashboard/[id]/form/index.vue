@@ -26,7 +26,7 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard",
-    middleware: "participant",
+    middleware: ["auth", "participant"],
 });
 
 const { actionId, actionContext, actionLabel, handleCreating, handleDeleting, handleUpdating } = useCrudManager();

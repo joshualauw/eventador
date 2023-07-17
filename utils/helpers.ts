@@ -41,3 +41,18 @@ export function exclude<T, Key extends keyof T>(obj: T, keys: Key[]): Omit<T, Ke
     }
     return newObj;
 }
+
+//@ts-ignore
+String.prototype.replaceAt = function (index, replacement) {
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+};
+
+export function emailCensor(str: string) {
+    let ctr = 0;
+    for (let i = 0; i < str.length; i++) {
+        ctr++;
+        //@ts-ignore
+        if (ctr % 4 == 0) str = str.replaceAt(ctr, "*");
+    }
+    return str;
+}

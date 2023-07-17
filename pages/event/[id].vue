@@ -70,7 +70,7 @@
             </div>
             <div class="w-full lg:w-[40%] space-y-8 mt-8 lg:mt-0">
                 <div class="card hover:scale-100 text-center">
-                    <div class="card-body">
+                    <div v-if="!eventDetail.data.event.is_joined" class="card-body">
                         <p class="text-3xl text-success font-bold">
                             Rp. {{ formatNumber(eventDetail.data.event.price) }}
                         </p>
@@ -87,6 +87,12 @@
                                 Apply
                             </button>
                         </div>
+                    </div>
+                    <div v-else class="card-body">
+                        <p class="text-success text-center">already registered</p>
+                        <button @click="navigateTo(`/attending/${eventDetail.data.event._id}`)" class="btn btn-primary">
+                            Go to Event
+                        </button>
                     </div>
                 </div>
                 <h2 class="text-xl font-semibold">Sponsored By</h2>
@@ -126,6 +132,10 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
 
+definePageMeta({
+    middleware: ["auth"],
+});
+
 const socialMediaLinks = [
     {
         tooltip: "Copy Link",
@@ -152,10 +162,15 @@ const { registerParticipant, applyInvite } = useParticipantStore();
 const { pending, error, errors, mutate: registerMutate } = useMutate(registerParticipant);
 const { mutate: inviteMutate } = useMutate(applyInvite);
 
-const { data: eventDetail } = await useAsyncData("getEventDetail", () => getEventDetail(route.params.id as string));
+const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =>
+    getEventDetail(route.params.id as string)
+);
 
 async function doRegisterParticipant() {
-    await registerMutate(route.params.id as string);
+    const res = await registerMutate(route.params.id as string);
+    if (res.status) {
+        refresh();
+    }
 }
 
 async function doApplyInvite() {
@@ -163,6 +178,8 @@ async function doApplyInvite() {
     const res = await inviteMutate(route.params.id as string, { code: code.value });
     if (!res.status) {
         error.value = res.error;
+    } else {
+        refresh();
     }
     pending.value = false;
 }

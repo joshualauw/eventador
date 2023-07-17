@@ -11,16 +11,7 @@
         <form class="w-full md:w-2/3 form-group space-y-4">
             <div class="form-field">
                 <label class="form-label">Your Balance</label>
-                <div class="flex">
-                    <button type="button" class="btn btn-primary btn-no-animation rounded-r-none">Rp.</button>
-                    <input
-                        placeholder="balance.."
-                        disabled
-                        type="number"
-                        value="250000"
-                        class="input rounded-l-none max-w-full"
-                    />
-                </div>
+                <p class="text-xl mt-2 text-success font-semibold">Rp. {{ formatNumber(loggedUser?.balance || 0) }}</p>
             </div>
             <div class="form-field">
                 <label class="form-label">Actions</label>
@@ -32,3 +23,7 @@
         </form>
     </div>
 </template>
+
+<script setup lang="ts">
+const { loggedUser } = useAuthStore();
+</script>
