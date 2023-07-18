@@ -38,6 +38,7 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "home",
+    middleware: "auth",
 });
 
 const followQuery = reactive({

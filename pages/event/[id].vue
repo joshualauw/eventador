@@ -75,17 +75,23 @@
                             Rp. {{ formatNumber(eventDetail.data.event.price) }}
                         </p>
                         <p>{{ eventDetail.data.event.slotLeft }} Slots Left</p>
-                        <label for="payment-modal" class="btn btn-primary mt-3">Register Now</label>
-                        <div class="divider">-or-</div>
-                        <div class="flex">
-                            <input
-                                v-model="code"
-                                class="input max-w-full rounded-r-none"
-                                placeholder="invitation code.."
-                            />
-                            <button @click="doApplyInvite" type="button" class="btn btn-solid-primary rounded-l-none">
-                                Apply
-                            </button>
+                        <div v-if="loggedUser">
+                            <label for="payment-modal" class="btn w-full btn-primary mt-3">Register Now</label>
+                            <div class="divider">-or-</div>
+                            <div class="flex">
+                                <input
+                                    v-model="code"
+                                    class="input max-w-full rounded-r-none"
+                                    placeholder="invitation code.."
+                                />
+                                <button
+                                    @click="doApplyInvite"
+                                    type="button"
+                                    class="btn btn-solid-primary rounded-l-none"
+                                >
+                                    Apply
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div v-else class="card-body">
@@ -132,10 +138,6 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
 
-definePageMeta({
-    middleware: ["auth"],
-});
-
 const socialMediaLinks = [
     {
         tooltip: "Copy Link",
@@ -157,6 +159,7 @@ const socialMediaLinks = [
 const code = ref("");
 
 const route = useRoute();
+const { loggedUser } = useAuthStore();
 const { getEventDetail } = useEventStore();
 const { registerParticipant, applyInvite } = useParticipantStore();
 const { pending, error, errors, mutate: registerMutate } = useMutate(registerParticipant);

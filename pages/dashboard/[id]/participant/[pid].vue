@@ -54,8 +54,12 @@
                 class="flex flex-center space-x-4 mt-8"
             >
                 <button class="btn btn-sm md:btn-md btn-success relative">
-                    <input type="file" class="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer" />
-                    <Icon name="fa:mail-forward" class="mr-2" /> Email Certificate
+                    <input
+                        @change="handleFileChange"
+                        type="file"
+                        class="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer"
+                    />
+                    <Icon name="fa:upload" class="w-5 h-5 mr-2" /> Upload Certificate
                 </button>
                 <label
                     for="ban-participant-modal"
@@ -66,6 +70,15 @@
                 >
             </div>
         </div>
+    </div>
+    <div v-if="certificate?.preview" class="mt-12">
+        <div class="w-full flex-between mb-6">
+            <p class="font-semibold text-lg">Certificate Preview</p>
+            <button @click="doEmailCertificate" class="btn btn-primary">
+                <Icon name="fa:mail-forward" class="mr-2" /> Sent Via Email
+            </button>
+        </div>
+        <img :src="certificate.preview" class="rounded-md w-full h-full" />
     </div>
     <div v-if="participant?.data.type == 'organizer'" class="mt-6">
         <h1 class="font-semibold text-lg mb-6">Organizer Access</h1>
@@ -82,6 +95,7 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import { TYPE } from "vue-toastification";
 
 definePageMeta({
     layout: "dashboard",
@@ -90,16 +104,35 @@ definePageMeta({
 });
 
 const route = useRoute();
-const { getOneParticipant, applyRole } = useParticipantStore();
-const { mutate, pending, error, errors } = useMutate(applyRole);
+const { getOneParticipant, applyRole, emailCertificate } = useParticipantStore();
+const { mutate: roleMutate, pending, error, errors } = useMutate(applyRole);
+const { mutate: emailMutate } = useMutate(emailCertificate);
 
 const { data: participant, refresh } = await useAsyncData("getOneParticipant", () =>
     getOneParticipant(route.params.pid as string)
 );
 
 const role = ref(participant.value?.data.role || "");
+const certificate = ref<{ file: File | null; preview: string }>();
 
 async function doApplyRole() {
-    await mutate(route.params.pid as string, { role: role.value });
+    await roleMutate(route.params.pid as string, { role: role.value });
+}
+
+async function doEmailCertificate() {
+    if (certificate.value) {
+        pending.value = true;
+        await emailMutate(route.params.pid as string, { certificate: certificate.value.file });
+        pending.value = false;
+    }
+}
+
+function handleFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
+        certificate.value = { file, preview: URL.createObjectURL(file) };
+    } else {
+        createToast("File should be an image!", TYPE.ERROR);
+    }
 }
 </script>

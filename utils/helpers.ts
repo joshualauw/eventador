@@ -28,6 +28,42 @@ export function getWeekDays() {
     return dateList.map((d) => d.format("DD MMM"));
 }
 
+export function blobToBase64(blob: Blob): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64String = reader.result?.toString()?.split(",")[1];
+            if (base64String) {
+                resolve(base64String);
+            } else {
+                reject(new Error("Failed to convert Blob to Base64."));
+            }
+        };
+        reader.onerror = () => {
+            reject(reader.error);
+        };
+        reader.readAsDataURL(blob);
+    });
+}
+
+export function base64ToBlobUrl(base64String: string, type: string): string {
+    const byteCharacters = atob(base64String);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
+        const slice = byteCharacters.slice(offset, offset + 1024);
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type }); // Adjust the type based on your image format
+    return URL.createObjectURL(blob);
+}
+
 export function getTypeColor(type: string) {
     if (type == "reguler") return "text-primary";
     if (type == "invited") return "text-warning";

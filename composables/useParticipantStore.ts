@@ -57,6 +57,17 @@ export default function useItinenaryStore() {
         return res;
     }
 
+    async function emailCertificate(id: string, body: IEmailCertificate.Body) {
+        const formData = new FormData();
+        if (body.certificate) formData.append("certificate", body.certificate);
+
+        const res = await executeRequest<IEmailCertificate.Data>(`/participant/${id}/certificate`, {
+            method: "POST",
+            body: formData,
+        });
+        return res;
+    }
+
     return {
         getAllParticipant,
         getOneParticipant,
@@ -66,6 +77,7 @@ export default function useItinenaryStore() {
         applyRole,
         banParticipant,
         grantAccess,
+        emailCertificate,
         loggedParticipant,
     };
 }

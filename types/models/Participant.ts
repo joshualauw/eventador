@@ -72,3 +72,8 @@ namespace IGrantAccessParticipant {
 namespace IBanParticipant {
     export type Data = ApiResponse<IParticipant>;
 }
+
+namespace IEmailCertificate {
+    export type Body = { certificate: File | null };
+    export type Data = ApiResponse<IParticipant>;
+}

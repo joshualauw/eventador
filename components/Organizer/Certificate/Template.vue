@@ -12,7 +12,7 @@
                 >
                     <img :src="img" class="w-full h-full absolute top-0 left-0" />
                     <button
-                        @click="emits('applied', img)"
+                        @click="emits('applied', { preview: img, file: img })"
                         class="hidden group-hover:block btn btn-sm btn-solid-secondary"
                     >
                         Apply
@@ -20,7 +20,10 @@
                 </div>
                 <div class="h-full flex flex-row justify-end gap-2">
                     <button class="btn btn-ghost">Cancel</button>
-                    <button class="btn btn-primary"><Icon name="fa:upload" class="mr-2" /> Custom Template</button>
+                    <button class="btn btn-primary relative">
+                        <Icon name="fa:upload" class="mr-2" /> Custom Template
+                        <input @change="handleFileChange" type="file" class="w-full h-full absolute opacity-0" />
+                    </button>
                 </div>
             </div>
         </div>
@@ -28,11 +31,34 @@
 </template>
 
 <script setup lang="ts">
-const emits = defineEmits<{ (e: "applied", img: string): void }>();
+import { TYPE } from "vue-toastification";
+
+const emits = defineEmits<{ (e: "applied", img: { preview: string; file: string }): void }>();
 
 const baseTemplate = [
     "/images/certificate/blue.jpg",
     "/images/certificate/white.jpg",
     "/images/certificate/yellow.jpg",
 ];
+
+const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+    if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64String = reader.result?.toString()?.split(",")[1];
+            if (base64String) {
+                emits("applied", { preview: URL.createObjectURL(file), file: file.type + "," + base64String });
+            } else {
+                createToast("Failed to convert file to Base64", TYPE.ERROR);
+            }
+        };
+        reader.onerror = () => {
+            createToast("Failed to read file", TYPE.ERROR);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        createToast("File should be an image!", TYPE.ERROR);
+    }
+};
 </script>

@@ -10,10 +10,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         if (currentParticipant) loggedParticipant.value = currentParticipant;
     }
 
-    if (
-        !loggedParticipant.value ||
-        (loggedParticipant.value.type != "owner" && loggedParticipant.value.type != "organizer")
-    ) {
+    if (!loggedParticipant.value) {
         return navigateTo("/");
     }
     if (to.meta.owner && loggedParticipant.value.type !== "owner") {

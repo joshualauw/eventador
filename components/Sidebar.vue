@@ -26,7 +26,7 @@ const items = [
     // { name: "Home", link: "/", icon: "fa:home" },
     { name: "Explore", link: "/", icon: "fa:hashtag" },
     { name: "Events", link: "/manage", icon: "material-symbols:event", auth: true },
-    { name: "Following", link: "/following", icon: "fa:user" },
+    { name: "Following", link: "/following", icon: "fa:user", auth: true },
     { name: "Notifications", link: "/notification", icon: "fa:bell", auth: true },
     { name: "Settings", link: "/settings", icon: "material-symbols:settings", auth: true },
 ];

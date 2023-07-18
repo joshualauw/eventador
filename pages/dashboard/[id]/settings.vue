@@ -45,7 +45,6 @@ const { data: event } = await useAsyncData("getEventDetail", () => getEventDetai
 
 if (event.value) {
     eventDetail.value = event.value.data.event;
-    console.log(eventDetail.value);
 }
 
 async function tooglePublicity() {

@@ -2,6 +2,7 @@ interface ICertificate {
     _id: string;
     template: string;
     texts: ICertificateText[];
+    images: ICertificateImage[];
 }
 
 interface ICertificateText {
@@ -9,7 +10,7 @@ interface ICertificateText {
     content: string;
     options: {
         fontStyle: string;
-        fontSize: string;
+        fontSize: number;
         fontColor: string;
     };
     state: ICertificatePosition;
@@ -25,4 +26,20 @@ interface ICertificatePosition {
     y: number;
     width: number;
     height: number;
+}
+
+type ICertificateImageExtra = ICertificateImage & { id: string; preview: string };
+type ICertificateTextExtra = ICertificateText & { id: string };
+
+namespace ISaveCertificate {
+    export type Body = {
+        template: string;
+        images: ICertificateImage[];
+        texts: ICertificateText[];
+    };
+    export type Data = ApiResponse<ICertificate>;
+}
+
+namespace IGetCertificate {
+    export type Data = ApiResponse<ICertificate>;
 }
