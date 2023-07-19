@@ -1,31 +1,3 @@
-interface IParticipant {
-    _id: string;
-    type: IParticipantType;
-    role: string;
-    access: IAccess[];
-    joinedDate: string;
-    refundable: boolean;
-    is_banned: boolean;
-    user_id: string;
-    event_id: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-type IAccess = "budget" | "form" | "itinenary" | "sponsor";
-
-interface IInvitation {
-    _id: string;
-    email: string;
-    type: string;
-    code: string;
-    event_id: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-type IParticipantType = "reguler" | "organizer" | "invited" | "owner";
-
 namespace IGetAllParticipant {
     export type Data = ApiResponse<(IParticipant & { user_id: IUser })[]>;
 }

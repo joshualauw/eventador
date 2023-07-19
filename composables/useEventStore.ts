@@ -72,10 +72,15 @@ export default function useEventStore() {
         return res;
     }
 
+    async function getEventReport(id: string) {
+        const res = await executeRequest<IGetEventReport.Data>(`/event/${id}/report`, { method: "GET" });
+        return res.data;
+    }
+
     return {
         eventDetail,
-        getExploreEvents,
         exploreEventQuery,
+        getExploreEvents,
         getEventDetail,
         getUserEvents,
         createEvent,
@@ -83,5 +88,6 @@ export default function useEventStore() {
         updateEventGallery,
         updateEventLocation,
         toogleEventPublicity,
+        getEventReport,
     };
 }

@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    <OrganizerOverviewTrans />
+    <!-- <OrganizerOverviewTrans :transactions="transactionsData" /> -->
 </template>
 
 <script setup lang="ts">
@@ -22,28 +22,41 @@ definePageMeta({
     middleware: ["auth", "participant"],
 });
 
+const route = useRoute();
+const { getEventReport } = useEventStore();
+const { data: report } = await useAsyncData("getEventReport", () => getEventReport(route.params.id as string));
+
+// const transactionsData = computed(
+//     () =>
+//         report.value?.data.transactions.map((tr) => ({
+//             trans_date: tr.trans_date,
+//             amount: tr.amount,
+//             status: tr.status,
+//         })) || []
+// );
+
 const stats = [
     {
         name: "Participants",
-        data: "15",
+        data: report.value?.data.participant_count || 0,
         icon: "majesticons:user-group",
         theme: "btn-solid-primary",
     },
     {
         name: "Budgets",
-        data: "5",
+        data: report.value?.data.budget_count || 0,
         icon: "material-symbols:account-balance-wallet",
         theme: "btn-solid-secondary",
     },
     {
         name: "Itinenaries",
-        data: "8",
+        data: report.value?.data.itinenary_count || 0,
         icon: "uis:schedule",
         theme: "btn-solid-warning",
     },
     {
         name: "Revenue",
-        data: "Rp, 250.000",
+        data: `Rp, ${formatNumber(report.value?.data.revenue || 0)}`,
         icon: "material-symbols:money",
         theme: "btn-solid-success",
     },

@@ -1,37 +1,3 @@
-interface IUser {
-    _id: string;
-    username: string;
-    password: string;
-    email: string;
-    role: "admin" | "user";
-    profile?: string;
-    preferences: IUserPreferences;
-    notifications: IUserNotification;
-    phone_number: string;
-    balance: number;
-    verify_code?: string;
-    is_banned: boolean;
-    is_premium: boolean;
-    is_verified: boolean;
-    is_deleted: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-type IUserNotify = "user:following" | "user:new_event" | "user:transaction" | "user:event_join";
-type IUserNotifyType = "info" | "success" | "warning" | "error";
-interface IUserPreferences {
-    theme: "dark" | "light";
-    notifications: IUserNotify[];
-}
-
-interface IUserNotification {
-    type: IUserNotifyType;
-    message: string;
-    callbackUrl?: string;
-    time: string;
-}
-
 namespace IRegister {
     export interface Body {
         username: string;
@@ -114,4 +80,14 @@ namespace IPremiumUser {
 
 namespace IFollowUser {
     export type Data = ApiResponse<IUser>;
+}
+
+namespace ITopUp {
+    export type Body = { amount: number };
+    export type Data = ApiResponse<string>;
+}
+
+namespace IWithdraw {
+    export type Body = { amount: number };
+    export type Data = ApiResponse<string>;
 }

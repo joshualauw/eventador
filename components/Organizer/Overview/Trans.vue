@@ -32,11 +32,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="i in 6">
-                        <th>{{ i }}</th>
-                        <td>20-07-2023</td>
-                        <td>Rp. 250.000</td>
-                        <td><span class="text-success">Success</span></td>
+                    <tr v-for="(trans, i) in transactions">
+                        <th>{{ i + 1 }}</th>
+                        <td>{{ dayjs(trans.trans_date).format("DD MM YYYY") }}</td>
+                        <td>Rp. {{ formatNumber(trans.amount) }}</td>
+                        <td>
+                            <span :class="trans.status == 'success' ? 'text-success' : 'text-error'">
+                                {{ trans.status }}
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -45,6 +49,16 @@
 </template>
 
 <script setup lang="ts">
+import dayjs from "dayjs";
+
+defineProps<{
+    transactions: {
+        trans_date: string;
+        amount: number;
+        status: string;
+    }[];
+}>();
+
 const { loggedUser } = useAuthStore();
 const route = useRoute();
 </script>

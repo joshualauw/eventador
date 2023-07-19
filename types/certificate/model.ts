@@ -30,16 +30,3 @@ interface ICertificatePosition {
 
 type ICertificateImageExtra = ICertificateImage & { id: string; preview: string };
 type ICertificateTextExtra = ICertificateText & { id: string };
-
-namespace ISaveCertificate {
-    export type Body = {
-        template: string;
-        images: ICertificateImage[];
-        texts: ICertificateText[];
-    };
-    export type Data = ApiResponse<ICertificate>;
-}
-
-namespace IGetCertificate {
-    export type Data = ApiResponse<ICertificate>;
-}

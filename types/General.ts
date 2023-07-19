@@ -23,4 +23,10 @@ interface OSMResponse {
     lon: string;
 }
 
+interface BaseModel {
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 type UnwrapApiResponse<T> = T extends ApiResponse<infer U> ? U : never;

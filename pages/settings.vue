@@ -24,7 +24,6 @@
             </form>
         </div>
     </div>
-    <ModalAccountDelete id="123" label="account" />
 </template>
 
 <script setup lang="ts">

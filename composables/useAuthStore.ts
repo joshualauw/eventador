@@ -81,6 +81,16 @@ export default function useAuthStore() {
         return res;
     }
 
+    async function topUp(body: ITopUp.Body) {
+        const res = await executeRequest<ITopUp.Data>(`/auth/topup`, { method: "PATCH", body });
+        return res;
+    }
+
+    async function withdraw(body: IWithdraw.Body) {
+        const res = await executeRequest<IWithdraw.Data>(`/auth/withdraw`, { method: "PATCH", body });
+        return res;
+    }
+
     return {
         loggedUser,
         register,
@@ -95,5 +105,7 @@ export default function useAuthStore() {
         getOneUser,
         becomePremium,
         followUser,
+        topUp,
+        withdraw,
     };
 }

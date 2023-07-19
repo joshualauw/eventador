@@ -1,13 +1,3 @@
-interface ISponsor {
-    _id: string;
-    name: string;
-    logo?: string;
-    description: string;
-    event_id: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
 namespace IGetAllSponsor {
     export type Data = ApiResponse<ISponsor[]>;
 }
