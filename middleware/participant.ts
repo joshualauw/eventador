@@ -1,3 +1,5 @@
+import { TYPE } from "vue-toastification";
+
 export default defineNuxtRouteMiddleware(async (to, from) => {
     //TODO: fetch only when route params changes
     const { loggedParticipant, getAllParticipant } = useParticipantStore();
@@ -11,6 +13,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
 
     if (!loggedParticipant.value) {
+        return navigateTo("/");
+    }
+    if (loggedParticipant.value.is_banned) {
+        createToast("you have been banned!", TYPE.ERROR);
         return navigateTo("/");
     }
     if (to.meta.owner && loggedParticipant.value.type !== "owner") {

@@ -13,7 +13,7 @@
             :publicity="managed.publicity"
             :total_participants="managed.total_participants"
             :capacity="managed.capacity"
-            :is_organizer="managed.is_organizer"
+            :type="managed.type"
             context="managed"
         />
     </div>
@@ -29,6 +29,7 @@
             :publicity="attended.publicity"
             :total_participants="attended.total_participants"
             :capacity="attended.capacity"
+            :type="attended.type"
             context="attended"
         />
     </div>

@@ -1,30 +1,35 @@
 <template>
     <div class="flex flex-col lg:flex-row h-full gap-10">
         <div class="card h-fit hover:scale-100 w-full lg:w-3/4 mx-auto">
-            <img src="/images/default-post.png" alt="" class="w-full h-68" />
+            <img :src="eventDetail?.data.event.banner ?? '/images/default-post.png'" alt="" class="w-full h-[350px]" />
             <div class="card-body space-y-4">
-                <h2 class="card-header">Maximizing Your Productivity at Work</h2>
-                <p class="text-content2">
-                    Welcome to our event! Please have fun and chatting and watch the stream! Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Dolorum odit soluta ex dolore minus officia eum quidem dignissimos
-                    quam eveniet, ipsam quaerat, hic quasi nemo. Eos inventore consectetur harum reiciendis.
-                </p>
+                <h2 class="card-header">{{ eventDetail?.data.event.name }}</h2>
+                <p v-html="eventDetail?.data.event.overview" class="text-content2"></p>
                 <div class="card-footer flex-col items-start w-full">
                     <p class="card-header mb-4">Participants</p>
                     <div class="grid grid-cols-2 gap-4 w-full">
-                        <div v-for="i in 5" class="card hover:scale-100 shadow-none">
+                        <div
+                            v-for="par in eventDetail?.data.eventParticipants"
+                            class="card hover:scale-100 shadow-none"
+                        >
                             <div class="flex flex-row gap-4 p-4 card-body bg-backgroundPrimary">
                                 <div class="avatar avatar-ring avatar-md">
-                                    <img src="/images/default-user.png" alt="avatar" />
+                                    <img :src="par.user_id.profile ?? '/images/default-user.png'" alt="avatar" />
                                 </div>
                                 <div class="flex flex-col text-sm lg:text-base">
-                                    <span>Joshua William</span>
-                                    <span class="text-xs lg:text-sm text-primary">Organizer</span>
+                                    <span>{{ par.user_id.username }}</span>
+                                    <p class="text-sm text-success mb-1.5" v-if="par.role">As {{ par.role }}</p>
+                                    <span class="text-xs lg:text-sm" :class="getBadgeColor(par.type)">{{
+                                        par.type
+                                    }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex space-x-2 w-full justify-end mt-4">
+                    <div
+                        v-if="loggedParticipant?.type == 'owner' || loggedParticipant?.type == 'organizer'"
+                        class="flex space-x-2 w-full justify-end mt-4"
+                    >
                         <label for="edit-overview-modal" class="btn btn-solid-secondary">
                             <Icon name="fa:edit" class="mr-2" /> Edit Overview
                         </label>
@@ -33,13 +38,27 @@
             </div>
         </div>
     </div>
-    <AttendingModalOverviewEdit />
+    <AttendingModalOverviewEdit @saved="refresh" :content="eventDetail?.data.event.overview" />
 </template>
 
 <script setup lang="ts">
-import rundown from "@/assets/json/itinenaries.json";
-
 definePageMeta({
     layout: "attending",
+    middleware: ["auth", "participant"],
 });
+
+const route = useRoute();
+const { getEventDetail } = useEventStore();
+const { loggedParticipant } = useParticipantStore();
+
+const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =>
+    getEventDetail(route.params.id as string)
+);
+
+function getBadgeColor(type: IParticipantType) {
+    if (type == "owner") return "text-secondary";
+    if (type == "organizer") return "text-secondary";
+    if (type == "invited") return "text-warning";
+    else return "text-primary";
+}
 </script>

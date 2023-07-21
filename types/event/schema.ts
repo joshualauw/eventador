@@ -24,6 +24,7 @@ namespace IGetEventDetail {
         };
         eventItinenaries: IItinenary[];
         eventSponsor: ISponsor[];
+        eventParticipants: (IParticipant & { user_id: IUser })[];
     }>;
 }
 
@@ -33,12 +34,12 @@ namespace IUserEvents {
         managed: (Pick<IEvent, "_id" | "name" | "capacity"> & {
             publicity: string;
             total_participants: number;
-            is_organizer: boolean;
+            type: IParticipantType;
         })[];
         attended: (Pick<IEvent, "_id" | "name" | "capacity"> & {
             publicity: string;
             total_participants: number;
-            is_banned: boolean;
+            type: IParticipantType;
         })[];
     }>;
 }
@@ -84,5 +85,10 @@ namespace IUpdateEventGallery {
 }
 
 namespace IToogleEventPublicity {
+    export type Data = ApiResponse<IEvent>;
+}
+
+namespace IUpdateEventOverview {
+    export type Body = { content: string };
     export type Data = ApiResponse<IEvent>;
 }

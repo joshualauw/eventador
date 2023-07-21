@@ -17,5 +17,6 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "attending",
+    middleware: ["auth", "participant"],
 });
 </script>

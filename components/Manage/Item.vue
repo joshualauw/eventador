@@ -1,9 +1,10 @@
 <template>
     <NuxtLink :to="context == 'managed' ? `/dashboard/${id}` : `/attending/${id}`" class="card cursor-pointer">
-        <div class="card-body min-h-full flex-center text-center">
+        <div class="card-body min-h-full flex-center text-center relative">
             <div class="space-x-2">
                 <span class="badge" :class="badgeColor">{{ publicity }}</span>
-                <span v-if="is_organizer" class="badge badge-flat-primary">organizer</span>
+                <span v-if="type == 'organizer'" class="badge badge-flat-primary">organized</span>
+                <span v-else-if="type == 'owner'" class="badge badge-flat-primary">owned</span>
             </div>
             <h2 class="card-header text-lg font-bold">{{ name }}</h2>
             <p class="text-content2">{{ total_participants }}/{{ capacity }} people attended</p>
@@ -18,7 +19,7 @@ const props = defineProps<{
     name: string;
     total_participants: number;
     capacity: number;
-    is_organizer?: boolean;
+    type?: IParticipantType;
     context: "managed" | "attended";
 }>();
 

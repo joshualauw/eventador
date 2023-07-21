@@ -33,17 +33,15 @@
                     <label class="mx-2 flex h-fit w-full cursor-pointer p-0" tabindex="0">
                         <div class="flex flex-row gap-4 p-4">
                             <div class="avatar avatar-ring avatar-md">
-                                <img src="/images/default-user.png" alt="avatar" />
+                                <img :src="loggedUser?.profile || '/images/default-user.png'" alt="avatar" />
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-white">Joshua William</span>
-                                <span class="text-xs font-normal text-gray-100">@joshualauw</span>
+                                <span class="text-white">{{ loggedUser?.username }}</span>
+                                <span class="text-xs font-normal text-gray-100">{{ loggedUser?.email }}</span>
                             </div>
                         </div>
                     </label>
                     <div class="dropdown-menu dropdown-menu-top-center ml-3">
-                        <NuxtLink to="/" class="dropdown-item text-sm">Profile</NuxtLink>
-                        <NuxtLink to="/" class="dropdown-item text-sm">Settings</NuxtLink>
                         <NuxtLink to="/" class="dropdown-item text-sm">Back to Home</NuxtLink>
                     </div>
                 </div>
@@ -54,6 +52,10 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const router = useRouter();
+const eventId = computed(() => router.currentRoute.value.params.id as string);
+
+const { loggedUser } = useAuthStore();
 
 function getBordered(link: string) {
     const splitLink = route.path.split("/");
@@ -65,22 +67,22 @@ const menus = [
     {
         icon: "material-symbols:chat-outline",
         name: "Discussion",
-        link: `/attending/123`,
+        link: `/attending/${eventId.value}`,
     },
     {
         icon: "material-symbols:info",
         name: "Overview",
-        link: `/attending/123/overview`,
+        link: `/attending/${eventId.value}/overview`,
     },
     {
         icon: "material-symbols:calendar-month",
         name: "Rundown",
-        link: `/attending/123/rundown`,
+        link: `/attending/${eventId.value}/rundown`,
     },
     {
         icon: "material-symbols:live-tv",
         name: "Livestream",
-        link: `/attending/123/prestream`,
+        link: `/attending/${eventId.value}/prestream`,
     },
 ];
 </script>

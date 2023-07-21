@@ -28,5 +28,6 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "stream",
+    middleware: ["auth", "participant"],
 });
 </script>

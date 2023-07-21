@@ -77,6 +77,11 @@ export default function useEventStore() {
         return res.data;
     }
 
+    async function updateEventOverview(id: string, body: IUpdateEventOverview.Body) {
+        const res = await executeRequest<IUpdateEventOverview.Data>(`/event/${id}/overview`, { method: "PATCH", body });
+        return res;
+    }
+
     return {
         eventDetail,
         exploreEventQuery,
@@ -89,5 +94,6 @@ export default function useEventStore() {
         updateEventLocation,
         toogleEventPublicity,
         getEventReport,
+        updateEventOverview,
     };
 }
