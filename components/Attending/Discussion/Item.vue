@@ -36,9 +36,7 @@
                     </div>
                 </div>
                 <p class="text-sm text-success font-semibold mb-2" v-if="role">As {{ role }}</p>
-                <p class="text-content2 text-sm">
-                    {{ content }}
-                </p>
+                <p class="text-content2 text-sm">{{ content }}</p>
             </div>
         </div>
     </div>
@@ -55,7 +53,7 @@ const props = defineProps<{
     type: IParticipantType;
     is_announcement: boolean;
     createdAt: string;
-    role: string;
+    role?: string;
     content: string;
     isEditable: boolean;
 }>();

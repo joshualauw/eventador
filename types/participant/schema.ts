@@ -49,3 +49,7 @@ namespace IEmailCertificate {
     export type Body = { certificate: File | null };
     export type Data = ApiResponse<IParticipant>;
 }
+
+namespace IGetLivestreamToken {
+    export type Data = ApiResponse<string>;
+}

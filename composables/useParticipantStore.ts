@@ -1,5 +1,5 @@
 export default function useItinenaryStore() {
-    const loggedParticipant = useState<IParticipant | null>("loggedParticipant", () => null);
+    const loggedParticipant = useState<(IParticipant & { user_id: IUser }) | null>("loggedParticipant", () => null);
 
     async function getAllParticipant(event_id: string) {
         const res = await executeRequest<IGetAllParticipant.Data>(`/participant/${event_id}`, { method: "GET" });
@@ -68,6 +68,13 @@ export default function useItinenaryStore() {
         return res;
     }
 
+    async function getLivestreamToken(event_id: string, id: string) {
+        const res = await executeRequest<IGetLivestreamToken.Data>(`/participant/${event_id}/${id}/stream`, {
+            method: "GET",
+        });
+        return res.data;
+    }
+
     return {
         getAllParticipant,
         getOneParticipant,
@@ -78,6 +85,7 @@ export default function useItinenaryStore() {
         banParticipant,
         grantAccess,
         emailCertificate,
+        getLivestreamToken,
         loggedParticipant,
     };
 }

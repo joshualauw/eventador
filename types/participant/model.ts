@@ -1,6 +1,6 @@
 interface IParticipant extends BaseModel {
     type: IParticipantType;
-    role: string;
+    role?: string;
     access: IAccess[];
     joinedDate: string;
     refundable: boolean;

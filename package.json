@@ -19,8 +19,10 @@
     },
     "dependencies": {
         "@pusher/push-notifications-web": "^1.1.0",
+        "agora-rtc-sdk-ng": "^4.18.2",
         "chart.js": "^3.9.1",
         "dayjs": "^1.11.8",
+        "firebase": "^10.1.0",
         "html-to-image": "^1.11.11",
         "html2canvas": "^1.4.1",
         "leaflet": "^1.9.4",

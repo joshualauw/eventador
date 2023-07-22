@@ -1,16 +1,26 @@
 <template>
-    <div class="flex-box flex-col h-[500px] space-y-4 bg-backgroundSecondary shadow-md">
-        <h2 class="text-center text-xl font-semibold text-content1">Join Stream?</h2>
-        <div class="avatar-group">
-            <div v-for="i in 4" class="avatar">
-                <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="avatar" />
-            </div>
-            <div class="avatar">
-                <div>+12</div>
-            </div>
+    <div class="flex-box flex-col h-[500px] bg-backgroundSecondary shadow-md">
+        <h2 v-if="!stream" class="text-center text-lg font-semibold text-content1 mb-5">Stream haven't started yet</h2>
+        <div v-if="loggedParticipant?.type == 'owner'">
+            <button @click="navigateTo(`/attending/${$route.params.id}/stream`)" class="btn btn-primary w-full">
+                Host Stream
+            </button>
         </div>
-        <p class="text-content2 text-center">16 people have joined</p>
-        <button @click="navigateTo('/attending/123/stream')" class="btn btn-primary w-fit">Join Now</button>
+        <div v-if="stream && loggedParticipant?.type != 'owner'" class="space-y-5">
+            <h2 class="text-center text-xl font-semibold text-content1">Join Stream?</h2>
+            <div class="avatar-group mx-auto">
+                <div v-for="par in stream.participants.slice(0, 4)" class="avatar">
+                    <img :src="par.user_id.profile || 'https://i.pravatar.cc/150?u=a042581f4e29026024d'" alt="avatar" />
+                </div>
+                <div v-if="stream.participants.length > 4" class="avatar">
+                    <div>+{{ stream.participants.length - 4 }}</div>
+                </div>
+            </div>
+            <p class="text-content2 text-center">{{ stream.participants.length }} people have joined</p>
+            <button @click="navigateTo(`/attending/${$route.params.id}/stream`)" class="btn btn-primary w-full">
+                Join Now
+            </button>
+        </div>
     </div>
 </template>
 
@@ -19,4 +29,10 @@ definePageMeta({
     layout: "attending",
     middleware: ["auth", "participant"],
 });
+
+const route = useRoute();
+const { stream, subscribe } = useStreamStore();
+const { loggedParticipant } = useParticipantStore();
+
+onMounted(() => subscribe(route.params.id as string));
 </script>

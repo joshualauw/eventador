@@ -1,7 +1,7 @@
 import { TYPE } from "vue-toastification";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    //TODO: fetch only when route params changes
+    //TODO: store in cookie
     const { loggedParticipant, getAllParticipant } = useParticipantStore();
     const { loggedUser } = useAuthStore();
 

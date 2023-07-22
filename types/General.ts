@@ -29,4 +29,12 @@ interface BaseModel {
     updatedAt: string;
 }
 
+interface AgoraOptions {
+    appId: string;
+    channel: string;
+    token: string;
+    uid: string;
+    role: "host" | "audience";
+}
+
 type UnwrapApiResponse<T> = T extends ApiResponse<infer U> ? U : never;
