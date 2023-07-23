@@ -20,7 +20,7 @@ export function getWeekDays() {
     const today = dayjs();
     const startOfWeek = today.subtract(1, "week");
     const dateList = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 1; i < 8; i++) {
         const date = startOfWeek.add(i, "day");
         dateList.push(date);
     }

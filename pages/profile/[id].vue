@@ -57,6 +57,9 @@
                                 :date="event.start_date"
                             />
                         </div>
+                        <p v-if="userDetail?.data.userEvents.length == 0" class="text-content-2">
+                            -user have no created events-
+                        </p>
                     </div>
                     <div v-if="activeTab == 1">
                         <NuxtLink
@@ -71,6 +74,9 @@
                                 <p class="font-semibold">{{ follower.username }}</p>
                             </div>
                         </NuxtLink>
+                        <p v-if="userDetail?.data.user.followers.length == 0" class="text-content-2">
+                            -user have no followers-
+                        </p>
                     </div>
                     <div v-if="activeTab == 2">
                         <NuxtLink
@@ -85,6 +91,9 @@
                                 <p class="font-semibold">{{ following.username }}</p>
                             </div>
                         </NuxtLink>
+                        <p v-if="userDetail?.data.user.followings.length == 0" class="text-content-2">
+                            -user have no followings-
+                        </p>
                     </div>
                 </div>
             </div>

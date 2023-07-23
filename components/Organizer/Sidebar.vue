@@ -116,6 +116,12 @@ const menus = [
         premium: true,
     },
     {
+        icon: "material-symbols:account-balance",
+        name: "Transactions",
+        link: `/dashboard/${eventId.value}/transaction`,
+        show: loggedParticipant.value?.type == "owner",
+    },
+    {
         icon: "material-symbols:settings",
         name: "Settings",
         link: `/dashboard/${eventId.value}/settings`,
