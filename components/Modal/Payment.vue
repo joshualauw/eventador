@@ -1,11 +1,13 @@
 <template>
-    <UIModal v-slot="{ setOpen }" modal-id="payment-modal">
+    <UIModal v-slot="{ setOpen }" :modal-id="uniqueId ? uniqueId : 'payment-modal'">
         <div class="flex flex-col text-center gap-2">
             <div class="flex-box rounded-full w-14 h-14 p-4 btn btn-solid-primary btn-no-animation self-center mb-4">
                 <Icon name="fa:info" class="w-7 h-7" />
             </div>
             <h2 class="text-center text-xl font-bold text-content1">Payment Confirmation</h2>
-            <p class="mx-auto max-w-xs text-sm text-content2">Do you want to purchase this activity?</p>
+            <p class="mx-auto max-w-xs text-sm text-content2">
+                {{ message ? message : "Do you want to purchase this item?" }}
+            </p>
             <div class="my-2 border-y border-border py-4">
                 <slot />
             </div>
@@ -27,7 +29,7 @@
                 </div>
             </div>
             <button @click="doPay(setOpen)" :disabled="afterBalance < 0" class="btn btn-primary mt-4">
-                <Icon name="fa:lock" class="mr-2" /> Pay
+                <Icon name="fa:lock" class="mr-2" /> Confirm
             </button>
         </div>
     </UIModal>
@@ -35,10 +37,21 @@
 
 <script setup lang="ts">
 const emits = defineEmits<{ (e: "pay"): void }>();
-const props = defineProps<{ amount: number }>();
+const props = defineProps<{
+    message?: string;
+    uniqueId?: string;
+    reverse?: boolean;
+    amount: number;
+}>();
 
 const { loggedUser } = useAuthStore();
-const afterBalance = computed(() => (loggedUser.value?.balance || 0) - props.amount);
+const afterBalance = computed(() => {
+    if (props.reverse) {
+        return (loggedUser.value?.balance || 0) + props.amount;
+    } else {
+        return (loggedUser.value?.balance || 0) - props.amount;
+    }
+});
 
 function doPay(setOpen: (state: boolean) => void) {
     emits("pay");

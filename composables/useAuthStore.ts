@@ -12,6 +12,11 @@ export default function useAuthStore() {
         return res;
     }
 
+    async function resetPass(body: IResetPass.Body) {
+        const res = await executeRequest("/auth/resetpass", { method: "POST", body });
+        return res;
+    }
+
     async function getMe() {
         const res = await executeRequest<ILogin.Data>("/auth/myself", { method: "GET" });
         if (res.status && res.data) {
@@ -91,11 +96,28 @@ export default function useAuthStore() {
         return res;
     }
 
+    async function resendVerificationCode(body: IResendVerificationCode.Body) {
+        const res = await executeRequest<IResendVerificationCode.Data>(`/auth/resend/verification`, {
+            method: "POST",
+            body,
+        });
+        return res;
+    }
+
+    async function resendPasswordToken(body: IResendPasswordToken.Body) {
+        const res = await executeRequest<IResendPasswordToken.Data>(`/auth/resend/forgotpass`, {
+            method: "POST",
+            body,
+        });
+        return res;
+    }
+
     return {
         loggedUser,
         register,
         getMe,
         activate,
+        resetPass,
         login,
         savePersonal,
         savePreferences,
@@ -107,5 +129,7 @@ export default function useAuthStore() {
         followUser,
         topUp,
         withdraw,
+        resendVerificationCode,
+        resendPasswordToken,
     };
 }

@@ -9,7 +9,7 @@
                     class="input input-sm lg:input-md w-40"
                     placeholder="Username.."
                 />
-                <span>
+                <span v-if="loggedUser">
                     <input
                         v-model="followQuery.followed"
                         type="checkbox"
@@ -38,7 +38,6 @@
 <script setup lang="ts">
 definePageMeta({
     layout: "home",
-    middleware: "auth",
 });
 
 const followQuery = reactive({
@@ -58,7 +57,7 @@ watch(
     () => refresh()
 );
 
-const { getFollowableUsers } = useAuthStore();
+const { loggedUser, getFollowableUsers } = useAuthStore();
 const { data: followableUsers, refresh } = await useAsyncData("getFollowableUsers", () =>
     getFollowableUsers(followQuery)
 );

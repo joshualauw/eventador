@@ -12,6 +12,7 @@
 const AuthLogin = shallowRef(resolveComponent("AuthLogin"));
 const AuthRegister = shallowRef(resolveComponent("AuthRegister"));
 const AuthVerify = shallowRef(resolveComponent("AuthVerify"));
+const AuthForgot = shallowRef(resolveComponent("AuthForgot"));
 
 const tabs = [
     {
@@ -31,6 +32,12 @@ const tabs = [
         title: "Verify Account",
         tip: "Check your email for verification code",
         component: AuthVerify,
+    },
+    {
+        id: "forgot",
+        title: "Reset Password",
+        tip: "Check your email for reset password token",
+        component: AuthForgot,
     },
 ];
 const activeTab = ref(tabs[0]);

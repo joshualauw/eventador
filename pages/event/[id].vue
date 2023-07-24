@@ -21,15 +21,15 @@
                                 <img :src="eventDetail.data.event.owner.profile ?? '/images/default-user.png'" />
                             </div>
                             <div>
-                                <p>
-                                    By: <span class="font-bold">{{ eventDetail.data.event.owner.username }}</span>
+                                <p class="font-bold">
+                                    {{ eventDetail.data.event.owner.username }}
+                                    <span class="text-mute">(organizer)</span>
                                 </p>
                                 <p class="text-content2 text-sm mt-1">
                                     {{ eventDetail.data.event.owner.followers_count }} followers
                                 </p>
                             </div>
                         </div>
-                        <button class="btn btn-solid-secondary">Follow +</button>
                     </div>
                 </div>
                 <h2 class="text-lg lg:text-xl font-semibold">Description</h2>
@@ -76,7 +76,7 @@
                         </p>
                         <p>{{ eventDetail.data.event.slotLeft }} Slots Left</p>
                         <div v-if="loggedUser">
-                            <label for="payment-modal" class="btn w-full btn-primary mt-3">Register Now</label>
+                            <label for="payment-modal-register" class="btn w-full btn-primary mt-3">Register Now</label>
                             <div class="divider">-or-</div>
                             <div class="flex">
                                 <input
@@ -94,11 +94,17 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else class="card-body">
+                    <div v-else class="card-body space-y-3">
                         <p class="text-success text-center">already registered</p>
                         <button @click="navigateTo(`/attending/${eventDetail.data.event._id}`)" class="btn btn-primary">
                             Go to Event
                         </button>
+                        <div v-if="loggedUser?._id != eventDetail.data.event.owner._id">
+                            <label for="payment-modal-refund" class="btn btn-solid-error w-full flex-center mb-2">
+                                <Icon name="ri:refund-2-fill" class="w-5 h-5 mr-2" /> Issue Refund
+                            </label>
+                            <p class="text-mute">*event can only be refunded within 12 hours of purchase</p>
+                        </div>
                     </div>
                 </div>
                 <h2 class="text-xl font-semibold">Sponsored By</h2>
@@ -122,7 +128,11 @@
             </div>
         </div>
     </div>
-    <ModalPayment @pay="doRegisterParticipant" :amount="eventDetail?.data.event.price ?? 0">
+    <ModalPayment
+        @pay="doRegisterParticipant"
+        unique-id="payment-modal-register"
+        :amount="eventDetail?.data.event.price ?? 0"
+    >
         <div v-if="eventDetail" class="flex space-x-5">
             <img :src="eventDetail.data.event.banner ?? '/images/default-post.png'" class="w-36 h-20 rounded-md" />
             <div class="text-left">
@@ -132,6 +142,23 @@
             </div>
         </div>
         <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-4" />
+    </ModalPayment>
+
+    <ModalPayment
+        @pay="doRefundEvent"
+        unique-id="payment-modal-refund"
+        message="do you want to refund this event?"
+        :amount="eventDetail?.data.event.price ?? 0"
+        reverse
+    >
+        <div v-if="eventDetail" class="flex space-x-5">
+            <img :src="eventDetail.data.event.banner ?? '/images/default-post.png'" class="w-36 h-20 rounded-md" />
+            <div class="text-left">
+                <p class="font-semibold">{{ eventDetail.data.event.name }}</p>
+                <p class="text-warning text-lg">Rp. {{ formatNumber(eventDetail.data.event.price) }}</p>
+                <p class="text-content2">Amount: x1</p>
+            </div>
+        </div>
     </ModalPayment>
 </template>
 
@@ -159,11 +186,13 @@ const socialMediaLinks = [
 const code = ref("");
 
 const route = useRoute();
-const { loggedUser } = useAuthStore();
-const { getEventDetail } = useEventStore();
+const { loggedUser, getMe } = useAuthStore();
+const { getEventDetail, refundEvent } = useEventStore();
 const { registerParticipant, applyInvite } = useParticipantStore();
+
 const { pending, error, errors, mutate: registerMutate } = useMutate(registerParticipant);
 const { mutate: inviteMutate } = useMutate(applyInvite);
+const { mutate: refundMutate } = useMutate(refundEvent);
 
 const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =>
     getEventDetail(route.params.id as string)
@@ -172,6 +201,7 @@ const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =
 async function doRegisterParticipant() {
     const res = await registerMutate(route.params.id as string);
     if (res.status) {
+        await getMe();
         refresh();
     }
 }
@@ -182,6 +212,19 @@ async function doApplyInvite() {
     if (!res.status) {
         error.value = res.error;
     } else {
+        await getMe();
+        refresh();
+    }
+    pending.value = false;
+}
+
+async function doRefundEvent() {
+    pending.value = true;
+    const res = await refundMutate(route.params.id as string);
+    if (!res.status) {
+        error.value = res.error;
+    } else {
+        await getMe();
         refresh();
     }
     pending.value = false;

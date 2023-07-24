@@ -11,7 +11,9 @@ namespace IExploreEvent {
     }
 
     export type Data = ApiResponse<
-        Pick<IEvent, "_id" | "name" | "price" | "banner" | "category" | "location" | "capacity" | "start_date">[]
+        (Pick<IEvent, "_id" | "name" | "price" | "banner" | "category" | "location" | "capacity" | "start_date"> & {
+            is_wishlist?: boolean;
+        })[]
     >;
 }
 
@@ -90,5 +92,13 @@ namespace IToogleEventPublicity {
 
 namespace IUpdateEventOverview {
     export type Body = { content: string };
+    export type Data = ApiResponse<IEvent>;
+}
+
+namespace IWishlistEvent {
+    export type Data = ApiResponse<IEvent>;
+}
+
+namespace IRefundEvent {
     export type Data = ApiResponse<IEvent>;
 }

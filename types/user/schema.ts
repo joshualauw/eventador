@@ -15,6 +15,10 @@ namespace IActivate {
     }
 }
 
+namespace IResetPass {
+    export type Body = { email: string; password: string; confirm_password: string; token: string };
+}
+
 namespace ILogin {
     export interface Body {
         email: string;
@@ -89,5 +93,15 @@ namespace ITopUp {
 
 namespace IWithdraw {
     export type Body = { amount: number };
+    export type Data = ApiResponse<string>;
+}
+
+namespace IResendVerificationCode {
+    export type Body = { email: string };
+    export type Data = ApiResponse<string>;
+}
+
+namespace IResendPasswordToken {
+    export type Body = { email: string };
     export type Data = ApiResponse<string>;
 }

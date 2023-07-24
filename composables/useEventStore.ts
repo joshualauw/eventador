@@ -77,6 +77,16 @@ export default function useEventStore() {
         return res;
     }
 
+    async function wishlistEvent(id: string) {
+        const res = await executeRequest<IWishlistEvent.Data>(`/event/${id}/wishlist`, { method: "PATCH" });
+        return res;
+    }
+
+    async function refundEvent(id: string) {
+        const res = await executeRequest<IRefundEvent.Data>(`/event/${id}/refund`, { method: "PATCH" });
+        return res;
+    }
+
     return {
         eventDetail,
         exploreEventQuery,
@@ -89,5 +99,7 @@ export default function useEventStore() {
         updateEventLocation,
         toogleEventPublicity,
         updateEventOverview,
+        wishlistEvent,
+        refundEvent,
     };
 }

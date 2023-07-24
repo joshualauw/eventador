@@ -1,4 +1,5 @@
 <template>
+    <UILoader v-if="pending" />
     <div class="card card-image-cover">
         <img
             @click="navigateTo(`/event/${id}`)"
@@ -17,7 +18,9 @@
             </div>
             <div class="badge badge-primary w-fit">{{ category }}</div>
             <div class="card-footer justify-end space-x-2 mt-2">
-                <button class="btn btn-solid-error"><Icon name="fa:heart-o" /></button>
+                <button v-if="loggedUser" @click="addToWishlist" class="btn btn-solid-error">
+                    <Icon :name="is_wishlist ? 'fa:heart' : 'fa:heart-o'" />
+                </button>
                 <button class="btn btn-solid-success btn-no-animation">Rp. {{ formatNumber(price) }}</button>
             </div>
         </div>
@@ -27,14 +30,27 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
 
-defineProps<{
+const props = defineProps<{
     id: string;
     name: string;
     price: number;
     banner?: string;
     category: string;
     location_name: string;
+    is_wishlist?: boolean;
     slot: number;
     date: string;
 }>();
+const emits = defineEmits<{ (e: "wishlisted", id: string): void }>();
+
+const { wishlistEvent } = useEventStore();
+const { loggedUser } = useAuthStore();
+const { mutate, pending } = useMutate(wishlistEvent);
+
+async function addToWishlist() {
+    const res = await mutate(props.id);
+    if (res.status) {
+        emits("wishlisted", props.id);
+    }
+}
 </script>

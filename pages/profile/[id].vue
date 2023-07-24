@@ -21,7 +21,7 @@
                 </span>
             </div>
             <button
-                v-if="userDetail?.data.user._id !== loggedUser?._id"
+                v-if="loggedUser && userDetail?.data.user._id !== loggedUser._id"
                 @click="doFollowUser"
                 class="btn btn-sm w-full lg:w-fit lg:btn-md"
                 :class="userDetail?.data.user.is_followed ? 'btn-error' : 'btn-primary'"

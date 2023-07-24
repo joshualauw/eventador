@@ -30,7 +30,9 @@
                         <span class="text-content2">Remember me</span>
                     </div>
                     <label class="form-label">
-                        <a class="link link-underline-hover link-primary text-sm">Forgot your password?</a>
+                        <a @click="emits('switch', 'forgot')" class="link link-underline-hover link-primary text-sm">
+                            Forgot your password?
+                        </a>
                     </label>
                 </div>
             </div>

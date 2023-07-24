@@ -23,10 +23,10 @@ const { loggedUser } = useAuthStore();
 const logged = computed(() => loggedUser.value);
 
 const items = [
-    // { name: "Home", link: "/", icon: "fa:home" },
-    { name: "Explore", link: "/", icon: "fa:hashtag" },
+    { name: "Home", link: "/", icon: "fa:home" },
+    { name: "Explore", link: "/explore", icon: "fa:hashtag" },
     { name: "Events", link: "/manage", icon: "material-symbols:event", auth: true },
-    { name: "Following", link: "/following", icon: "fa:user", auth: true },
+    { name: "Following", link: "/following", icon: "fa:user" },
     { name: "Notifications", link: "/notification", icon: "fa:bell", auth: true },
     { name: "Settings", link: "/settings", icon: "material-symbols:settings", auth: true },
 ];

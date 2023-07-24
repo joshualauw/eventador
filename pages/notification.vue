@@ -4,8 +4,9 @@
             <h2 class="font-bold text-xl">All Notifications</h2>
             <select v-model="type" class="select w-36">
                 <option value="">All</option>
-                <option value="success">Transaction</option>
-                <option value="info">Announcement</option>
+                <option value="info">info</option>
+                <option value="success">success</option>
+                <option value="warning">warning</option>
             </select>
         </div>
         <div class="space-y-5 text-sm">
