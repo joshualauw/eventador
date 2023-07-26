@@ -61,6 +61,11 @@ export default function useAuthStore() {
         return res.data;
     }
 
+    async function readAllNotifications(id: string) {
+        const res = await executeRequest<IGetNotifications.Data>(`/auth/${id}/notifications`, { method: "DELETE" });
+        return res;
+    }
+
     async function changePassword(body: IChangePassword.Body) {
         const res = await executeRequest<IChangePassword.Data>(`/auth/change`, { method: "PATCH", body });
         return res;
@@ -122,6 +127,7 @@ export default function useAuthStore() {
         savePersonal,
         savePreferences,
         getUserNotifications,
+        readAllNotifications,
         changePassword,
         getFollowableUsers,
         getOneUser,

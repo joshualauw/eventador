@@ -23,6 +23,6 @@ defineProps<{
     name: string;
     followers_count: number;
     events_count: number;
-    is_followed: boolean;
+    is_followed?: boolean;
 }>();
 </script>

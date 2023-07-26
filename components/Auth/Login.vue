@@ -65,7 +65,7 @@
 <script setup lang="ts">
 const emits = defineEmits<{ (e: "saved"): void; (e: "switch", to: string): void }>();
 
-const loginState = reactive({
+const { value: loginState, reset } = useStateHandler({
     email: "",
     password: "",
 });
@@ -77,6 +77,7 @@ async function doLogin() {
     const res = await mutate(loginState);
     if (res.status) {
         emits("saved");
+        reset();
     }
 }
 </script>

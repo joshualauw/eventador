@@ -65,7 +65,7 @@
 <script setup lang="ts">
 const emits = defineEmits<{ (e: "saved"): void; (e: "switch", to: string): void }>();
 
-const registerState = reactive({
+const { value: registerState, reset } = useStateHandler({
     email: "",
     username: "",
     password: "",
@@ -79,6 +79,7 @@ async function doRegister() {
     const res = await mutate(registerState);
     if (res.status) {
         emits("switch", "verify");
+        reset();
     }
 }
 </script>

@@ -5,42 +5,65 @@
                 <img :src="author.avatar ?? '/images/default-user.png'" alt="avatar" />
             </div>
         </div>
-        <div>
+        <div class="w-full">
             <div class="flex-between w-full">
-                <div @click="navigateTo(`/profile/${author.id}`)" class="font-bold hover:underline cursor-pointer">
+                <div class="cursor-pointer">
                     <div class="md:hidden avatar avatar-sm mr-2">
                         <img :src="author.avatar ?? '/images/default-user.png'" alt="avatar" />
                     </div>
-                    {{ author.name }} -<span class="text-gray-400 font-medium ml-2">{{ createdAt }}</span>
+                    <span class="font-semibold">{{ author.name }} -</span>
+                    <span class="text-mute ml-2 text-xs">{{ dayjs(createdAt).format("DD/MM/YY - HH:mm") }}</span>
                 </div>
-                <div class="dropdown">
-                    <label class="btn btn-circle btn-ghost"><Icon name="mdi:dots-horizontal" tabindex="0" /></label>
-                    <div class="dropdown-menu mt-1 w-20 border dropdown-menu-bottom-left">
-                        <a class="dropdown-item text-sm">Report</a>
+                <div>
+                    <div class="dropdown">
+                        <label class="btn btn-circle btn-ghost" tabindex="0"><Icon name="mdi:dots-horizontal" /></label>
+                        <div class="dropdown-menu mt-1 w-20 border dropdown-menu-bottom-left">
+                            <a class="dropdown-item text-sm">Report</a>
+                        </div>
+                    </div>
+                    <div v-if="author.id == loggedUser?._id && !hideEdit" class="dropdown">
+                        <label class="btn btn-circle btn-ghost" tabindex="0"><Icon name="mdi:pencil" /></label>
+                        <div class="dropdown-menu mt-1 w-20 border dropdown-menu-bottom-left">
+                            <label
+                                for="edit-post-modal"
+                                @click="emits('editing', id)"
+                                class="dropdown-item text-sm text-warning"
+                                >Edit</label
+                            >
+                            <label
+                                for="delete-post-modal"
+                                @click="emits('deleting', id, 'this post')"
+                                class="dropdown-item text-sm text-error"
+                            >
+                                Delete
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
-            <p>{{ title }}</p>
-            <div @click="navigateTo(`/post/${id}`)" class="my-4 space-y-3 cursor-pointer">
-                <img src="/images/default-post.png" class="rounded-xl" />
-                <p>{{ content }}</p>
+            <div @click="navigateTo(`/post/${id}`)" class="my-4 space-y-6 cursor-pointer">
+                <div v-if="image" class="max-w-full h-60 rounded-xl bg-backgroundSecondary flex-center">
+                    <img :src="image" class="mx-auto max-w-full max-h-full" />
+                </div>
+                <p v-html="content"></p>
             </div>
-            <div v-if="showTags">
+            <div>
                 <span
                     v-for="tag in tags"
+                    @click="navigateTo(`/tags/${tag}`)"
                     class="badge badge-md lg:badge-lg badge-flat-secondary cursor-pointer inline-flex w-fit m-1.5"
                 >
                     #{{ tag }}
                 </span>
             </div>
-            <div class="mt-5 flex w-full justify-end">
-                <button class="btn btn-ghost text-red-400 text-base">
-                    <Icon name="fa:heart" class="mr-2" /> {{ likes }}
+            <div v-if="!hideLikes" class="mt-5 flex w-full justify-end">
+                <button @click="doLikePost" class="btn btn-ghost text-secondary text-base">
+                    <Icon :name="is_liked ? 'mdi:thumb-up' : 'mdi:thumb-up-outline'" class="mr-2" /> {{ likes }}
                 </button>
                 <label
                     @click="emits('commenting', id)"
                     for="post-comments-modal"
-                    class="btn btn-ghost text-green-400 text-base"
+                    class="btn btn-ghost text-success text-base"
                 >
                     <Icon name="fa:comment" class="mr-2" /> {{ comments }}
                 </label>
@@ -50,21 +73,45 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import dayjs from "dayjs";
+import { TYPE } from "vue-toastification";
+
+const props = defineProps<{
     id: string;
     author: {
         id: string;
         name: string;
-        avatar: string | null;
+        avatar?: string;
     };
     likes: number;
     comments: number;
-    title: string;
     content: string;
-    imageUrl: string | null;
+    image?: string;
     createdAt: string;
     tags: string[];
-    showTags?: boolean;
+    hideLikes?: boolean;
+    hideEdit?: boolean;
+    is_liked?: boolean;
 }>();
-const emits = defineEmits<{ (e: "commenting", id: string): void }>();
+const emits = defineEmits<{
+    (e: "commenting", id: string): void;
+    (e: "liked"): void;
+    (e: "editing", id: string): void;
+    (e: "deleting", id: string, label: string): void;
+}>();
+
+const { loggedUser } = useAuthStore();
+const { likePost } = usePostStore();
+const { mutate } = useMutate(likePost);
+
+async function doLikePost() {
+    if (loggedUser.value) {
+        const res = await mutate(props.id);
+        if (res.data) {
+            emits("liked");
+        }
+    } else {
+        createToast("you must login first", TYPE.ERROR);
+    }
+}
 </script>

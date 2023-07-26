@@ -43,6 +43,31 @@
                 </div>
                 <div class="mt-4">
                     <div v-if="activeTab == 0">
+                        <div class="w-full">
+                            <PostItem
+                                v-for="post in userDetail?.data.userPosts"
+                                :id="post._id"
+                                :content="post.content"
+                                :image="post.image"
+                                :tags="post.tags"
+                                :author="{
+                                    id: post.user_id._id,
+                                    name: post.user_id.username,
+                                    avatar: post.user_id.profile,
+                                }"
+                                :likes="post.likes.length"
+                                :comments="post.comments.length"
+                                :created-at="post.createdAt"
+                                hide-likes
+                                hide-edit
+                                class="py-4 border-b-2 border-gray-6"
+                            />
+                        </div>
+                        <p v-if="userDetail?.data.userPosts.length == 0" class="text-content-2">
+                            -user have no created posts-
+                        </p>
+                    </div>
+                    <div v-if="activeTab == 1">
                         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
                             <ExploreItem
                                 v-for="event in userDetail?.data.userEvents"
@@ -61,7 +86,7 @@
                             -user have no created events-
                         </p>
                     </div>
-                    <div v-if="activeTab == 1">
+                    <div v-if="activeTab == 2">
                         <NuxtLink
                             v-for="follower in userDetail?.data.user.followers"
                             :to="`/profile/${follower._id}`"
@@ -78,7 +103,7 @@
                             -user have no followers-
                         </p>
                     </div>
-                    <div v-if="activeTab == 2">
+                    <div v-if="activeTab == 3">
                         <NuxtLink
                             v-for="following in userDetail?.data.user.followings"
                             :to="`/profile/${following._id}`"
@@ -106,7 +131,7 @@ definePageMeta({
     layout: "home",
 });
 
-const tabs = [{ name: "Events" }, { name: "Followers" }, { name: "Followings" }];
+const tabs = [{ name: "Posts" }, { name: "Events" }, { name: "Followers" }, { name: "Followings" }];
 const activeTab = ref(0);
 
 const route = useRoute();
@@ -114,6 +139,7 @@ const { getOneUser, followUser, loggedUser } = useAuthStore();
 const { pending, mutate } = useMutate(followUser);
 
 const { data: userDetail, refresh } = await useAsyncData("getOneUser", () => getOneUser(route.params.id as string));
+console.log(userDetail.value);
 
 async function doFollowUser() {
     const res = await mutate(route.params.id as string);

@@ -71,6 +71,7 @@ namespace IGetOneUser {
             followings: (IUser & { followers: string[]; followings: string[] })[];
             is_followed: boolean;
         };
+        userPosts: (IPost & { user_id: IUser })[];
         userEvents: Pick<
             IEvent,
             "_id" | "name" | "price" | "banner" | "location" | "capacity" | "category" | "start_date"

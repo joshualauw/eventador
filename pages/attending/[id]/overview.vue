@@ -10,7 +10,8 @@
                     <div class="grid grid-cols-2 gap-4 w-full">
                         <div
                             v-for="par in eventDetail?.data.eventParticipants"
-                            class="card hover:scale-100 shadow-none"
+                            @click="navigateTo(`/profile/${par.user_id._id}`)"
+                            class="card hover:scale-100 cursor-pointer shadow-none"
                         >
                             <div class="flex flex-row gap-4 p-4 card-body bg-backgroundPrimary">
                                 <div class="avatar avatar-ring avatar-md">
