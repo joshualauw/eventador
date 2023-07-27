@@ -5,7 +5,11 @@
                 <label class="form-label">Email</label>
                 <div class="flex-center space-x-1">
                     <input v-model="verifyState.email" placeholder="mail@example.com" type="email" class="input" />
-                    <button @click="doResend" class="btn btn-solid-secondary w-1/3" :class="{ 'btn-loading': pending }">
+                    <button
+                        @click="doResend"
+                        class="btn btn-solid-secondary w-1/3"
+                        :class="{ 'btn-loading': resendPending }"
+                    >
                         sent code
                     </button>
                 </div>
@@ -20,7 +24,14 @@
                 />
             </div>
             <div class="form-control justify-between">
-                <button @click="doActivate" type="button" class="btn btn-primary w-full">Activate</button>
+                <button
+                    @click="doActivate"
+                    type="button"
+                    class="btn btn-primary w-full"
+                    :class="{ 'btn-loading': pending }"
+                >
+                    Activate
+                </button>
             </div>
         </div>
         <UIErrors v-if="error" :errors="errors" :message="error.message" class="mt-8" />
@@ -42,7 +53,7 @@ const verifyState = reactive({
 
 const { activate, resendVerificationCode } = useAuthStore();
 const { errors, mutate, error, pending } = useMutate(activate);
-const { mutate: resendMutate } = useMutate(resendVerificationCode);
+const { mutate: resendMutate, pending: resendPending } = useMutate(resendVerificationCode);
 
 async function doActivate() {
     const res = await mutate(verifyState);
@@ -55,9 +66,7 @@ async function doResend() {
     errors.value = [];
     error.value = null;
 
-    pending.value = true;
     const res = await resendMutate({ email: verifyState.email });
-    pending.value = false;
 
     if (!res.status) {
         error.value = res.error;

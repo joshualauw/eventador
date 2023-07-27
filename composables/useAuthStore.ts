@@ -30,6 +30,7 @@ export default function useAuthStore() {
         if (res.status && res.data) {
             loggedUser.value = res.data.data;
             token.value = res.data.data.token;
+            usePusherSubsribe();
         }
         return res;
     }

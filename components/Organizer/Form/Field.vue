@@ -49,8 +49,6 @@ const type = ref(props.type || "text");
 const options = ref<{ name: string }[]>(props.options?.map((o) => ({ name: o })) || []);
 const isOptionsField = ref(["radio", "checkbox"].includes(props.type ?? "text") || false);
 
-console.log(isOptionsField.value);
-
 watch(type, (newType) => {
     isOptionsField.value = ["radio", "checkbox"].includes(newType);
 });

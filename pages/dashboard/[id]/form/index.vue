@@ -17,6 +17,7 @@
             :name="form.name"
             :fields_length="form.fields.length"
             :response_length="form.responses.length"
+            :is_open="form.is_open"
         />
     </div>
     <OrganizerModalFormEdit @saved="refresh" :context="actionContext" :update-id="actionId" />

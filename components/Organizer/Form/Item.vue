@@ -6,6 +6,12 @@
                 <Icon name="material-symbols:dynamic-form" class="mr-1" /> {{ fields_length }} fields
             </p>
             <p class="text-mute"><Icon name="ph:users-three-bold" class="mr-1" /> {{ response_length }} responses</p>
+            <p class="text-mute">
+                Status:
+                <span :class="is_open ? 'text-success' : 'text-error'" class="ml-1">
+                    {{ is_open ? "Active" : "Inactive" }}
+                </span>
+            </p>
             <div v-if="accessible" class="flex-end space-x-1.5">
                 <label for="edit-form-modal" @click="emits('editing', id)" class="btn btn-sm btn-solid-secondary">
                     Edit
@@ -26,11 +32,12 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
     id: string;
     name: string;
     fields_length: number;
     response_length: number;
+    is_open: boolean;
 }>();
 
 const route = useRoute();

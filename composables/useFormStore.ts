@@ -1,6 +1,6 @@
 export default function useFormStore() {
-    async function getAllForm(event_id: string) {
-        const res = await executeRequest<IGetAllForm.Data>(`/form/${event_id}`, { method: "GET" });
+    async function getAllForm(event_id: string, query?: IGetAllForm.Query) {
+        const res = await executeRequest<IGetAllForm.Data>(`/form/${event_id}`, { method: "GET", query });
         return res.data;
     }
 
@@ -29,5 +29,10 @@ export default function useFormStore() {
         return res;
     }
 
-    return { getAllForm, getOneForm, createForm, updateForm, deleteForm, saveForm };
+    async function submitResponse(id: string, body: ISubmitResponse.Body) {
+        const res = await executeRequest<ISubmitResponse.Data>(`/form/${id}/submit`, { method: "PUT", body });
+        return res;
+    }
+
+    return { getAllForm, getOneForm, createForm, updateForm, deleteForm, saveForm, submitResponse };
 }

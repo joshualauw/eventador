@@ -3,10 +3,17 @@
         <h2 class="text-center text-xl font-semibold text-content1">
             {{ context == "create" ? "Create" : "Edit" }} Form
         </h2>
-        <form class="space-y-2 mt-4">
+        <form class="space-y-3 mt-4">
             <div class="form-group">
                 <label class="form-label">Form Name</label>
                 <input v-model="formState.name" type="text" placeholder="form name.." class="input max-w-full" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Form Status</label>
+                <div class="flex-center">
+                    <input v-model="formState.is_open" type="checkbox" class="checkbox checkbox-primary" />
+                    <span class="ml-2">active</span>
+                </div>
             </div>
             <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-6" />
             <div class="form-group pt-6">
@@ -31,6 +38,7 @@ const route = useRoute();
 const { getOneForm, createForm, updateForm } = useFormStore();
 const { value: formState, reset } = useStateHandler({
     name: "",
+    is_open: false,
 });
 const { mutate: createMutate, error, errors, pending } = useMutate(createForm);
 const { mutate: updateMutate } = useMutate(updateForm);
@@ -45,6 +53,7 @@ watch(
             const res = await getOneForm(val);
             if (res && res.data) {
                 formState.name = res.data.name;
+                formState.is_open = res.data.is_open;
             }
         } else {
             reset();

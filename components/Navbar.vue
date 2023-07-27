@@ -11,7 +11,7 @@
             <label v-if="!loggedUser" for="login-modal" class="btn btn-sm md:btn-md btn-primary"> Sign In </label>
             <div v-else>
                 <label
-                    @click="navigateTo('/settings')"
+                    @click="navigateTo(`/profile/${loggedUser._id}`)"
                     class="flex-center space-x-3 text-sm cursor-pointer"
                     tabindex="0"
                 >

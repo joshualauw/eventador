@@ -8,4 +8,6 @@
 
 <script setup lang="ts">
 const { loggedUser } = useAuthStore();
+
+usePusherSubsribe();
 </script>

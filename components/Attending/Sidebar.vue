@@ -84,5 +84,10 @@ const menus = [
         name: "Livestream",
         link: `/attending/${eventId.value}/prestream`,
     },
+    {
+        icon: "material-symbols:edit-document-rounded",
+        name: "Forms",
+        link: `/attending/${eventId.value}/form`,
+    },
 ];
 </script>

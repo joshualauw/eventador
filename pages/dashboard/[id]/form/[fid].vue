@@ -23,11 +23,30 @@
             class="mb-12"
         />
     </div>
+    <div v-else>
+        <p v-if="_fields?.data.responses.length == 0" class="text-center font-semibold text-lg text-content2 mt-8">
+            -no responses-
+        </p>
+        <OrganizerFormResponse
+            v-for="response in _fields?.data.responses"
+            :email="response.email"
+            :answers="response.answers"
+            class="mb-12"
+        />
+    </div>
     <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-6" />
-    <button @click="doSaveForm" class="btn btn-success btn-circle w-12 h-12 lg:w-14 lg:h-14 fixed bottom-5 right-0">
+    <button
+        v-if="!isResponse"
+        @click="doSaveForm"
+        class="btn btn-success btn-circle w-12 h-12 lg:w-14 lg:h-14 fixed bottom-5 right-0"
+    >
         <Icon name="material-symbols:save" class="w-5 h-5 lg:w-7 lg:h-7" />
     </button>
-    <button @click="addField" class="btn btn-primary btn-circle w-12 h-12 lg:w-14 lg:h-14 fixed bottom-[85px] right-0">
+    <button
+        v-if="!isResponse"
+        @click="addField"
+        class="btn btn-primary btn-circle w-12 h-12 lg:w-14 lg:h-14 fixed bottom-[85px] right-0"
+    >
         <Icon name="material-symbols:add" class="w-5 h-5 lg:w-7 lg:h-7" />
     </button>
     <OrganizerModalFormDeleteField @deleted="deleteField" :id="actionId" :label="actionLabel" />
@@ -48,13 +67,12 @@ const { mutate, pending, error, errors } = useMutate(saveForm);
 const name = ref("");
 const fields = ref<(IFormField & { key: string })[]>([]);
 
-onMounted(async () => {
-    const res = await getOneForm(route.params.fid as string);
-    if (res) {
-        fields.value = [...res.data.fields.map((field) => ({ ...field, key: genId(4) }))];
-        name.value = res.data.name;
-    }
-});
+const { data: _fields } = await useAsyncData("getOneForm", () => getOneForm(route.params.fid as string));
+if (_fields.value) {
+    fields.value = [..._fields.value.data.fields.map((field) => ({ ...field, key: genId(4) }))];
+    name.value = _fields.value.data.name;
+    console.log(_fields.value.data.responses[0].answers);
+}
 
 function addField() {
     fields.value.push({

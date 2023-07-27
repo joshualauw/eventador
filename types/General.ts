@@ -37,4 +37,11 @@ interface AgoraOptions {
     role: "host" | "audience";
 }
 
+interface IPusherNotifyPayload {
+    message: string;
+    callbackUrl: string | undefined;
+    type: "error" | "info" | "success" | "warning";
+    time: Date;
+}
+
 type UnwrapApiResponse<T> = T extends ApiResponse<infer U> ? U : never;

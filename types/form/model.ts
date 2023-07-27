@@ -2,6 +2,7 @@ interface IForm extends BaseModel {
     name: string;
     fields: IFormField[];
     responses: IFormResponse[];
+    is_open: boolean;
     event_id: string;
 }
 
@@ -13,5 +14,5 @@ interface IFormField {
 
 interface IFormResponse {
     email: string;
-    anwers: string[];
+    answers: string[];
 }

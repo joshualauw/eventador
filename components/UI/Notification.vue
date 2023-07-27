@@ -8,7 +8,7 @@
         </div>
         <span class="text-content2">{{ dayjs(time).format("DD-MM-YY HH:mm") }}</span>
         <div v-if="callbackUrl" class="flex flex-col lg:flex-row gap-2">
-            <button @click="navigateTo(callbackUrl)" class="btn btn-sm btn-solid-primary">view</button>
+            <button @click="toUrl" class="btn btn-sm btn-solid-primary">view</button>
         </div>
     </div>
 </template>
@@ -22,6 +22,10 @@ const props = defineProps<{
     callbackUrl?: string;
     type: IUserNotifyType;
 }>();
+
+function toUrl() {
+    if (props.callbackUrl) window.location.href = props.callbackUrl;
+}
 
 const alertType = computed(() => {
     if (props.type == "success") return "alert-success";

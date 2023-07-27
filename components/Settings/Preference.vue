@@ -72,6 +72,16 @@ const preferenceState = reactive({
     notifications: userNotifications.value || ([] as string[]),
 });
 
+watch(preferenceState, (state) => {
+    if (loggedUser.value) {
+        if (state.theme == "dark") {
+            loggedUser.value.preferences.theme = "dark";
+        } else {
+            loggedUser.value.preferences.theme = "light";
+        }
+    }
+});
+
 watch(notificationsType, (state) => {
     //@ts-ignore
     preferenceState.notifications = state.filter((notf) => notf.selected).map((notf) => notf.key);

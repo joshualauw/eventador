@@ -139,7 +139,6 @@ const { getOneUser, followUser, loggedUser } = useAuthStore();
 const { pending, mutate } = useMutate(followUser);
 
 const { data: userDetail, refresh } = await useAsyncData("getOneUser", () => getOneUser(route.params.id as string));
-console.log(userDetail.value);
 
 async function doFollowUser() {
     const res = await mutate(route.params.id as string);

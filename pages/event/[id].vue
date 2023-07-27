@@ -23,7 +23,6 @@
                             <div>
                                 <p class="font-bold">
                                     {{ eventDetail.data.event.owner.username }}
-                                    <span class="text-mute">(organizer)</span>
                                 </p>
                                 <p class="text-content2 text-sm mt-1">
                                     {{ eventDetail.data.event.owner.followers_count }} followers
@@ -164,12 +163,16 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import { TYPE } from "vue-toastification";
 
 const socialMediaLinks = [
     {
         tooltip: "Copy Link",
         icon: "material-symbols:share",
-        callback: () => {},
+        callback: () => {
+            navigator.clipboard.writeText(linkUrl);
+            createToast("event URL copied", TYPE.SUCCESS);
+        },
     },
     {
         tooltip: "Facebook Share",
@@ -197,6 +200,16 @@ const { mutate: refundMutate } = useMutate(refundEvent);
 const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =>
     getEventDetail(route.params.id as string)
 );
+const linkUrl = useRuntimeConfig().public.baseURL + "/event/" + route.params.id;
+
+useHead({
+    meta: [
+        { property: "og:title", content: eventDetail.value?.data.event.name },
+        { property: "og:description", content: "Join to our event!" },
+        { property: "og:image", content: eventDetail.value?.data.event.banner || "" },
+        { property: "og:url", content: linkUrl },
+    ],
+});
 
 async function doRegisterParticipant() {
     const res = await registerMutate(route.params.id as string);
@@ -208,10 +221,9 @@ async function doRegisterParticipant() {
 
 async function doApplyInvite() {
     pending.value = true;
+
     const res = await inviteMutate(route.params.id as string, { code: code.value });
-    if (!res.status) {
-        error.value = res.error;
-    } else {
+    if (res.status) {
         await getMe();
         refresh();
     }
@@ -220,10 +232,9 @@ async function doApplyInvite() {
 
 async function doRefundEvent() {
     pending.value = true;
+
     const res = await refundMutate(route.params.id as string);
-    if (!res.status) {
-        error.value = res.error;
-    } else {
+    if (res.status) {
         await getMe();
         refresh();
     }

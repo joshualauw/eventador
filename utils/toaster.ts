@@ -1,7 +1,7 @@
 import { POSITION, TYPE } from "vue-toastification";
 import { ToastOptions } from "vue-toastification/dist/types/types";
 
-export function createToast(message: string, type: TYPE) {
+export function createToast(message: string, type: TYPE, custom?: ToastOptions) {
     const toast = useToast();
 
     const options: ToastOptions = {
@@ -18,6 +18,7 @@ export function createToast(message: string, type: TYPE) {
         closeButton: "button",
         icon: true,
         rtl: false,
+        ...custom,
     };
 
     toast(message, options);

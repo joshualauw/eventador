@@ -1,5 +1,6 @@
 namespace IGetAllForm {
     export type Data = ApiResponse<IForm[]>;
+    export type Query = { open?: boolean };
 }
 
 namespace IGetOneForm {
@@ -16,6 +17,7 @@ namespace ICreateForm {
 namespace IUpdateForm {
     export type Body = {
         name: string;
+        is_open: boolean;
     };
     export type Data = ApiResponse<IForm>;
 }
@@ -32,5 +34,10 @@ namespace ISaveForm {
 }
 
 namespace IDeleteForm {
+    export type Data = ApiResponse<IForm>;
+}
+
+namespace ISubmitResponse {
+    export type Body = { email: string; answers: any[] };
     export type Data = ApiResponse<IForm>;
 }
