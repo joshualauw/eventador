@@ -38,14 +38,14 @@
     <button
         v-if="!isResponse"
         @click="doSaveForm"
-        class="btn btn-success btn-circle w-12 h-12 lg:w-14 lg:h-14 fixed bottom-5 right-0"
+        class="btn btn-success btn-circle w-12 h-12 lg:w-14 lg:h-14 fixed bottom-5 right-5"
     >
         <Icon name="material-symbols:save" class="w-5 h-5 lg:w-7 lg:h-7" />
     </button>
     <button
         v-if="!isResponse"
         @click="addField"
-        class="btn btn-primary btn-circle w-12 h-12 lg:w-14 lg:h-14 fixed bottom-[85px] right-0"
+        class="btn btn-primary btn-circle w-12 h-12 lg:w-14 lg:h-14 fixed bottom-[85px] right-5"
     >
         <Icon name="material-symbols:add" class="w-5 h-5 lg:w-7 lg:h-7" />
     </button>
@@ -71,7 +71,6 @@ const { data: _fields } = await useAsyncData("getOneForm", () => getOneForm(rout
 if (_fields.value) {
     fields.value = [..._fields.value.data.fields.map((field) => ({ ...field, key: genId(4) }))];
     name.value = _fields.value.data.name;
-    console.log(_fields.value.data.responses[0].answers);
 }
 
 function addField() {

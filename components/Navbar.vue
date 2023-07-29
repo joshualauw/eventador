@@ -15,6 +15,7 @@
                     class="flex-center space-x-3 text-sm cursor-pointer"
                     tabindex="0"
                 >
+                    <Icon v-if="loggedUser.role == 'admin'" name="mdi:crown" class="text-warning w-5 h-5" />
                     <div class="avatar avatar-sm lg:avatar-md avatar-ring">
                         <img :src="loggedUser.profile ?? '/images/default-user.png'" alt="avatar" />
                     </div>

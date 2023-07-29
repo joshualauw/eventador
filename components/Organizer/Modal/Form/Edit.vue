@@ -8,7 +8,7 @@
                 <label class="form-label">Form Name</label>
                 <input v-model="formState.name" type="text" placeholder="form name.." class="input max-w-full" />
             </div>
-            <div class="form-group">
+            <div v-if="context == 'update'" class="form-group">
                 <label class="form-label">Form Status</label>
                 <div class="flex-center">
                     <input v-model="formState.is_open" type="checkbox" class="checkbox checkbox-primary" />

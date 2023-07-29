@@ -118,6 +118,14 @@ export default function useAuthStore() {
         return res;
     }
 
+    async function reportUser(id: string, body: IReportUser.Body) {
+        const res = await executeRequest<IReportUser.Data>(`/auth/${id}/report`, {
+            method: "PATCH",
+            body,
+        });
+        return res;
+    }
+
     return {
         loggedUser,
         register,
@@ -138,5 +146,6 @@ export default function useAuthStore() {
         withdraw,
         resendVerificationCode,
         resendPasswordToken,
+        reportUser,
     };
 }

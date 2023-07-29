@@ -4,6 +4,7 @@ interface IPost extends BaseModel {
     content: string;
     likes: string[];
     comments: DetailComment[];
+    reports: IReport[];
     tags: string[];
 }
 

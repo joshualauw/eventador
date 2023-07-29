@@ -8,7 +8,9 @@
                 class="max-h-72 lg:max-h-[525px] w-full rounded-lg border border-backgroundSecondary"
             />
         </div>
+
         <h1 class="text-xl lg:text-3xl font-extrabold mt-8">{{ eventDetail.data.event.name }}</h1>
+
         <div class="mt-8 flex flex-col lg:flex-row w-full lg:space-x-16">
             <div class="w-full lg:w-[60%] space-y-8 lg:space-y-10 lg:border-r-2 border-gray-4 lg:pr-16">
                 <div class="card hover:scale-100">
@@ -29,10 +31,20 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="dropdown">
+                            <div class="btn btn-circle btn-ghost" tabindex="0">
+                                <Icon name="mdi:dots-horizontal" />
+                            </div>
+                            <div class="dropdown-menu w-20 border dropdown-menu-bottom-left">
+                                <label for="report-event-modal" class="dropdown-item text-sm">Report</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <h2 class="text-lg lg:text-xl font-semibold">Description</h2>
                 <p v-html="eventDetail.data.event.description" class="text-content2 text-sm lg:text-base"></p>
+
                 <h2 class="text-lg lg:text-xl font-semibold">When & Where</h2>
                 <div class="flex flex-col gap-8 lg:flex-row">
                     <div class="flex items-start w-full lg:w-1/3">
@@ -52,12 +64,15 @@
                         </div>
                         <div>
                             <p class="font-bold">Location</p>
-                            <p class="text-sm text-content2 mt-1">{{ eventDetail.data.event.location.name }}</p>
-                            <p class="text-sm text-content2 mt-1">Venue: {{ eventDetail.data.event.location.venue }}</p>
+                            <p class="text-sm text-content2 mt-1">{{ eventDetail.data.event.location?.name || "-" }}</p>
+                            <p class="text-sm text-content2 mt-1">
+                                Venue: {{ eventDetail.data.event.location?.venue ?? "not specified" }}
+                            </p>
                         </div>
                     </div>
                 </div>
                 <UIMap
+                    v-if="eventDetail.data.event.location"
                     :latitude="eventDetail.data.event.location.latitude"
                     :longitude="eventDetail.data.event.location.longitude"
                     class="w-full h-64 lg:h-72 rounded-lg"
@@ -67,6 +82,7 @@
                     <img v-for="img in eventDetail.data.event.gallery" :src="img" class="w-36 h-36 rounded-lg m-4" />
                 </div>
             </div>
+
             <div class="w-full lg:w-[40%] space-y-8 mt-8 lg:mt-0">
                 <div class="card hover:scale-100 text-center">
                     <div v-if="!eventDetail.data.event.is_joined" class="card-body">
@@ -127,6 +143,7 @@
             </div>
         </div>
     </div>
+
     <ModalPayment
         @pay="doRegisterParticipant"
         unique-id="payment-modal-register"
@@ -159,6 +176,8 @@
             </div>
         </div>
     </ModalPayment>
+
+    <ModalReportEvent :id="($route.params.id as string)" />
 </template>
 
 <script setup lang="ts">

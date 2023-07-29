@@ -19,12 +19,13 @@
         <OrganizerOverviewDaily :trans="report.data.today_transactions" />
         <div>
             <p class="font-semibold mb-4 text-lg">Highest Record</p>
-            <div class="card max-h-full">
+            <div v-if="report.data.highest_transaction" class="card max-h-full">
                 <div class="card-body">
                     <p class="text-xl text-success">Rp. {{ formatNumber(report.data.highest_transaction.revenue) }}</p>
                     <p class="text-content-2">{{ dayjs(report.data.highest_transaction._id).format("DD-MM-YYYY") }}</p>
                 </div>
             </div>
+            <p v-else>-no transactions recorded-</p>
             <p class="font-semibold my-4 text-lg">Latest Transaction</p>
             <div v-if="report.data.latest_transaction" class="card max-h-full">
                 <div class="card-body">
@@ -56,7 +57,6 @@ const { getTransactionReport } = useTransactionStore();
 const { data: report } = await useAsyncData("getTransactionReport", () =>
     getTransactionReport(route.params.id as string)
 );
-console.log(report.value?.data);
 
 const stats = [
     {

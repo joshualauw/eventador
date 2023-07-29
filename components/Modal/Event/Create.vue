@@ -24,7 +24,7 @@
             <div class="form-field pt-5">
                 <div class="form-control justify-between">
                     <button
-                        @click="mutate(createEventState)"
+                        @click="doCreateEvent(setOpen)"
                         type="button"
                         class="btn btn-primary w-full"
                         :class="{ 'btn-loading': pending }"
@@ -50,4 +50,12 @@ const createEventState = reactive({
 const { createEvent } = useEventStore();
 
 const { error, errors, pending, mutate } = useMutate(createEvent);
+
+async function doCreateEvent(setOpen: (state: boolean) => void) {
+    const res = await mutate(createEventState);
+    if (res.status && res.data) {
+        setOpen(false);
+        navigateTo(`/dashboard/${res.data.data._id}`);
+    }
+}
 </script>

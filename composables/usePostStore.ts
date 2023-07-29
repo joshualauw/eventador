@@ -76,6 +76,14 @@ export default function usePostStore() {
         return res;
     }
 
+    async function reportPost(id: string, body: IReportPost.Body) {
+        const res = await executeRequest<IReportPost.Data>(`/post/${id}/report`, {
+            method: "PATCH",
+            body,
+        });
+        return res;
+    }
+
     return {
         getAllPosts,
         getOnePost,
@@ -89,5 +97,6 @@ export default function usePostStore() {
         deleteComment,
         getOneComment,
         likeComment,
+        reportPost,
     };
 }

@@ -1,12 +1,3 @@
-type AsyncFunction<T, V extends any[]> = (...args: V) => Promise<T>;
-
-interface Mutation<T> {
-    status: boolean;
-    data: T | null;
-    errors: string[];
-    error: ApiError | null;
-}
-
 export function useMutate<T, V extends any[]>(callback: AsyncFunction<Mutation<T>, V>) {
     const pending = ref(false);
     const data = ref<T | null>(null);

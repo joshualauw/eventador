@@ -8,9 +8,10 @@ interface IEvent extends BaseModel {
     price: number;
     capacity: number;
     overview: string;
-    location: IEventLocation;
+    location?: IEventLocation;
     discussion: IDiscussion;
     certificate: ICertificate;
+    reports: IReport[];
     user_id: string;
     is_published: boolean;
     is_deleted: boolean;

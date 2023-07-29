@@ -1,8 +1,7 @@
 <template>
     <div>
         <p class="font-semibold mb-4 text-lg">This week Report</p>
-        <UIChart v-if="trans.length > 0" :labels="weekDays" name="total transactions" :datasets="weeklyData" />
-        <p v-else>-no transactions this week-</p>
+        <UIChart :labels="weekDays" name="total transactions" :datasets="weeklyData" />
     </div>
 </template>
 

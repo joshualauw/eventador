@@ -40,6 +40,9 @@
                 </span>
             </div>
         </div>
+        <p v-if="discusssions?.data.length == 0" class="mt-8 text-center text-lg font-semibold">
+            -no discussions here-
+        </p>
         <AttendingDiscussionItem
             v-for="disc in discusssions?.data"
             @editing="handleUpdating"

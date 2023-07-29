@@ -55,3 +55,8 @@ namespace IDeleteComment {
 namespace ILikeComment {
     export type Data = ApiResponse<IComment>;
 }
+
+namespace IReportPost {
+    export type Body = { content: string };
+    export type Data = ApiResponse<IReport>;
+}

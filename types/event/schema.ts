@@ -102,3 +102,8 @@ namespace IWishlistEvent {
 namespace IRefundEvent {
     export type Data = ApiResponse<IEvent>;
 }
+
+namespace IReportEvent {
+    export type Body = { content: string };
+    export type Data = ApiResponse<IReport>;
+}

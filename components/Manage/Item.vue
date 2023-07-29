@@ -3,8 +3,7 @@
         <div class="card-body min-h-full flex-center text-center relative">
             <div class="space-x-2">
                 <span class="badge" :class="badgeColor">{{ publicity }}</span>
-                <span v-if="type == 'organizer'" class="badge badge-flat-primary">organized</span>
-                <span v-else-if="type == 'owner'" class="badge badge-flat-primary">owned</span>
+                <span v-if="type == 'organizer'" class="badge badge-flat-primary">co-organizer</span>
             </div>
             <h2 class="card-header text-lg font-bold">{{ name }}</h2>
             <p class="text-content2">{{ total_participants }}/{{ capacity }} people attended</p>

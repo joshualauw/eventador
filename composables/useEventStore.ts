@@ -87,6 +87,14 @@ export default function useEventStore() {
         return res;
     }
 
+    async function reportEvent(id: string, body: IReportEvent.Body) {
+        const res = await executeRequest<IReportEvent.Data>(`/event/${id}/report`, {
+            method: "PATCH",
+            body,
+        });
+        return res;
+    }
+
     return {
         eventDetail,
         exploreEventQuery,
@@ -101,5 +109,6 @@ export default function useEventStore() {
         updateEventOverview,
         wishlistEvent,
         refundEvent,
+        reportEvent,
     };
 }

@@ -88,10 +88,10 @@ const { error, errors, pending, mutate } = useMutate(updateEventLocation);
 const fetchLocation = ref(false);
 
 const locationState = reactive<IUpdateEventLocation.Body>({
-    name: eventDetail.value?.location.name || "",
-    venue: eventDetail.value?.location.venue || "",
-    latitude: eventDetail.value?.location.latitude || 0,
-    longitude: eventDetail.value?.location.longitude || 0,
+    name: eventDetail.value?.location?.name || "",
+    venue: eventDetail.value?.location?.venue || "",
+    latitude: eventDetail.value?.location?.latitude || 0,
+    longitude: eventDetail.value?.location?.longitude || 0,
 });
 const suggestions = ref<Suggestion[]>([]);
 const coordinate = ref([locationState.latitude || 0, locationState.longitude || 0]);

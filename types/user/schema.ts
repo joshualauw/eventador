@@ -106,3 +106,8 @@ namespace IResendPasswordToken {
     export type Body = { email: string };
     export type Data = ApiResponse<string>;
 }
+
+namespace IReportUser {
+    export type Body = { content: string };
+    export type Data = ApiResponse<IReport>;
+}

@@ -1,24 +1,34 @@
 <template>
     <UILoader v-if="pending" />
     <div>
-        <div class="flex-between flex-col lg:flex-row gap-3">
-            <div class="flex-center space-x-5 lg:space-x-12 text-center lg:text-left">
+        <div class="flex-between gap-3">
+            <div class="flex-between space-x-6 lg:space-x-12">
                 <div class="flex space-x-3 text-sm cursor-pointer">
                     <div class="avatar avatar-md lg:avatar-lg avatar-ring">
                         <img :src="userDetail?.data.user.profile || '/images/default-user.png'" alt="avatar" />
                     </div>
-                    <div class="hidden lg:block">
-                        <p class="font-bold text-lg">{{ userDetail?.data.user.username }}</p>
-                        <p class="text-content2">{{ userDetail?.data.user.email }}</p>
+                    <div class="">
+                        <p class="font-bold lg:text-lg">{{ userDetail?.data.user.username }}</p>
+                        <p class="lg:text-content2">{{ userDetail?.data.user.email }}</p>
                     </div>
                 </div>
-                <span class="font-semibold text-base lg:text-lg">{{ userDetail?.data.userEvents.length }} Events</span>
-                <span class="font-semibold text-base lg:text-lg">
+                <span class="font-semibold hidden lg:inline text-lg">
+                    {{ userDetail?.data.userEvents.length }} Events
+                </span>
+                <span class="font-semibold hidden lg:inline text-lg">
                     {{ userDetail?.data.user.followers.length }} Followers
                 </span>
-                <span class="font-semibold text-base lg:text-lg">
+                <span class="font-semibold hidden lg:inline text-lg">
                     {{ userDetail?.data.user.followings.length }} Followings
                 </span>
+                <div class="dropdown">
+                    <div class="btn btn-circle btn-ghost" tabindex="0">
+                        <Icon name="mdi:dots-horizontal" />
+                    </div>
+                    <div class="dropdown-menu w-20 border dropdown-menu-bottom-left">
+                        <label for="report-user-modal" class="dropdown-item text-sm">Report</label>
+                    </div>
+                </div>
             </div>
             <button
                 v-if="loggedUser && userDetail?.data.user._id !== loggedUser._id"
@@ -77,7 +87,7 @@
                                 :price="event.price"
                                 :category="event.category"
                                 :slot="event.capacity"
-                                :location_name="event.location.venue"
+                                :location_name="event.location?.venue || '-'"
                                 :banner="event.banner"
                                 :date="event.start_date"
                             />
@@ -124,6 +134,7 @@
             </div>
         </div>
     </div>
+    <ModalReportUser :id="($route.params.id as string)" />
 </template>
 
 <script setup lang="ts">

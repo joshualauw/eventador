@@ -15,10 +15,12 @@
                     <span class="text-mute ml-2 text-xs">{{ dayjs(createdAt).format("DD/MM/YY - HH:mm") }}</span>
                 </div>
                 <div>
-                    <div class="dropdown">
-                        <label class="btn btn-circle btn-ghost" tabindex="0"><Icon name="mdi:dots-horizontal" /></label>
-                        <div class="dropdown-menu mt-1 w-20 border dropdown-menu-bottom-left">
-                            <a class="dropdown-item text-sm">Report</a>
+                    <div v-if="!hideEdit" class="dropdown">
+                        <div class="btn btn-circle btn-ghost" tabindex="0">
+                            <Icon name="mdi:dots-horizontal" />
+                        </div>
+                        <div class="dropdown-menu w-20 border dropdown-menu-bottom-left">
+                            <label for="report-post-modal" class="dropdown-item text-sm"> Report </label>
                         </div>
                     </div>
                     <div v-if="author.id == loggedUser?._id && !hideEdit" class="dropdown">

@@ -10,6 +10,7 @@ interface IUser {
     phone_number: string;
     balance: number;
     verify_code?: string;
+    reports: IReport[];
     is_banned: boolean;
     is_premium: boolean;
     is_verified: boolean;

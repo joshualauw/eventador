@@ -45,3 +45,12 @@ interface IPusherNotifyPayload {
 }
 
 type UnwrapApiResponse<T> = T extends ApiResponse<infer U> ? U : never;
+
+type AsyncFunction<T, V extends any[]> = (...args: V) => Promise<T>;
+
+interface Mutation<T> {
+    status: boolean;
+    data: T | null;
+    errors: string[];
+    error: ApiError | null;
+}

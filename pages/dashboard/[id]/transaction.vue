@@ -12,7 +12,10 @@
                 </select>
             </div>
         </div>
-        <table class="table">
+        <p v-if="filteredTransactions?.length == 0" class="text-center font-semibold text-lg text-content2 mt-8">
+            -no transactions-
+        </p>
+        <table v-else class="table">
             <thead>
                 <tr>
                     <th>No</th>
@@ -24,7 +27,7 @@
             </thead>
             <tbody>
                 <tr v-for="(tr, i) in filteredTransactions">
-                    <th>{{ i }}</th>
+                    <th>{{ i + 1 }}</th>
                     <td>{{ dayjs(tr.trans_date).format("DD-MM-YYYY") }}</td>
                     <td>{{ tr.user_id.username }}</td>
                     <td>Rp. {{ formatNumber(tr.amount) }}</td>
