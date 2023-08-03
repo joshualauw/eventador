@@ -177,7 +177,7 @@
         </div>
     </ModalPayment>
 
-    <ModalReportEvent :id="($route.params.id as string)" />
+    <ModalReportEvent v-if="eventDetail" :id="($route.params.id as string)" :label="eventDetail?.data.event.name" />
 </template>
 
 <script setup lang="ts">

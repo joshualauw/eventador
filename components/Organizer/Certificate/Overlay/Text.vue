@@ -61,21 +61,21 @@
                         <button
                             @click="applyStyles('bold')"
                             class="btn btn-sm"
-                            :class="{ 'bg-border': fontStyles.includes('bold') }"
+                            :class="{ 'bg-border': text.options.fontStyle.includes('bold') }"
                         >
                             B
                         </button>
                         <button
                             @click="applyStyles('italic')"
                             class="btn btn-sm"
-                            :class="{ 'bg-border': fontStyles.includes('italic') }"
+                            :class="{ 'bg-border': text.options.fontStyle.includes('italic') }"
                         >
                             I
                         </button>
                         <button
                             @click="applyStyles('underline')"
                             class="btn btn-sm"
-                            :class="{ 'bg-border': fontStyles.includes('underline') }"
+                            :class="{ 'bg-border': text.options.fontStyle.includes('underline') }"
                         >
                             U
                         </button>
@@ -95,9 +95,12 @@ const props = defineProps<{ text: ICertificateTextExtra }>();
 const emits = defineEmits<{ (e: "closed"): void; (e: "deleted", id: string): void }>();
 
 const textState = ref();
-const fontStyles = ref<string[]>([...props.text.options.fontStyle.split(" ")]);
+const fontStyles = ref<string[]>([]);
 
-watchEffect(() => (textState.value = props.text));
+watchEffect(() => {
+    textState.value = props.text;
+    fontStyles.value = [...props.text.options.fontStyle.split(" ")];
+});
 watch(fontStyles, (val) => (textState.value.options.fontStyle = val.join(" ")), { deep: true });
 
 function applyStyles(style: "bold" | "italic" | "underline") {

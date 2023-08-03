@@ -6,7 +6,8 @@
             </div>
             <h2 class="text-center text-lg font-semibold text-content1">Report Event</h2>
             <p class="mx-auto max-w-xs text-sm text-content2">
-                Do you want to report this <span class="font-bold">event</span>?
+                Do you want to report <span class="font-bold">{{ label }}</span>
+                ?
             </p>
             <div class="form-field">
                 <label class="form-label">Reason</label>
@@ -25,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ id: string }>();
+const props = defineProps<{ id: string; label: string }>();
 
 const { reportEvent } = useEventStore();
 const { mutate, pending, error, errors } = useMutate(reportEvent);

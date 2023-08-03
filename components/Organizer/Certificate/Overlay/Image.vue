@@ -71,7 +71,7 @@ const handleFileChange = (event: any) => {
             const base64String = reader.result?.toString()?.split(",")[1];
             if (base64String) {
                 props.image.preview = URL.createObjectURL(file);
-                props.image.url = base64String;
+                props.image.url = file.type + "," + base64String;
             }
         };
         reader.readAsDataURL(file);

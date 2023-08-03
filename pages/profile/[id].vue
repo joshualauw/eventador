@@ -134,7 +134,7 @@
             </div>
         </div>
     </div>
-    <ModalReportUser :id="($route.params.id as string)" />
+    <ModalReportUser v-if="userDetail" :id="($route.params.id as string)" :label="userDetail?.data.user.username" />
 </template>
 
 <script setup lang="ts">
