@@ -25,6 +25,9 @@
                         Withdraw
                     </button>
                 </div>
+                <p class="text-sm text-red-500 mt-4">
+                    *If balance doesn't change after top-up/witdhraw, try to Re-login
+                </p>
             </div>
 
             <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />
@@ -50,9 +53,7 @@ async function doWithdraw() {
     pending.value = true;
 
     const res = await withdrawMutate({ amount: amount.value });
-    if (res.status && res.data) {
-        window.open(res.data.data, "_blank");
-    } else {
+    if (!res.status) {
         error.value = res.error;
         errors.value = [];
         errors.value.push(...res.errors);
