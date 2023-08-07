@@ -107,6 +107,12 @@
                                     Apply
                                 </button>
                             </div>
+                            <UIErrors
+                                v-if="inviteError"
+                                :errors="inviteErrors"
+                                :message="inviteError.message"
+                                class="my-4"
+                            />
                         </div>
                     </div>
                     <div v-else class="card-body space-y-3">
@@ -213,7 +219,7 @@ const { getEventDetail, refundEvent } = useEventStore();
 const { registerParticipant, applyInvite } = useParticipantStore();
 
 const { pending, error, errors, mutate: registerMutate } = useMutate(registerParticipant);
-const { mutate: inviteMutate } = useMutate(applyInvite);
+const { mutate: inviteMutate, error: inviteError, errors: inviteErrors } = useMutate(applyInvite);
 const { mutate: refundMutate } = useMutate(refundEvent);
 
 const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =>

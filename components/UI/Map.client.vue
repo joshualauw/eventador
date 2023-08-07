@@ -1,5 +1,5 @@
 <template>
-    <div ref="leafletMap" class="flex-box bg-border">
+    <div ref="leafletMap" class="flex-box bg-border z-20">
         <p v-if="!map && !coordinateSafe">-no location specified-</p>
         <div v-if="!map && coordinateSafe" class="flex-center text-center">
             <svg class="animate-spin h-8 w-8 mr-3 bg-gray-200" viewBox="0 0 24 24"></svg>

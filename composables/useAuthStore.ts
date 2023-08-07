@@ -1,6 +1,7 @@
 export default function useAuthStore() {
-    const loggedUser = useState("loggedUser", () => null as Omit<IUser, "password"> | null);
+    const loggedUser = useState<Omit<IUser, "password"> | null>("loggedUser", () => null);
     const token = useCookie("token", { maxAge: 24 * 60 * 60 });
+    const registeredUser = useState<string>("registeredUser", () => "");
 
     async function register(body: IRegister.Body) {
         const res = await executeRequest<IRegister.Data>("/auth/register", { method: "POST", body });
@@ -128,6 +129,7 @@ export default function useAuthStore() {
 
     return {
         loggedUser,
+        registeredUser,
         register,
         getMe,
         activate,

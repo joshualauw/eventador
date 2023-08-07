@@ -51,13 +51,16 @@ const verifyState = reactive({
     email: "",
 });
 
-const { activate, resendVerificationCode } = useAuthStore();
+const { activate, resendVerificationCode, registeredUser } = useAuthStore();
 const { errors, mutate, error, pending } = useMutate(activate);
 const { mutate: resendMutate, pending: resendPending } = useMutate(resendVerificationCode);
+
+watchEffect(() => (verifyState.email = registeredUser.value));
 
 async function doActivate() {
     const res = await mutate(verifyState);
     if (res.status) {
+        registeredUser.value = "";
         emits("switch", "login");
     }
 }

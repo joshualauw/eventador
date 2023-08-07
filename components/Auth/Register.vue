@@ -72,12 +72,13 @@ const { value: registerState, reset } = useStateHandler({
     confirm_password: "",
 });
 
-const { register } = useAuthStore();
+const { register, registeredUser } = useAuthStore();
 const { errors, mutate, error, pending } = useMutate(register);
 
 async function doRegister() {
     const res = await mutate(registerState);
     if (res.status) {
+        registeredUser.value = registerState.email;
         emits("switch", "verify");
         reset();
     }
