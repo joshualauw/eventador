@@ -49,6 +49,7 @@
                 <span>{{ stream?.participants.length }} participant(s)</span>
             </div>
         </div>
+        {{ options.role }}
         <AttendingModalStreamLeave
             @leave="leaveStream"
             :host_label="options.role == 'host' ? 'End stream now? all participants will automatically kicked out' : ''"
@@ -85,22 +86,23 @@ onMounted(async () => {
     await joinStream();
     emits("joined", props.options.role);
 
+    //audience subscribe published audio/video from host
     agoraEngine.on("user-published", async (user, mediaType) => {
         await agoraEngine.subscribe(user, mediaType);
 
-        if (mediaType == "video" && user.videoTrack && user.audioTrack) {
-            remoteVideoTrack.value = user.videoTrack;
-            remoteAudioTrack.value = user.audioTrack;
-            remoteUid.value = user.uid.toString();
+        if (user.videoTrack && user.audioTrack) {
+            if (mediaType == "video") {
+                remoteVideoTrack.value = user.videoTrack;
+                remoteUid.value = user.uid.toString();
 
-            if (props.options.role != "host") {
-                localVideoTrack.value?.stop();
-                remoteVideoTrack.value.play("remotePlayerContainer");
+                if (props.options.role == "audience") {
+                    remoteVideoTrack.value.play("remotePlayerContainer");
+                }
             }
-        }
-        if (mediaType == "audio" && user.audioTrack) {
-            remoteAudioTrack.value = user.audioTrack;
-            remoteAudioTrack.value.play();
+            if (mediaType == "audio") {
+                remoteAudioTrack.value = user.audioTrack;
+                remoteAudioTrack.value.play();
+            }
         }
     });
 
@@ -111,13 +113,13 @@ async function joinStream() {
     await agoraEngine.setClientRole(props.options.role);
     await agoraEngine.join(props.options.appId, props.options.channel, props.options.token, props.options.uid);
 
-    localAudioTrack.value = await AgoraRTC.createMicrophoneAudioTrack();
-    localVideoTrack.value = await AgoraRTC.createCameraVideoTrack();
-
+    //host publish audio/video
     if (props.options.role == "host") {
+        localAudioTrack.value = await AgoraRTC.createMicrophoneAudioTrack();
+        localVideoTrack.value = await AgoraRTC.createCameraVideoTrack();
+
         await agoraEngine.publish([localAudioTrack.value, localVideoTrack.value]);
         localVideoTrack.value.play("localPlayerContainer");
-        remoteVideoTrack.value?.stop();
     }
 }
 

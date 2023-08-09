@@ -94,7 +94,6 @@ const { data: discusssions, refresh } = await useAsyncData(
         }),
     { watch: [discussionQuery] }
 );
-console.log(discusssions.value?.data);
 
 async function doCreateDiscusssion() {
     if (loggedParticipant.value) {

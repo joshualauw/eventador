@@ -25,7 +25,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             if (currentParticipant) {
                 loggedParticipant.value = currentParticipant;
                 cached.value = currentParticipant;
-                console.log(cached.value);
             }
         }
     }

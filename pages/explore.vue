@@ -30,7 +30,7 @@
                 :category="event.category"
                 :slot="event.capacity"
                 :is_wishlist="event.is_wishlist"
-                :location_name="event.location.venue"
+                :location_name="event.location?.venue || '-'"
                 :banner="event.banner"
                 :date="event.start_date"
             />
