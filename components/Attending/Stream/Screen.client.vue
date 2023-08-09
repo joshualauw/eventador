@@ -49,7 +49,6 @@
                 <span>{{ stream?.participants.length }} participant(s)</span>
             </div>
         </div>
-        {{ options.role }}
         <AttendingModalStreamLeave
             @leave="leaveStream"
             :host_label="options.role == 'host' ? 'End stream now? all participants will automatically kicked out' : ''"
@@ -59,6 +58,7 @@
 
 <script setup lang="ts">
 import AgoraRTC, { IRemoteAudioTrack, IRemoteVideoTrack, ILocalAudioTrack, ILocalVideoTrack } from "agora-rtc-sdk-ng";
+import { TYPE } from "vue-toastification";
 
 const props = defineProps<{ options: AgoraOptions }>();
 const emits = defineEmits<{
@@ -83,6 +83,9 @@ watch(stream, async (val) => {
 });
 
 onMounted(async () => {
+    const mediaDevices = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+    if (!mediaDevices) createToast("no audio/video found or permission not granted", TYPE.ERROR);
+
     await joinStream();
     emits("joined", props.options.role);
 
@@ -120,6 +123,7 @@ async function joinStream() {
 
         await agoraEngine.publish([localAudioTrack.value, localVideoTrack.value]);
         localVideoTrack.value.play("localPlayerContainer");
+        localAudioTrack.value.play();
     }
 }
 
