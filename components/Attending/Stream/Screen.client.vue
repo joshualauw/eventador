@@ -123,7 +123,6 @@ async function joinStream() {
 
         await agoraEngine.publish([localAudioTrack.value, localVideoTrack.value]);
         localVideoTrack.value.play("localPlayerContainer");
-        localAudioTrack.value.play();
     }
 }
 
