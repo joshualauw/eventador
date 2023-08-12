@@ -4,10 +4,12 @@ import { POSITION, TYPE } from "vue-toastification";
 export default function usePusherSubscribe() {
     const config = useRuntimeConfig();
     const { loggedUser } = useAuthStore();
-    const pusher = new Pusher(config.public.pusher.key, {
-        cluster: config.public.pusher.cluster,
-    });
+
     if (loggedUser.value) {
+        const pusher = new Pusher(config.public.pusher.key, {
+            cluster: config.public.pusher.cluster,
+        });
+
         const channel_name = loggedUser.value._id;
         if (!pusher.channels.find(channel_name)) {
             const channel = pusher.subscribe(channel_name);
