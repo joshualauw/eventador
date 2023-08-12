@@ -8,23 +8,25 @@
             <h2 class="hidden md:block md:text-xl font-bold tracking-widest">Eventador</h2>
         </div>
         <div class="flex-center space-x-4">
-            <label v-if="!loggedUser" for="login-modal" class="btn btn-sm md:btn-md btn-primary"> Sign In </label>
-            <div v-else>
-                <label
-                    @click="navigateTo(`/profile/${loggedUser._id}`)"
-                    class="flex-center space-x-3 text-sm cursor-pointer"
-                    tabindex="0"
-                >
-                    <Icon v-if="loggedUser.role == 'admin'" name="mdi:crown" class="text-warning w-5 h-5" />
-                    <div class="avatar avatar-sm lg:avatar-md avatar-ring">
-                        <img :src="loggedUser.profile ?? '/images/default-user.png'" alt="avatar" />
-                    </div>
-                    <div class="hidden md:block">
-                        <p class="font-bold">{{ loggedUser.username }}</p>
-                        <p class="text-gray-300">{{ loggedUser.email }}</p>
-                    </div>
-                </label>
-            </div>
+            <ClientOnly>
+                <label v-if="!loggedUser" for="login-modal" class="btn btn-sm md:btn-md btn-primary"> Sign In </label>
+                <div v-else>
+                    <label
+                        @click="navigateTo(`/profile/${loggedUser._id}`)"
+                        class="flex-center space-x-3 text-sm cursor-pointer"
+                        tabindex="0"
+                    >
+                        <Icon v-if="loggedUser.role == 'admin'" name="mdi:crown" class="text-warning w-5 h-5" />
+                        <div class="avatar avatar-sm lg:avatar-md avatar-ring">
+                            <img :src="loggedUser.profile ?? '/images/default-user.png'" alt="avatar" />
+                        </div>
+                        <div class="hidden md:block">
+                            <p class="font-bold">{{ loggedUser.username }}</p>
+                            <p class="text-gray-300">{{ loggedUser.email }}</p>
+                        </div>
+                    </label>
+                </div>
+            </ClientOnly>
         </div>
         <ModalLogin />
     </div>
