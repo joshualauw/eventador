@@ -35,10 +35,12 @@ definePageMeta({
 });
 const { loggedUser } = useAuthStore();
 const { loggedParticipant } = useParticipantStore();
+const { unsubscribe } = usePusher();
 
 function logout() {
     const token = useCookie("token");
     const cachedParticipant = useCookie("loggedParticipant");
+    unsubscribe(loggedUser.value!._id);
 
     token.value = null;
     cachedParticipant.value = null;

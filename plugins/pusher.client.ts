@@ -1,3 +1,4 @@
 export default defineNuxtPlugin(() => {
-    usePusherSubsribe();
+    const { subscribe } = usePusher();
+    subscribe();
 });

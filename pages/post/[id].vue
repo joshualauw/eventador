@@ -6,6 +6,7 @@
                 v-if="post"
                 @liked="refresh"
                 @editing="handleUpdating"
+                @deleting="handleDeleting"
                 :id="post.data._id"
                 :content="post.data.content"
                 :image="post.data.image"
