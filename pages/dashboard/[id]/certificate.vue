@@ -1,62 +1,64 @@
 <template>
-    <UILoader v-if="pending" />
-    <div class="relative w-screen h-screen">
-        <div class="flex flex-col gap-4 flex-center absolute top-2 left-2 p-2 z-50">
-            <label v-if="!isPreview" @click="$router.go(-1)" class="btn btn-neutral w-12 h-12 btn-circle">
-                <Icon name="material-symbols:arrow-back" class="w-5 h-5 font-extrabold" />
-            </label>
-            <label v-if="!isPreview" for="certificate-template" class="btn btn-primary w-12 h-12 btn-circle">
-                <Icon name="eos-icons:templates-outlined" class="w-5 h-5" />
-            </label>
-            <button v-if="!isPreview" class="dropdown">
-                <label class="btn btn-secondary w-12 h-12 btn-circle" tabindex="0">
-                    <Icon name="material-symbols:add" class="w-5 h-5" />
+    <div>
+        <UILoader v-if="pending" />
+        <div class="relative w-screen h-screen">
+            <div class="flex flex-col gap-4 flex-center absolute top-2 left-2 p-2 z-50">
+                <label v-if="!isPreview" @click="$router.go(-1)" class="btn btn-neutral w-12 h-12 btn-circle">
+                    <Icon name="material-symbols:arrow-back" class="w-5 h-5 font-extrabold" />
                 </label>
-                <div class="dropdown-menu dropdown-menu-right ml-2">
-                    <p class="dropdown-item text-sm relative">
-                        <span class="flex-center"><Icon name="fa:image" class="mr-2" /> Add Image</span>
-                        <input @change="addImage" type="file" class="absolute w-full h-full opacity-0" />
-                    </p>
-                    <p @click="addText" class="dropdown-item text-sm">
-                        <span class="flex-center">
-                            <Icon name="material-symbols:text-fields" class="mr-2" /> Add Text
-                        </span>
-                    </p>
-                </div>
-            </button>
-            <label v-if="!isPreview" @click="doSaveCertificate" class="btn btn-success w-12 h-12 btn-circle">
-                <Icon name="material-symbols:save" class="w-5 h-5" />
-            </label>
-            <label @click="isPreview = !isPreview" class="btn btn-error w-12 h-12 btn-circle">
-                <Icon :name="isPreview ? 'fa:eye-slash' : 'fa:eye'" class="w-5 h-5" />
-            </label>
-            <label v-if="isPreview" @click="downloadCertificate" class="btn btn-primary w-12 h-12 btn-circle">
-                <Icon name="fa:download" class="w-5 h-5" />
-            </label>
+                <label v-if="!isPreview" for="certificate-template" class="btn btn-primary w-12 h-12 btn-circle">
+                    <Icon name="eos-icons:templates-outlined" class="w-5 h-5" />
+                </label>
+                <button v-if="!isPreview" class="dropdown">
+                    <label class="btn btn-secondary w-12 h-12 btn-circle" tabindex="0">
+                        <Icon name="material-symbols:add" class="w-5 h-5" />
+                    </label>
+                    <div class="dropdown-menu dropdown-menu-right ml-2">
+                        <p class="dropdown-item text-sm relative">
+                            <span class="flex-center"><Icon name="fa:image" class="mr-2" /> Add Image</span>
+                            <input @change="addImage" type="file" class="absolute w-full h-full opacity-0" />
+                        </p>
+                        <p @click="addText" class="dropdown-item text-sm">
+                            <span class="flex-center">
+                                <Icon name="material-symbols:text-fields" class="mr-2" /> Add Text
+                            </span>
+                        </p>
+                    </div>
+                </button>
+                <label v-if="!isPreview" @click="doSaveCertificate" class="btn btn-success w-12 h-12 btn-circle">
+                    <Icon name="material-symbols:save" class="w-5 h-5" />
+                </label>
+                <label @click="isPreview = !isPreview" class="btn btn-error w-12 h-12 btn-circle">
+                    <Icon :name="isPreview ? 'fa:eye-slash' : 'fa:eye'" class="w-5 h-5" />
+                </label>
+                <label v-if="isPreview" @click="downloadCertificate" class="btn btn-primary w-12 h-12 btn-circle">
+                    <Icon name="fa:download" class="w-5 h-5" />
+                </label>
+            </div>
+            <div
+                ref="capture"
+                class="relative grid grid-cols-4 grid-rows-4 md:grid-cols-7 md:grid-rows-5 xl:grid-cols-10 xl:grid-rows-6 w-full h-full divide-x-2 divide-y-2"
+            >
+                <img :src="activeTemplate.preview" class="absolute top-0 left-0 w-full h-full z-10" />
+                <OrganizerCertificateText v-for="text in texts" @selected="openText" :text="text" />
+                <OrganizerCertificateImage v-for="image in images" @selected="openImage" :image="image" />
+                <div v-if="!isPreview" v-for="i in 60" class="bg-transparent z-20"></div>
+            </div>
         </div>
-        <div
-            ref="capture"
-            class="relative grid grid-cols-4 grid-rows-4 md:grid-cols-7 md:grid-rows-5 xl:grid-cols-10 xl:grid-rows-6 w-full h-full divide-x-2 divide-y-2"
-        >
-            <img :src="activeTemplate.preview" class="absolute top-0 left-0 w-full h-full z-10" />
-            <OrganizerCertificateText v-for="text in texts" @selected="openText" :text="text" />
-            <OrganizerCertificateImage v-for="image in images" @selected="openImage" :image="image" />
-            <div v-if="!isPreview" v-for="i in 60" class="bg-transparent z-20"></div>
-        </div>
+        <OrganizerCertificateOverlayText
+            v-if="overlayText"
+            :text="overlayText"
+            @deleted="deleteText"
+            @closed="overlayText = null"
+        />
+        <OrganizerCertificateOverlayImage
+            v-if="overlayImage"
+            :image="overlayImage"
+            @deleted="deleteImage"
+            @closed="overlayImage = null"
+        />
+        <OrganizerCertificateTemplate @applied="handleApplied" />
     </div>
-    <OrganizerCertificateOverlayText
-        v-if="overlayText"
-        :text="overlayText"
-        @deleted="deleteText"
-        @closed="overlayText = null"
-    />
-    <OrganizerCertificateOverlayImage
-        v-if="overlayImage"
-        :image="overlayImage"
-        @deleted="deleteImage"
-        @closed="overlayImage = null"
-    />
-    <OrganizerCertificateTemplate @applied="handleApplied" />
 </template>
 
 <script setup lang="ts">
@@ -113,8 +115,11 @@ if (certificate.value) {
 }
 
 async function downloadCertificate() {
+    pending.value = true;
     toPng(capture.value, { height: window.innerHeight }).then(function (dataUrl) {
+        pending.value = false;
         saveAs(dataUrl, `certificate_${genId()}`);
+        createToast("certificate downloaded", TYPE.SUCCESS);
     });
 }
 

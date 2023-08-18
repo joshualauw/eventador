@@ -1,6 +1,6 @@
 <template>
-    <UILoader v-if="pending" />
     <div>
+        <UILoader v-if="pending" />
         <div class="flex-between gap-3">
             <div class="flex-between space-x-6 lg:space-x-12">
                 <div class="flex space-x-3 text-sm cursor-pointer">
@@ -150,8 +150,8 @@
                 </div>
             </div>
         </div>
+        <ModalReportUser v-if="userDetail" :id="($route.params.id as string)" :label="userDetail?.data.user.username" />
     </div>
-    <ModalReportUser v-if="userDetail" :id="($route.params.id as string)" :label="userDetail?.data.user.username" />
 </template>
 
 <script setup lang="ts">

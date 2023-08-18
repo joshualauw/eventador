@@ -1,9 +1,11 @@
 <template>
-    <p class="mb-4 text-lg font-semibold">Welcome, {{ loggedParticipant?.user_id.username }}</p>
-    <div class="flex">
-        <AttendingStreamScreen @joined="addParticipant" @leave="removeParticipant" :options="options" />
+    <div>
+        <p class="mb-4 text-lg font-semibold">Welcome, {{ loggedParticipant?.user_id.username }}</p>
+        <div class="flex">
+            <AttendingStreamScreen @joined="addParticipant" @leave="removeParticipant" :options="options" />
+        </div>
+        <p class="text-error mt-8 text-sm">*if video are not showing, try to refresh the page</p>
     </div>
-    <p class="text-error mt-8 text-sm">*if video are not showing, try to refresh the page</p>
 </template>
 
 <script setup lang="ts">

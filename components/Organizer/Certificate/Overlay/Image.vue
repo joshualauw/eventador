@@ -1,6 +1,6 @@
 <template>
     <div class="absolute right-2 top-2 max-w-[350px] bg-backgroundPrimary shadow-md rounded-xl p-4 z-30">
-        <img :src="image.preview" class="w-24 h-24 mx-auto rounded-md" />
+        <img :src="image.preview" class="w-1/2 h-24 mx-auto rounded-md bg-gray-100" />
         <button class="btn btn-circle absolute top-4 right-4">
             <Icon name="fa:edit" class="w-4 h-4" />
         </button>

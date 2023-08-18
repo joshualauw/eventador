@@ -79,6 +79,7 @@
                         >
                             U
                         </button>
+                        <input v-model="textState.options.fontColor" type="color" class="btn btn-sm" />
                     </div>
                 </div>
             </div>

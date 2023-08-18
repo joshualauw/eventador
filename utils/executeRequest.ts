@@ -10,14 +10,14 @@ export async function executeRequest<T>(url: string, options: FetchOptions, toas
         const res = await fetcher<T>(url, options);
         data = res;
         //@ts-ignore
-        if (toasted && options.method != "GET") createToast(data.message || "", TYPE.SUCCESS);
+        if (toasted && options.method != "GET" && process.client) createToast(data.message || "", TYPE.SUCCESS);
     } catch (e) {
         const err = errorHandler(e);
         status = false;
         error = err;
         errors = [];
         errors.push(...(err.errors ?? []));
-        if (toasted) createToast(err.message || "", TYPE.ERROR);
+        if (toasted && process.client) createToast(err.message || "", TYPE.ERROR);
     } finally {
         return { status, data, errors, error };
     }
