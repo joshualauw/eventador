@@ -39,11 +39,11 @@ const { unsubscribe } = usePusher();
 
 function logout() {
     const token = useCookie("token");
-    const cachedParticipant = useCookie("loggedParticipant");
+    const eventId = useCookie("eventId");
     unsubscribe(loggedUser.value!._id);
 
     token.value = null;
-    cachedParticipant.value = null;
+    eventId.value = null;
     loggedUser.value = null;
     loggedParticipant.value = null;
 
