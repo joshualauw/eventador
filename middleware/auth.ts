@@ -1,13 +1,6 @@
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware((to, from) => {
     const { loggedUser } = useAuthStore();
     const token = useCookie("token");
-
-    if (token.value && !loggedUser.value) {
-        const res = await fetcher<ILogin.Data>("/auth/myself");
-        if (res.data) {
-            loggedUser.value = res.data;
-        }
-    }
 
     if (!loggedUser.value) {
         return navigateTo("/");

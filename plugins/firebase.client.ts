@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 
-export default defineNuxtPlugin(async (NuxtApp) => {
+export default defineNuxtPlugin((NuxtApp) => {
     const config = useRuntimeConfig();
 
     const firebaseConfig = {

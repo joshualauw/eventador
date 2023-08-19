@@ -1,31 +1,16 @@
 import { TYPE } from "vue-toastification";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    const { loggedParticipant, getAllParticipant } = useParticipantStore();
+    const { loggedParticipant, getParticipantByUser } = useParticipantStore();
     const { loggedUser } = useAuthStore();
-    const cached = useCookie<IParticipant & { user_id: IUser }>("loggedParticipant");
+    const eventId = useCookie<string>("eventId");
+    const event_id = to.params.id as string;
 
-    if (cached.value) {
-        if (cached.value.event_id === to.params.id) {
-            loggedParticipant.value = cached.value;
-        } else {
-            const participants = await getAllParticipant(to.params.id as string);
-            if (participants) {
-                const currentParticipant = participants.data.find((par) => par.user_id._id == loggedUser.value?._id);
-                if (currentParticipant) {
-                    loggedParticipant.value = currentParticipant;
-                    cached.value = currentParticipant;
-                }
-            }
-        }
-    } else {
-        const participants = await getAllParticipant(to.params.id as string);
-        if (participants) {
-            const currentParticipant = participants.data.find((par) => par.user_id._id == loggedUser.value?._id);
-            if (currentParticipant) {
-                loggedParticipant.value = currentParticipant;
-                cached.value = currentParticipant;
-            }
+    if (loggedUser.value && (!loggedParticipant.value || eventId.value != event_id)) {
+        const res = await getParticipantByUser(event_id, loggedUser.value._id);
+        if (res) {
+            loggedParticipant.value = res.data;
+            eventId.value = event_id;
         }
     }
 

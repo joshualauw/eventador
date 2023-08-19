@@ -11,6 +11,13 @@ export default function useItinenaryStore() {
         return res.data;
     }
 
+    async function getParticipantByUser(event_id: string, user_id: string) {
+        const res = await executeRequest<IGetParticipantByUser.Data>(`/participant/${event_id}/${user_id}/detail`, {
+            method: "GET",
+        });
+        return res.data;
+    }
+
     async function inviteParticipant(event_id: string, body: IInviteParticipant.Body) {
         const res = await executeRequest<IInviteParticipant.Data>(`/participant/${event_id}/invite`, {
             method: "POST",
@@ -78,6 +85,7 @@ export default function useItinenaryStore() {
     return {
         getAllParticipant,
         getOneParticipant,
+        getParticipantByUser,
         inviteParticipant,
         applyInvite,
         registerParticipant,

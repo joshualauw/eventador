@@ -6,6 +6,10 @@ namespace IGetOneParticipant {
     export type Data = ApiResponse<IParticipant & { user_id: IUser }>;
 }
 
+namespace IGetParticipantByUser {
+    export type Data = ApiResponse<IParticipant & { user_id: IUser }>;
+}
+
 namespace IInviteParticipant {
     export type Body = {
         link: string;
