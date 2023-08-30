@@ -61,11 +61,4 @@ const { loggedParticipant } = useParticipantStore();
 const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =>
     getEventDetail(route.params.id as string)
 );
-
-function getBadgeColor(type: IParticipantType) {
-    if (type == "owner") return "text-secondary";
-    if (type == "organizer") return "text-secondary";
-    if (type == "invited") return "text-warning";
-    else return "text-primary";
-}
 </script>

@@ -10,7 +10,7 @@
                 </label>
                 <slot />
             </div>
-            <AttendingStreamChatbar class="hidden lg:flex h-screen" />
+            <AttendingStreamChatbar class="hidden lg:flex h-full" />
             <input type="checkbox" id="chatbar" class="drawer-toggle" />
             <label class="overlay" for="chatbar"></label>
             <div class="drawer drawer-right max-w-[20rem]">

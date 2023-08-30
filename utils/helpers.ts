@@ -70,6 +70,13 @@ export function getTypeColor(type: string) {
     else return "text-secondary";
 }
 
+export function getBadgeColor(type: IParticipantType) {
+    if (type == "owner") return "text-secondary";
+    if (type == "organizer") return "text-secondary";
+    if (type == "invited") return "text-warning";
+    else return "text-primary";
+}
+
 export function exclude<T, Key extends keyof T>(obj: T, keys: Key[]): Omit<T, Key> {
     const newObj = { ...obj };
     for (const key of keys) {

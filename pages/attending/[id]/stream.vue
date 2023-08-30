@@ -79,6 +79,6 @@ async function removeParticipant(role: "host" | "audience") {
             }),
         });
     }
-    navigateTo({ path: `/attending/${route.params.id}`, replace: true });
+    navigateTo({ path: `/attending/${route.params.id}/prestream`, replace: true });
 }
 </script>

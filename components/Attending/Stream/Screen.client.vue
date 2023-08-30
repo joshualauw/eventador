@@ -13,50 +13,42 @@
         <div class="mt-8 w-full flex-between">
             <div class="space-x-3">
                 <button
+                    v-for="btn in toogleButtons"
                     v-if="options.role == 'host'"
-                    @click="toogleMic"
+                    @click="btn.callback"
                     class="btn btn-circle w-12 h-12 p-2"
-                    :class="localAudioTrack?.muted ? 'btn-solid-error' : 'btn-solid-secondary'"
+                    :class="btn.state ? 'btn-solid-error' : 'btn-solid-secondary'"
                 >
-                    <Icon
-                        :name="
-                            localAudioTrack?.muted ? 'material-symbols:mic-off-rounded' : 'material-symbols:mic-rounded'
-                        "
-                        class="w-6 h-6"
-                    />
-                </button>
-                <button
-                    v-if="options.role == 'host'"
-                    @click="toogleCamera"
-                    class="btn btn-circle w-12 h-12 p-2"
-                    :class="localVideoTrack?.muted ? 'btn-solid-error' : 'btn-solid-secondary'"
-                >
-                    <Icon
-                        :name="
-                            localVideoTrack?.muted
-                                ? 'material-symbols:video-camera-front-off'
-                                : 'material-symbols:video-camera-front'
-                        "
-                        class="w-6 h-6"
-                    />
-                </button>
-                <button
-                    v-if="options.role == 'host'"
-                    @click="toogleScreen"
-                    class="btn btn-circle w-12 h-12 p-2"
-                    :class="shareScreen ? 'btn-solid-error' : 'btn-solid-secondary'"
-                >
-                    <Icon :name="shareScreen ? 'mdi:monitor-off' : 'mdi:monitor-share'" class="w-6 h-6" />
+                    <Icon :name="btn.state ? btn.iconOff : btn.iconOn" class="w-6 h-6" />
                 </button>
                 <label for="leave-stream-modal" class="btn btn-circle btn-solid-error w-12 h-12 p-2">
                     <Icon name="material-symbols:call-end" class="w-6 h-6" />
                 </label>
             </div>
-            <div>
+            <label for="participant-stream-modal" class="cursor-pointer">
                 <Icon name="material-symbols:person" class="w-6 h-6" />
                 <span>{{ stream?.participants.length }} participant(s)</span>
-            </div>
+            </label>
         </div>
+        <UIModal modal-id="participant-stream-modal">
+            <div>
+                <h2 class="text-lg font-semibold mb-4">All Participants</h2>
+                <div class="grid grid-cols-1 gap-3 w-full">
+                    <div v-for="par in stream?.participants" class="card hover:scale-100 shadow-none">
+                        <div class="flex flex-row gap-4 p-4 card-body rounded-md bg-backgroundSecondary">
+                            <div class="avatar avatar-ring avatar-md">
+                                <img :src="par.user_id.profile ?? '/images/default-user.png'" alt="avatar" />
+                            </div>
+                            <div class="flex flex-col text-sm lg:text-base">
+                                <span>{{ par.user_id.username }}</span>
+                                <p class="text-sm text-success mb-1.5" v-if="par.role">As {{ par.role }}</p>
+                                <span class="text-xs lg:text-sm" :class="getBadgeColor(par.type)">{{ par.type }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </UIModal>
         <AttendingModalStreamLeave
             @leave="leaveStream"
             :host_label="options.role == 'host' ? 'End stream now? all participants will automatically kicked out' : ''"
@@ -84,6 +76,26 @@ const localScreenTrack = ref<ILocalVideoTrack>(); //for share screen
 
 const remoteUid = ref("");
 const shareScreen = ref(false);
+const toogleButtons = computed(() => [
+    {
+        state: localAudioTrack.value?.muted,
+        iconOn: "material-symbols:mic-rounded",
+        iconOff: "material-symbols:mic-off-rounded",
+        callback: () => toogleMic(),
+    },
+    {
+        state: localVideoTrack.value?.muted,
+        iconOn: "material-symbols:video-camera-front",
+        iconOff: "material-symbols:video-camera-front-off",
+        callback: () => toogleCamera(),
+    },
+    {
+        state: shareScreen.value,
+        iconOn: "mdi:monitor-share",
+        iconOff: "mdi:monitor-off",
+        callback: () => toogleScreen(),
+    },
+]);
 
 const agoraEngine = AgoraRTC.createClient({ mode: "live", codec: "vp9" });
 
