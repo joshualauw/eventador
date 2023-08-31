@@ -22,6 +22,9 @@ const props = defineProps<{
 const leafletMap = ref();
 let map: Map;
 let marker: Marker;
+const markerIcon = leaflet.icon({
+    iconUrl: "/images/marker.png",
+});
 
 watch(
     () => [props.latitude, props.longitude],
@@ -47,7 +50,7 @@ function plotMap() {
         .addTo(map);
 
     if (marker) marker.remove();
-    marker = leaflet.marker([props.latitude, props.longitude]).addTo(map);
+    marker = leaflet.marker([props.latitude, props.longitude], { icon: markerIcon }).addTo(map);
     map.setView([props.latitude, props.longitude], 13);
 }
 </script>
