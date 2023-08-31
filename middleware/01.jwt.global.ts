@@ -1,4 +1,4 @@
-export default defineNuxtPlugin(async () => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
     const { loggedUser } = useAuthStore();
     const token = useCookie("token");
 
