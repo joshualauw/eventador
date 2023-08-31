@@ -25,9 +25,9 @@
                     <Icon name="material-symbols:call-end" class="w-6 h-6" />
                 </label>
             </div>
-            <label for="participant-stream-modal" class="cursor-pointer">
+            <label for="participant-stream-modal" class="cursor-pointer btn">
                 <Icon name="material-symbols:person" class="w-6 h-6" />
-                <span>{{ stream?.participants.length }} participant(s)</span>
+                <span class="ml-1.5">{{ stream?.participants.length }}</span>
             </label>
         </div>
         <UIModal modal-id="participant-stream-modal">

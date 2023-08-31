@@ -2,7 +2,7 @@
     <div>
         <UILoader v-if="pending" />
         <div class="flex-between gap-3">
-            <div class="flex-between space-x-6 lg:space-x-12">
+            <div class="flex-between w-full mb-4 lg:mb-0 lg:space-x-12">
                 <div class="flex space-x-3 text-sm cursor-pointer">
                     <div class="avatar avatar-md lg:avatar-lg avatar-ring">
                         <img :src="userDetail?.data.user.profile || '/images/default-user.png'" alt="avatar" />
@@ -29,32 +29,53 @@
                         <label for="report-user-modal" class="dropdown-item text-sm">Report</label>
                     </div>
                 </div>
+                <div v-if="loggedUser" class="hidden md:block">
+                    <button
+                        v-if="userDetail?.data.user._id !== loggedUser._id"
+                        @click="doFollowUser"
+                        class="btn btn-sm w-full lg:w-fit lg:btn-md"
+                        :class="userDetail?.data.user.is_followed ? 'btn-error' : 'btn-primary'"
+                    >
+                        <Icon
+                            :name="
+                                userDetail?.data.user.is_followed
+                                    ? 'material-symbols:person-remove'
+                                    : 'material-symbols:person-add'
+                            "
+                            class="w-5 h-5 mr-2"
+                        />
+                        {{ userDetail?.data.user.is_followed ? "Unfollow" : "Follow" }}
+                    </button>
+                    <button
+                        v-else
+                        @click="navigateTo('/settings')"
+                        class="btn btn-sm w-full lg:w-fit lg:btn-md btn-primary"
+                    >
+                        <Icon name="material-symbols:settings" class="w-5 h-5 mr-2" /> Settings
+                    </button>
+                </div>
             </div>
-            <div v-if="loggedUser">
-                <button
-                    v-if="userDetail?.data.user._id !== loggedUser._id"
-                    @click="doFollowUser"
-                    class="btn btn-sm w-full lg:w-fit lg:btn-md"
-                    :class="userDetail?.data.user.is_followed ? 'btn-error' : 'btn-primary'"
-                >
-                    <Icon
-                        :name="
-                            userDetail?.data.user.is_followed
-                                ? 'material-symbols:person-remove'
-                                : 'material-symbols:person-add'
-                        "
-                        class="w-5 h-5 mr-2"
-                    />
-                    {{ userDetail?.data.user.is_followed ? "Unfollow" : "Follow" }}
-                </button>
-                <button
-                    v-else
-                    @click="navigateTo('/settings')"
-                    class="btn btn-sm w-full lg:w-fit lg:btn-md btn-primary"
-                >
-                    <Icon name="material-symbols:settings" class="w-5 h-5 mr-2" /> Settings
-                </button>
-            </div>
+        </div>
+        <div v-if="loggedUser" class="block md:hidden">
+            <button
+                v-if="userDetail?.data.user._id !== loggedUser._id"
+                @click="doFollowUser"
+                class="btn btn-sm w-full lg:w-fit lg:btn-md"
+                :class="userDetail?.data.user.is_followed ? 'btn-error' : 'btn-primary'"
+            >
+                <Icon
+                    :name="
+                        userDetail?.data.user.is_followed
+                            ? 'material-symbols:person-remove'
+                            : 'material-symbols:person-add'
+                    "
+                    class="w-5 h-5 mr-2"
+                />
+                {{ userDetail?.data.user.is_followed ? "Unfollow" : "Follow" }}
+            </button>
+            <button v-else @click="navigateTo('/settings')" class="btn btn-sm w-full lg:w-fit lg:btn-md btn-primary">
+                <Icon name="material-symbols:settings" class="w-5 h-5 mr-2" /> Settings
+            </button>
         </div>
         <div class="card hover:scale-100 mt-8">
             <div class="card-body p-6">

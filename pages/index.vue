@@ -3,9 +3,10 @@
         <div class="w-full lg:w-2/3 lg:mr-16">
             <div class="flex-between">
                 <div class="flex-center space-x-4">
-                    <h2 class="text-xl font-semibold">All Posts</h2>
+                    <h2 class="md:text-xl text-lg font-semibold">All Posts</h2>
                     <label @click="handleCreating" for="edit-post-modal" class="btn btn-sm md:btn-md btn-primary">
-                        Create <Icon name="material-symbols:add" class="w-5 h-5 ml-1" />
+                        <span class="hidden sm:inline mr-2">Create</span>
+                        <Icon name="material-symbols:add" class="w-5 h-5" />
                     </label>
                 </div>
                 <select v-model="sortBy" class="select select-sm md:select-md w-36">

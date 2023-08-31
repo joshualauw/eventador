@@ -26,7 +26,7 @@
             </div>
             <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-4" />
             <div class="divider my-4"></div>
-            <div class="my-4 flex-between">
+            <div class="my-8 flex-between">
                 <p class="text-lg">Discussions</p>
                 <div class="flex items-center space-x-3">
                     <select v-model="discussionQuery.type" class="select w-32">
@@ -35,15 +35,17 @@
                         <option value="organizer">Organizer</option>
                         <option value="reguler">Reguler</option>
                     </select>
-                    <span>
-                        <input v-model="discussionQuery.yours" type="checkbox" class="switch switch-primary mr-2" />
+                    <div class="flex-between">
+                        <input
+                            v-model="discussionQuery.yours"
+                            type="checkbox"
+                            class="switch switch-primary switch-sm md:switch-md mr-1.5"
+                        />
                         <span>Yours</span>
-                    </span>
+                    </div>
                 </div>
             </div>
-            <p v-if="discusssions?.data.length == 0" class="mt-8 text-center text-lg font-semibold">
-                -no discussions here-
-            </p>
+            <p v-if="discusssions?.data.length == 0" class="text-center text-lg font-semibold">-no discussions here-</p>
             <AttendingDiscussionItem
                 v-for="disc in discusssions?.data"
                 @editing="handleUpdating"

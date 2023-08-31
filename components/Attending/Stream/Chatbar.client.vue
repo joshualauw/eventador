@@ -4,24 +4,19 @@
             <Icon name="material-symbols:android-messages" class="mr-2 w-6 h-6" />
             <span class="mr-4">Live Chat</span>
         </h1>
-        <div class="mt-8 h-[615px] px-4 space-y-3 overflow-y-auto">
-            <div v-for="chat in stream?.chats">
-                <p v-if="chat.type == 'bot'" class="badge badge-sm">{{ chat.content }}</p>
+        <div class="mt-8 h-[550px] px-4 space-y-4 overflow-y-auto">
+            <div v-for="chat in stream?.chats" class="bg-blue-4 p-1.5 pr-5 rounded-xl w-fit">
+                <p v-if="chat.type == 'bot'" class="badge badge-sm badge-flat-primary">{{ chat.content }}</p>
                 <div v-else class="p-1">
                     <p class="text-white font-semibold">{{ chat.username }}</p>
                     <p class="text-sm text-gray-300">{{ chat.content }}</p>
                 </div>
             </div>
         </div>
-        <div class="flex-center space-x-2 px-4 mt-8">
-            <input
-                v-model="newMessage"
-                @keypress.enter="sendMessage"
-                type="text"
-                class="input"
-                placeholder="send a message.."
-            />
-            <button @click="sendMessage" :disabled="!newMessage" class="btn btn-primary">
+        <div class="divider my-6"></div>
+        <div class="flex-center space-x-2 px-4">
+            <input ref="sender" v-model="newMessage" type="text" class="input" placeholder="send a message.." />
+            <button @click="sendMessage" :disabled="!newMessage" class="btn btn-sm btn-primary">
                 <Icon name="material-symbols:send" class="w-5 h-5" />
             </button>
         </div>
@@ -35,6 +30,7 @@ const route = useRoute();
 const { loggedParticipant } = useParticipantStore();
 const { stream, subscribe } = useStreamStore();
 const newMessage = ref("");
+const sender = ref();
 
 onMounted(() => subscribe(route.params.id as string));
 
@@ -49,6 +45,7 @@ async function sendMessage() {
         }),
     });
     newMessage.value = "";
+    sender.value.focus();
 }
 </script>
 

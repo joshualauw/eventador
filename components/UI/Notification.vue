@@ -1,15 +1,13 @@
 <template>
-    <div class="alert p-4 flex-between" :class="alertType">
-        <div class="flex-center space-x-3">
+    <div class="alert flex-col items-start p-4" :class="alertType">
+        <div class="flex-center space-x-2">
             <Icon :name="notifyIcon" class="w-6 h-6" :class="notifyColor" />
-            <span class="text-xs md:text-sm">
-                {{ message }}
-            </span>
+            <p class="text-sm">{{ message }}</p>
         </div>
-        <span class="text-content2">{{ dayjs(time).format("DD-MM-YY HH:mm") }}</span>
-        <div v-if="callbackUrl" class="flex flex-col lg:flex-row gap-2">
-            <button @click="toUrl" class="btn btn-sm btn-solid-primary">view</button>
-        </div>
+        <p class="text-content2 text-sm">
+            received at: <span class="font-semibold">{{ dayjs(time).format("DD MMM YY, HH:mm") }}</span>
+        </p>
+        <button v-if="callbackUrl" @click="toUrl" class="btn btn-sm btn-solid-primary w-full">view</button>
     </div>
 </template>
 

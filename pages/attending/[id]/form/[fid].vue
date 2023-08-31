@@ -22,8 +22,8 @@
                     :options="field.options"
                     class="mb-12"
                 />
-                <div class="w-full flex-between">
-                    <p class="text-mute">*make sure your all questions is answered</p>
+                <div class="w-full flex-between mb-6 md:mb-0">
+                    <p class="text-mute">*make sure all fields is answered</p>
                     <label for="submit-response-modal" class="w-fit btn btn-success">Submit</label>
                 </div>
             </div>

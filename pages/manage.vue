@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex-between mb-8">
-            <h2 class="font-bold text-xl">
+            <h2 class="font-bold text-lg md:text-xl">
                 Managed Events <span v-if="!loggedUser?.is_premium">({{ events?.data.events_count }}/{{ 3 }})</span>
             </h2>
             <label for="create-event-modal" class="btn btn-primary">+ Create Event</label>

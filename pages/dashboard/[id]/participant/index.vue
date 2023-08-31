@@ -7,8 +7,7 @@
             </label>
         </div>
         <div class="flex flex-center flex-col md:flex-row gap-3 mb-8">
-            <Icon name="fa:search" />
-            <input v-model="searchTerm" type="text" class="input max-w-full md:w-56" placeholder="participant name.." />
+            <input v-model="searchTerm" type="text" class="input max-w-full md:w-56" placeholder="Search by name.." />
             <select v-model="typeTerm" class="select w-full md:w-36">
                 <option value="">All</option>
                 <option value="reguler">Reguler</option>
@@ -17,17 +16,19 @@
                 <option value="owner">Owner</option>
             </select>
         </div>
-        <OrganizerParticipantList
-            :participants="
-                filteredParticipants.map((par) => ({
-                    id: par._id,
-                    email: par.user_id.email,
-                    name: par.user_id.username,
-                    joinedAt: par.joinedDate,
-                    type: par.type,
-                }))
-            "
-        />
+        <div class="w-full overflow-x-auto">
+            <OrganizerParticipantList
+                :participants="
+                    filteredParticipants.map((par) => ({
+                        id: par._id,
+                        email: par.user_id.email,
+                        name: par.user_id.username,
+                        joinedAt: par.joinedDate,
+                        type: par.type,
+                    }))
+                "
+            />
+        </div>
         <OrganizerModalParticipantInvite />
     </div>
 </template>

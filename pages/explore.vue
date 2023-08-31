@@ -1,17 +1,17 @@
 <template>
     <div class="w-full">
         <div class="flex-between mb-8">
-            <h2 class="font-bold text-xl">Explore Events</h2>
+            <h2 class="font-bold md:text-xl text-lg">Explore Events</h2>
             <div class="flex-center space-x-5">
-                <span v-if="loggedUser">
+                <div v-if="loggedUser" class="flex-center">
                     <input
                         @change="() => refresh()"
                         v-model="query.wishlist"
                         type="checkbox"
-                        class="checkbox-primary checkbox-solid checkbox mr-1"
+                        class="checkbox-primary checkbox-solid checkbox checkbox-sm md:checkbox-md mr-1.5"
                     />
-                    Wishlist
-                </span>
+                    <span class="text-sm md:text-base">Wishlisted</span>
+                </div>
                 <ExploreFilter @filtered="refresh" />
             </div>
         </div>

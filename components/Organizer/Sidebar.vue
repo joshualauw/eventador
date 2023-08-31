@@ -34,7 +34,7 @@
                     </section>
                 </nav>
             </section>
-            <section class="sidebar-footer h-full justify-end pt-2">
+            <section class="sidebar-footer h-full justify-end pb-12 md:pb-2">
                 <div class="divider my-0"></div>
                 <div class="dropdown z-50 flex h-fit w-full cursor-pointer">
                     <label class="mx-2 flex h-fit w-full cursor-pointer p-0" tabindex="0">

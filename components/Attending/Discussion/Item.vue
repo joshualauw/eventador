@@ -1,6 +1,9 @@
 <template>
     <div class="card hover:scale-100 mb-8">
-        <div class="card-body relative flex-row space-x-3">
+        <div
+            class="card-body relative flex-row space-x-3 rounded-md"
+            :class="{ 'border-2 border-border': is_announcement }"
+        >
             <Icon
                 v-if="is_announcement"
                 name="mdi:exclamation-thick"
@@ -13,30 +16,29 @@
             </div>
             <div class="w-full">
                 <div class="w-full flex-between">
-                    <p class="font-semibold flex-center">
+                    <p class="font-semibold flex-center space-x-3">
                         <span>{{ username }} </span>
-                        <span class="badge ml-2" :class="badgeColor">{{ type }}</span>
+                        <span class="badge" :class="badgeColor">{{ type }}</span>
                     </p>
-                    <div v-if="isEditable" class="flex space-x-3">
-                        <label
-                            for="edit-discussion-modal"
-                            @click="emits('editing', id)"
-                            class="btn btn-xs btn-solid-warning"
-                        >
-                            Edit
-                        </label>
-                        <label
-                            for="delete-discussion-modal"
-                            @click="emits('deleting', id, 'this discussion')"
-                            class="btn btn-xs btn-solid-error"
-                        >
-                            Delete
-                        </label>
-                        <p class="text-mute">{{ dayjs(createdAt).format("DD-MM-YY") }}</p>
-                    </div>
                 </div>
-                <p class="text-sm text-success font-semibold mb-2" v-if="role">As {{ role }}</p>
-                <p class="text-content2 text-sm">{{ content }}</p>
+                <p class="text-sm text-success font-semibold" v-if="role">As {{ role }}</p>
+                <p class="text-content2 text-sm mt-1.5">{{ content }}</p>
+                <div v-if="isEditable" class="flex mt-6 space-x-3">
+                    <label
+                        for="edit-discussion-modal"
+                        @click="emits('editing', id)"
+                        class="btn btn-xs btn-solid-warning"
+                    >
+                        Edit
+                    </label>
+                    <label
+                        for="delete-discussion-modal"
+                        @click="emits('deleting', id, 'this discussion')"
+                        class="btn btn-xs btn-solid-error"
+                    >
+                        Delete
+                    </label>
+                </div>
             </div>
         </div>
     </div>

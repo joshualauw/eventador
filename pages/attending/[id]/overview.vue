@@ -5,29 +5,31 @@
                 <img
                     :src="eventDetail?.data.event.banner ?? '/images/default-post.png'"
                     alt=""
-                    class="w-full h-[350px]"
+                    class="w-full h-[225px] md:h-[350px]"
                 />
                 <div class="card-body space-y-4">
                     <h2 class="card-header">{{ eventDetail?.data.event.name }}</h2>
                     <p v-html="eventDetail?.data.event.overview" class="text-content2"></p>
                     <div class="card-footer flex-col items-start w-full">
                         <p class="card-header mb-4">Participants</p>
-                        <div class="grid grid-cols-2 gap-4 w-full">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                             <div
                                 v-for="par in eventDetail?.data.eventParticipants"
                                 @click="navigateTo(`/profile/${par.user_id._id}`)"
                                 class="card hover:scale-100 cursor-pointer shadow-none"
                             >
-                                <div class="flex flex-row gap-4 p-4 card-body bg-backgroundPrimary">
+                                <div class="flex flex-row gap-4 p-4 card-body h-full bg-backgroundPrimary">
                                     <div class="avatar avatar-ring avatar-md">
                                         <img :src="par.user_id.profile ?? '/images/default-user.png'" alt="avatar" />
                                     </div>
-                                    <div class="flex flex-col text-sm lg:text-base">
-                                        <span>{{ par.user_id.username }}</span>
-                                        <p class="text-sm text-success mb-1.5" v-if="par.role">As {{ par.role }}</p>
-                                        <span class="text-xs lg:text-sm" :class="getBadgeColor(par.type)">{{
-                                            par.type
-                                        }}</span>
+                                    <div class="flex flex-col">
+                                        <p>
+                                            {{ par.user_id.username }}
+                                            <span class="text-success text-sm ml-1.5" v-if="par.role">
+                                                as {{ par.role }}
+                                            </span>
+                                        </p>
+                                        <p class="text-sm" :class="getBadgeColor(par.type)">{{ par.type }}</p>
                                     </div>
                                 </div>
                             </div>
