@@ -4,10 +4,16 @@
         <div @click="$router.go(-1)" class="btn btn-ghost w-fit mb-8">
             <Icon name="material-symbols:arrow-back" class="w-5 h-5 mr-1" /> Back
         </div>
+        <div v-if="participant" class="flex-center justify-center w-full mb-6">
+            <img
+                :src="participant?.data.user_id.profile ?? '/images/default-user.png'"
+                class="rounded-full w-40 h-40 bg-border p-2 block lg:hidden aspect-square"
+            />
+        </div>
         <div v-if="participant" class="flex w-full space-x-8 md:space-x-12 lg:space-x-16">
             <img
                 :src="participant.data.user_id.profile ?? '/images/default-user.png'"
-                class="rounded-full w-24 h-24 md:h-48 md:w-48 bg-border p-2 aspect-square"
+                class="rounded-full h-48 w-48 bg-border p-2 hidden lg:block aspect-square"
             />
             <div class="w-full text-sm md:text-base">
                 <div class="form-group">
@@ -21,7 +27,13 @@
                     </div>
                     <div class="grid grid-cols-3">
                         <div class="col-span-1">Email</div>
-                        <div class="col-span-2">{{ participant.data.user_id.email }}</div>
+                        <div class="col-span-2">
+                            {{
+                                userIsPremium(participant.data.type)
+                                    ? emailCensor(participant.data.user_id.email)
+                                    : participant.data.user_id.email
+                            }}
+                        </div>
                     </div>
                     <div class="grid grid-cols-3">
                         <div class="col-span-1">Joined At</div>
@@ -44,16 +56,14 @@
                         class="grid grid-cols-3"
                     >
                         <div class="col-span-1">Role</div>
-                        <div class="col-span-2">
+                        <div class="col-span-2 flex-center space-x-2">
                             <input
                                 v-model="role"
                                 type="text"
-                                class="input input-sm w-full md:w-44 mr-0 md:mr-2"
+                                class="input input-sm max-w-[12rem] w-fit"
                                 placeholder="custom role.."
                             />
-                            <button @click="doApplyRole" class="btn btn-primary btn-sm w-full md:w-fit mt-3 md:mt-0">
-                                Save
-                            </button>
+                            <button @click="doApplyRole" class="btn btn-primary btn-sm">Save</button>
                         </div>
                     </div>
                 </div>
@@ -61,9 +71,9 @@
         </div>
         <div
             v-if="participant?.data.type == 'reguler' || participant?.data.type == 'invited'"
-            class="flex flex-center space-x-4 mt-8"
+            class="flex flex-col md:flex-row flex-center gap-4 mt-8"
         >
-            <button class="btn btn-sm md:btn-md btn-success relative w-full md:w-fit">
+            <button class="btn btn-sm md:btn-md btn-solid-success relative w-full md:w-fit">
                 <input
                     @change="handleFileChange"
                     type="file"
@@ -113,6 +123,7 @@ definePageMeta({
 });
 
 const route = useRoute();
+const { loggedUser } = useAuthStore();
 const { getOneParticipant, applyRole, emailCertificate } = useParticipantStore();
 const { mutate: roleMutate, pending, error, errors } = useMutate(applyRole);
 const { mutate: emailMutate } = useMutate(emailCertificate);
@@ -143,5 +154,9 @@ function handleFileChange(event: any) {
     } else {
         createToast("File should be an image!", TYPE.ERROR);
     }
+}
+
+function userIsPremium(type: IParticipantType) {
+    return type != "organizer" && type != "owner" && !loggedUser?.value?.is_premium;
 }
 </script>

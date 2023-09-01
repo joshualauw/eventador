@@ -70,7 +70,7 @@
         @apply text-sm text-content2
     }
     .web-container {
-      @apply px-8 xl:px-24 pt-28 pb-8 xl:pb-16 xl:pt-36
+      @apply px-6 xl:px-24 pt-28 pb-8 xl:pb-16 xl:pt-36
     }
  
 }

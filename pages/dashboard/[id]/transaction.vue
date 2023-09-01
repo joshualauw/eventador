@@ -1,8 +1,8 @@
 <template>
-    <div class="w-full">
+    <div>
         <div class="flex-between mb-8 gap-4">
             <div class="flex-center space-x-2">
-                <h1 class="font-semibold text-lg w-64">All Transactions</h1>
+                <h1 class="font-semibold text-lg">All Transactions</h1>
             </div>
             <div class="flex-center space-x-3">
                 <select v-model="status" class="select w-28">

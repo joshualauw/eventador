@@ -7,18 +7,18 @@
                     <div class="avatar avatar-md lg:avatar-lg avatar-ring">
                         <img :src="userDetail?.data.user.profile || '/images/default-user.png'" alt="avatar" />
                     </div>
-                    <div class="">
+                    <div>
                         <p class="font-bold lg:text-lg">{{ userDetail?.data.user.username }}</p>
-                        <p class="lg:text-content2">{{ userDetail?.data.user.email }}</p>
+                        <p class="text-xs md:text-sm lg:text-base text-content2">{{ userDetail?.data.user.email }}</p>
                     </div>
                 </div>
-                <span class="font-semibold hidden lg:inline text-lg">
+                <span class="font-semibold hidden xl:inline lg:text-lg">
                     {{ userDetail?.data.userEvents.length }} Events
                 </span>
-                <span class="font-semibold hidden lg:inline text-lg">
+                <span class="font-semibold hidden xl:inline lg:text-lg">
                     {{ userDetail?.data.user.followers.length }} Followers
                 </span>
-                <span class="font-semibold hidden lg:inline text-lg">
+                <span class="font-semibold hidden xl:inline lg:text-lg">
                     {{ userDetail?.data.user.followings.length }} Followings
                 </span>
                 <div class="dropdown">
@@ -79,7 +79,7 @@
         </div>
         <div class="card hover:scale-100 mt-8">
             <div class="card-body p-6">
-                <div class="tabs">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     <div
                         v-for="(tab, i) in tabs"
                         @click="activeTab = i"

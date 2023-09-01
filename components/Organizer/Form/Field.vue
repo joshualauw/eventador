@@ -17,7 +17,7 @@
             <template v-if="isOptionsField">
                 <label class="form-label">Options:</label>
                 <ul>
-                    <li v-for="(option, i) in options" :key="i" class="space-x-2 mb-2">
+                    <li v-for="(option, i) in options" :key="i" class="space-x-2 flex-center mb-2">
                         <input v-model="option.name" @input="emitUpdate" class="input" placeholder="option name.." />
                         <button type="button" @click="deleteOption(i)" class="btn btn-sm btn-error">
                             <Icon name="fa:trash" />

@@ -7,12 +7,16 @@
         </div>
         <div class="w-full">
             <div class="flex-between w-full">
-                <div class="cursor-pointer">
+                <div @click="navigateTo(`/profile/${author.id}`)" class="cursor-pointer flex-center">
                     <div class="md:hidden avatar avatar-sm mr-2">
                         <img :src="author.avatar ?? '/images/default-user.png'" alt="avatar" />
                     </div>
-                    <span class="font-semibold">{{ author.name }} -</span>
-                    <span class="text-mute ml-2 text-xs">{{ dayjs(createdAt).format("DD/MM/YY - HH:mm") }}</span>
+                    <div>
+                        <p class="font-semibold text-sm md:text-base">{{ author.name }}</p>
+                        <p class="text-xs md:text-sm text-content2">
+                            posted at {{ dayjs(createdAt).format("DD/MM/YY, HH:mm") }}
+                        </p>
+                    </div>
                 </div>
                 <div>
                     <div v-if="!hideEdit" class="dropdown">
@@ -30,8 +34,9 @@
                                 for="edit-post-modal"
                                 @click="emits('editing', id)"
                                 class="dropdown-item text-sm text-warning"
-                                >Edit</label
                             >
+                                Edit
+                            </label>
                             <label
                                 for="delete-post-modal"
                                 @click="emits('deleting', id, 'this post')"

@@ -1,7 +1,7 @@
 <template>
     <NuxtLayout name="default">
         <div>
-            <Navbar class="px-8 xl:px-24" />
+            <Navbar class="px-6 xl:px-24" />
             <input type="checkbox" id="drawer-left" class="drawer-toggle" />
             <label class="overlay" for="drawer-left"></label>
             <div class="drawer max-w-[288px]">

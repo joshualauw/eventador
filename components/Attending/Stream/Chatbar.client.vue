@@ -4,7 +4,7 @@
             <Icon name="material-symbols:android-messages" class="mr-2 w-6 h-6" />
             <span class="mr-4">Live Chat</span>
         </h1>
-        <div class="mt-8 h-full px-4 space-y-4 overflow-y-auto">
+        <div class="mt-8 h-[400px] md:h-full px-4 space-y-4 overflow-y-auto">
             <div v-for="chat in stream?.chats" class="w-fit">
                 <p v-if="chat.type == 'bot'" class="badge badge-sm badge-flat-primary">{{ chat.content }}</p>
                 <div v-else class="p-1">

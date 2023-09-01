@@ -5,7 +5,7 @@
                 <img :src="profile || '/images/default-user.png'" alt="avatar" />
             </div>
             <div>
-                <p class="font-semibold text-lg mb-1">{{ name }}</p>
+                <p class="font-semibold mb-1">{{ name }}</p>
                 <p class="text-content2 text-sm">{{ followers_count }} followers</p>
                 <p class="text-content2 text-sm">{{ events_count }} events created</p>
             </div>

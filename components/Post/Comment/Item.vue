@@ -7,9 +7,13 @@
         </div>
         <div class="space-y-3 w-full">
             <div class="w-full flex-between">
-                <p class="font-semibold">{{ commenter.name }}</p>
+                <div>
+                    <p class="font-semibold text-sm md:text-base">{{ commenter.name }}</p>
+                    <p class="text-xs md:text-sm text-content2">
+                        commented at {{ dayjs(createdAt).format("DD/MM/YY, HH:mm") }}
+                    </p>
+                </div>
                 <div class="flex-center space-x-2">
-                    <p class="text-mute">{{ dayjs(createdAt).format("DD/MM/YY - HH:mm") }}</p>
                     <div v-if="commenter.id == loggedUser?._id && !hide_edit" class="dropdown">
                         <label class="btn btn-circle btn-ghost" tabindex="0"><Icon name="mdi:pencil" /></label>
                         <div class="dropdown-menu mt-1 w-20 border dropdown-menu-bottom-left">
@@ -30,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <p class="text-content2 text-sm">
+            <p class="text-sm md:text-base">
                 {{ content }}
             </p>
             <div @click="doLikeComment" class="flex-center space-x-3">

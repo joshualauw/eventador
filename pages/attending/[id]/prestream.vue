@@ -2,9 +2,7 @@
     <div class="flex-box flex-col h-[500px] bg-backgroundSecondary shadow-md">
         <h2 v-if="!stream" class="text-center text-lg font-semibold text-content1 mb-5">Stream haven't started yet</h2>
         <div v-if="loggedParticipant?.type == 'owner'">
-            <button @click="navigateTo(`/attending/${$route.params.id}/stream`)" class="btn btn-primary w-full">
-                Host Stream
-            </button>
+            <button @click="startStream" class="btn btn-primary w-full">Host Stream</button>
         </div>
         <div v-if="stream && loggedParticipant?.type != 'owner'" class="space-y-5">
             <h2 class="text-center text-xl font-semibold text-content1">Join Stream?</h2>
@@ -17,9 +15,7 @@
                 </div>
             </div>
             <p class="text-content2 text-center">{{ stream.participants.length }} people have joined</p>
-            <button @click="navigateTo(`/attending/${$route.params.id}/stream`)" class="btn btn-primary w-full">
-                Join Now
-            </button>
+            <button @click="startStream" class="btn btn-primary w-full">Join Now</button>
         </div>
     </div>
 </template>
@@ -35,4 +31,8 @@ const { stream, subscribe } = useStreamStore();
 const { loggedParticipant } = useParticipantStore();
 
 onMounted(() => subscribe(route.params.id as string));
+
+function startStream() {
+    navigateTo(`/attending/${route.params.id}/stream`);
+}
 </script>
