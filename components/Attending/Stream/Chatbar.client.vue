@@ -1,11 +1,11 @@
 <template>
-    <aside class="w-full max-w-[20rem] bg-blue-3 p-2 flex flex-col">
+    <aside class="w-full max-w-[22rem] bg-blue-3 p-2 flex flex-col">
         <h1 class="text-lg text-white font-bold flex-center justify-center">
             <Icon name="material-symbols:android-messages" class="mr-2 w-6 h-6" />
             <span class="mr-4">Live Chat</span>
         </h1>
-        <div class="mt-8 h-[550px] px-4 space-y-4 overflow-y-auto">
-            <div v-for="chat in stream?.chats" class="bg-blue-4 p-1.5 pr-5 rounded-xl w-fit">
+        <div class="mt-8 h-full px-4 space-y-4 overflow-y-auto">
+            <div v-for="chat in stream?.chats" class="w-fit">
                 <p v-if="chat.type == 'bot'" class="badge badge-sm badge-flat-primary">{{ chat.content }}</p>
                 <div v-else class="p-1">
                     <p class="text-white font-semibold">{{ chat.username }}</p>
@@ -13,8 +13,8 @@
                 </div>
             </div>
         </div>
-        <div class="divider my-6"></div>
-        <div class="flex-center space-x-2 px-4">
+        <div class="divider mt-12"></div>
+        <div class="flex-center space-x-2 px-4 mb-8 mt-4">
             <input ref="sender" v-model="newMessage" type="text" class="input" placeholder="send a message.." />
             <button @click="sendMessage" :disabled="!newMessage" class="btn btn-sm btn-primary">
                 <Icon name="material-symbols:send" class="w-5 h-5" />

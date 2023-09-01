@@ -100,7 +100,7 @@ const toogleButtons = computed(() => [
 const agoraEngine = AgoraRTC.createClient({ mode: "live", codec: "vp9" });
 
 watch(stream, async (val) => {
-    //force leave if host is leaving
+    //force kick if host is leaving
     if (val == null) await leaveStream();
 });
 
@@ -115,23 +115,19 @@ onMounted(async () => {
     agoraEngine.on("user-published", async (user, mediaType) => {
         await agoraEngine.subscribe(user, mediaType);
 
-        if (user.videoTrack && user.audioTrack) {
-            if (mediaType == "video") {
-                remoteVideoTrack.value = user.videoTrack;
-                remoteUid.value = user.uid.toString();
+        if (mediaType == "video") {
+            remoteVideoTrack.value = user.videoTrack;
+            remoteUid.value = user.uid.toString();
 
-                if (props.options.role == "audience") {
-                    remoteVideoTrack.value.play("remotePlayerContainer");
-                }
-            }
-            if (mediaType == "audio") {
-                remoteAudioTrack.value = user.audioTrack;
-                remoteAudioTrack.value.play();
+            if (props.options.role == "audience") {
+                remoteVideoTrack.value?.play("remotePlayerContainer");
             }
         }
+        if (mediaType == "audio") {
+            remoteAudioTrack.value = user.audioTrack;
+            remoteAudioTrack.value?.play();
+        }
     });
-
-    agoraEngine.on("user-unpublished", (user) => console.log(user.uid + " has left the channel"));
 });
 
 async function joinStream() {
@@ -144,6 +140,7 @@ async function joinStream() {
         localVideoTrack.value = await AgoraRTC.createCameraVideoTrack();
 
         await agoraEngine.publish([localAudioTrack.value, localVideoTrack.value]);
+        localAudioTrack.value.setMuted(false);
         localVideoTrack.value.play("localPlayerContainer");
     }
 }
@@ -153,7 +150,6 @@ async function leaveStream() {
     localVideoTrack.value?.close();
 
     await agoraEngine.leave();
-    console.log("you leave the channel");
     emits("leave", props.options.role);
 }
 

@@ -1,6 +1,6 @@
 <template>
     <NuxtLayout name="default">
-        <div class="flex flex-row">
+        <div class="flex flex-row h-screen">
             <div class="flex flex-col p-5 lg:p-14 w-full bg-backgroundPrimary">
                 <label
                     for="chatbar"
@@ -10,7 +10,7 @@
                 </label>
                 <slot />
             </div>
-            <AttendingStreamChatbar class="hidden lg:flex h-full" />
+            <AttendingStreamChatbar class="hidden lg:flex h-screen" />
             <input type="checkbox" id="chatbar" class="drawer-toggle" />
             <label class="overlay" for="chatbar"></label>
             <div class="drawer drawer-right max-w-[20rem]">
