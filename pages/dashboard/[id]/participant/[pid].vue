@@ -7,7 +7,7 @@
         <div v-if="participant" class="flex w-full space-x-8 md:space-x-12 lg:space-x-16">
             <img
                 :src="participant.data.user_id.profile ?? '/images/default-user.png'"
-                class="w-24 h-24 lg:w-36 lg:h-36 xl:w-52 xl:h-52 rounded-full"
+                class="rounded-full w-24 h-24 md:h-48 md:w-48 bg-border p-2 aspect-square"
             />
             <div class="w-full text-sm md:text-base">
                 <div class="form-group">
@@ -44,33 +44,40 @@
                         class="grid grid-cols-3"
                     >
                         <div class="col-span-1">Role</div>
-                        <div class="col-span-2 space-x-2">
-                            <input v-model="role" type="text" class="input input-sm w-44" placeholder="custom role.." />
-                            <button @click="doApplyRole" class="btn btn-primary btn-sm">Save</button>
+                        <div class="col-span-2">
+                            <input
+                                v-model="role"
+                                type="text"
+                                class="input input-sm w-full md:w-44 mr-0 md:mr-2"
+                                placeholder="custom role.."
+                            />
+                            <button @click="doApplyRole" class="btn btn-primary btn-sm w-full md:w-fit mt-3 md:mt-0">
+                                Save
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div
-                    v-if="participant.data.type == 'reguler' || participant.data.type == 'invited'"
-                    class="flex flex-center space-x-4 mt-8"
-                >
-                    <button class="btn btn-sm md:btn-md btn-success relative">
-                        <input
-                            @change="handleFileChange"
-                            type="file"
-                            class="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer"
-                        />
-                        <Icon name="fa:upload" class="w-5 h-5 mr-2" /> Upload Certificate
-                    </button>
-                    <label
-                        for="ban-participant-modal"
-                        class="btn btn-sm md:btn-md"
-                        :class="participant.data.is_banned ? 'btn-solid-warning' : 'btn-solid-error'"
-                    >
-                        {{ participant.data.is_banned ? "Unban" : "Ban" }} Participant</label
-                    >
-                </div>
             </div>
+        </div>
+        <div
+            v-if="participant?.data.type == 'reguler' || participant?.data.type == 'invited'"
+            class="flex flex-center space-x-4 mt-8"
+        >
+            <button class="btn btn-sm md:btn-md btn-success relative w-full md:w-fit">
+                <input
+                    @change="handleFileChange"
+                    type="file"
+                    class="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer"
+                />
+                <Icon name="fa:upload" class="w-5 h-5 mr-2" /> Upload Certificate
+            </button>
+            <label
+                for="ban-participant-modal"
+                class="btn btn-sm md:btn-md w-full md:w-fit"
+                :class="participant.data.is_banned ? 'btn-solid-warning' : 'btn-solid-error'"
+            >
+                {{ participant.data.is_banned ? "Unban" : "Ban" }} Participant</label
+            >
         </div>
         <div v-if="certificate?.preview" class="mt-12">
             <div class="w-full flex-between mb-6">

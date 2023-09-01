@@ -1,28 +1,30 @@
 <template>
     <div>
         <UILoader v-if="pending" />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Grant</th>
-                    <th>Access Name</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="acc in access">
-                    <th>
-                        <input
-                            v-model="acc.selected"
-                            type="checkbox"
-                            class="checkbox checkbox-bordered-secondary checkbox-secondary"
-                        />
-                    </th>
-                    <td>{{ acc.name }}</td>
-                    <td>{{ acc.description }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="w-full overflow-x-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Grant</th>
+                        <th>Access Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="acc in access">
+                        <th>
+                            <input
+                                v-model="acc.selected"
+                                type="checkbox"
+                                class="checkbox checkbox-bordered-secondary checkbox-secondary"
+                            />
+                        </th>
+                        <td>{{ acc.name }}</td>
+                        <td>{{ acc.description }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <button @click="doGrantAccess" type="button" class="btn btn-primary mt-4">Save</button>
     </div>
 </template>
