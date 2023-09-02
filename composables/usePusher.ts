@@ -12,7 +12,7 @@ export default function usePusher() {
         });
     }
 
-    function subscribe() {
+    async function subscribe() {
         if (loggedUser.value && pusher.value) {
             const channel_name = loggedUser.value._id;
             if (!pusher.value.channels.find(channel_name)) {
@@ -20,8 +20,20 @@ export default function usePusher() {
                 console.log("(pusher) subscribed to " + channel_name);
 
                 loggedUser.value.preferences.notifications.forEach((pref) => {
-                    channel.bind(pref, (data: IPusherNotifyPayload) => {
-                        createToast(data.message, TYPE.INFO, { position: POSITION.TOP_CENTER });
+                    channel.bind(pref, async (data: IPusherNotifyPayload) => {
+                        createToast(data.message, TYPE.INFO, {
+                            position: POSITION.TOP_CENTER,
+                            onClick: () => {
+                                navigateTo("/notification");
+                            },
+                        });
+                        //revalidate balance
+                        if (pref == "user:transaction") {
+                            const res = await fetcher<ILogin.Data>("/auth/myself");
+                            if (res.data && loggedUser.value) {
+                                loggedUser.value.balance = res.data.balance;
+                            }
+                        }
                     });
                 });
             }

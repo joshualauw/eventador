@@ -82,7 +82,7 @@
                         class="w-full h-64 lg:h-72 rounded-lg"
                     />
                     <h2 class="text-xl font-semibold">Image Gallery</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <img v-for="img in eventDetail.data.event.gallery" :src="img" class="rounded-lg" />
                     </div>
                 </div>

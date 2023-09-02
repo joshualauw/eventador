@@ -25,9 +25,7 @@
                         Withdraw
                     </button>
                 </div>
-                <p class="text-sm text-red-500 mt-4">
-                    *If balance doesn't change after top-up/witdhraw, try to Re-login
-                </p>
+                <p class="text-sm text-red-500 mt-4">*withdraw can take up to 5 minutes depends on connection</p>
             </div>
 
             <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />

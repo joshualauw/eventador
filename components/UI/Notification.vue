@@ -22,7 +22,7 @@ const props = defineProps<{
 }>();
 
 function toUrl() {
-    if (props.callbackUrl) window.location.href = props.callbackUrl;
+    if (props.callbackUrl) navigateTo(props.callbackUrl);
 }
 
 const alertType = computed(() => {
