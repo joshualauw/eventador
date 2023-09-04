@@ -27,5 +27,5 @@ export default defineNuxtConfig({
         },
     },
     build: { transpile: ["vue-toastification"] },
-    modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@nuxtjs/color-mode", "nuxt-lodash"],
+    modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "nuxt-lodash"],
 });
