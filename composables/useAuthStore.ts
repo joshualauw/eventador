@@ -1,6 +1,5 @@
 export default function useAuthStore() {
     const loggedUser = useState<Omit<IUser, "password"> | null>("loggedUser", () => null);
-    const token = useCookie("token", { maxAge: 24 * 60 * 60 });
     const registeredUser = useState<string>("registeredUser", () => "");
 
     async function register(body: IRegister.Body) {
@@ -30,6 +29,7 @@ export default function useAuthStore() {
         const res = await executeRequest<ILogin.Data>("/auth/login", { method: "POST", body });
         if (res.status && res.data) {
             loggedUser.value = res.data.data;
+            const token = useCookie("token", { maxAge: 24 * 60 * 60 });
             token.value = res.data.data.token;
             const { subscribe } = usePusher();
             subscribe();
