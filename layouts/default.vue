@@ -8,4 +8,6 @@
 
 <script setup lang="ts">
 const { loggedUser } = useAuthStore();
+const token = useCookie("token");
+console.log(token.value)
 </script>
