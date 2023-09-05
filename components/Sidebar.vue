@@ -27,7 +27,7 @@
 const { loggedUser } = useAuthStore();
 
 const items = [
-    { name: "Home", link: "/", icon: "fa:home" },
+    { name: "Home", link: "/home", icon: "fa:home" },
     { name: "Explore", link: "/explore", icon: "fa:hashtag" },
     { name: "Events", link: "/manage", icon: "material-symbols:event", auth: true },
     { name: "Following", link: "/following", icon: "fa:user" },

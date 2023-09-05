@@ -1,62 +1,84 @@
 <template>
-    <div class="flex relative w-full">
-        <div class="w-full lg:w-2/3 lg:mr-16">
-            <div class="flex-between">
-                <div class="flex-center space-x-4">
-                    <h2 class="md:text-xl text-lg font-semibold">All Posts</h2>
-                    <label @click="handleCreating" for="edit-post-modal" class="btn btn-sm md:btn-md btn-primary">
-                        <span class="hidden sm:inline mr-2">Create</span>
-                        <Icon name="material-symbols:add" class="w-5 h-5" />
-                    </label>
-                </div>
-                <select v-model="sortBy" class="select select-sm md:select-md w-36">
-                    <option value="latest">Latest</option>
-                    <option value="most-liked">Most Liked</option>
-                </select>
-            </div>
-            <div class="mt-8 space-y-5">
-                <div v-for="post in posts?.data">
-                    <PostItem
-                        @liked="refresh"
-                        @commenting="openComments"
-                        :id="post._id"
-                        :content="post.content"
-                        :image="post.image"
-                        :tags="post.tags"
-                        :author="{ id: post.user_id._id, name: post.user_id.username, avatar: post.user_id.profile }"
-                        :likes="post.likes.length"
-                        :comments="post.comments.length"
-                        :created-at="post.createdAt"
-                        :is_liked="post.is_liked"
-                        hide-edit
-                        class="py-4 border-b-2 border-gray-6"
+    <section class="bg-backgroundPrimary">
+        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
+                <div class="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
+                    <img
+                        alt="Party"
+                        src="https://storage.googleapis.com/ekrutassets/blogs/images/000/003/446/original/virtual-event-adalah-EKRUT.jpg"
+                        class="absolute inset-0 h-full w-full object-cover"
                     />
                 </div>
+                <div class="lg:py-24">
+                    <h2 class="text-content text-3xl font-bold sm:text-4xl">
+                        Grow your audience with <span class="text-primary">Eventador!</span>
+                    </h2>
+                    <p class="my-6 text-content2 text-lg">
+                        The best event platform for hybrid and event meeting, we will wait for your arrivance!
+                    </p>
+                    <button class="btn btn-success self-center" @click="navigateTo('/home')">Get Started</button>
+                </div>
             </div>
-            <ModalPostComment :comments="comments" />
-            <ModalPostEdit @saved="refresh" :context="actionContext" :update-id="actionId" />
         </div>
-        <PostTag class="w-1/3 hidden lg:block sticky h-[350px] top-10" />
-    </div>
+    </section>
+    <section class="bg-backgroundSecondary">
+        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
+            <div class="max-w-xl">
+                <h2 class="text-3xl text-content1 font-bold sm:text-4xl">
+                    Why <span class="text-primary">Eventador?</span>
+                </h2>
+                <p class="mt-4 text-content2">
+                    Eventador is an exceptional event platform that provides an array of services to both event
+                    organizers and attendees. The platform allows users to browse and join many various events easily!
+                </p>
+            </div>
+
+            <div class="mt-8 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
+                <div v-for="i in specialityItems" class="flex-center gap-6">
+                    <span class="flex-center rounded-lg bg-gray-800 text-white p-3">
+                        <Icon :name="i.icon" class="w-6 h-6" />
+                    </span>
+                    <div>
+                        <h2 class="text-lg font-bold">{{ i.name }}</h2>
+                        <p class="mt-1 text-sm text-content2">{{ i.desc }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-    layout: "home",
-});
-
-const sortBy = ref("latest");
-const comments = ref<DetailComment[]>([]);
-
-const { getAllPosts } = usePostStore();
-const { data: posts, refresh } = await useAsyncData("getAllPosts", () => getAllPosts({ sortBy: sortBy.value }), {
-    watch: [sortBy],
-});
-const { handleCreating, actionContext, actionId } = useCrudManager();
-
-function openComments(id: string) {
-    comments.value = [];
-    const post = posts.value?.data.find((p) => p._id == id);
-    if (post) comments.value = post.comments;
-}
+const specialityItems = [
+    {
+        icon: "mdi:phone-message",
+        name: "Livestreaming",
+        desc: "Eventador livestreaming feature allows attendees to tune in to events remotely, making it more accessible for those who cannot attend in person",
+    },
+    {
+        icon: "material-symbols:dashboard",
+        name: "Event dashboard",
+        desc: "Eventador event dashboard provides organizers with a comprehensive set of tools for efficient event management and promotion.",
+    },
+    {
+        icon: "ph:magnifying-glass-plus-bold",
+        name: "Browse event",
+        desc: "Eventador extensive event listings allow users to browse a diverse range of events, including concerts, festivals, conferences, and more",
+    },
+    {
+        icon: "material-symbols:lab-profile",
+        name: "Form builder",
+        desc: "Eventador form builder feature enables organizers to create custom forms to collect attendee information and feedback.",
+    },
+    {
+        icon: "mdi:certificate",
+        name: "Certificate Builder",
+        desc: "Eventador certificate generation feature enhances the attendee experience by providing personalized certificates for event participation.",
+    },
+    {
+        icon: "material-symbols:chat",
+        name: "Discussion",
+        desc: "Eventador discussion feature allows attendees to discuss event with other participants, facilitating networking and enhancing the event experience.",
+    },
+];
 </script>

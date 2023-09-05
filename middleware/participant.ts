@@ -15,13 +15,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
 
     if (!loggedParticipant.value) {
-        return navigateTo("/");
+        return navigateTo("/home");
     }
     if (loggedParticipant.value.is_banned) {
-        createToast("you have been banned!", TYPE.ERROR);
-        return navigateTo("/");
+        createToast("you have been banned from this event!", TYPE.ERROR);
+        return navigateTo("/home");
     }
     if (to.meta.owner && loggedParticipant.value.type !== "owner") {
-        return navigateTo("/");
+        return navigateTo("/home");
     }
 });

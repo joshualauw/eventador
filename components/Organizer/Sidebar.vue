@@ -49,7 +49,7 @@
                         </div>
                     </label>
                     <div class="dropdown-menu dropdown-menu-top-center ml-3">
-                        <NuxtLink to="/" class="dropdown-item text-sm">Back to Home</NuxtLink>
+                        <NuxtLink to="/home" class="dropdown-item text-sm">Back to Home</NuxtLink>
                     </div>
                 </div>
             </section>

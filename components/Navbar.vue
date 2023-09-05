@@ -4,7 +4,7 @@
             <label for="drawer-left" class="flex md:hidden btn btn-sm btn-ghost btn-circle text-white hover:text-black">
                 <Icon name="material-symbols:menu" class="w-6 h-6" />
             </label>
-            <img @click="navigateTo('/')" src="/images/logo/eventador-light.png" class="w-10 h-10 cursor-pointer" />
+            <img @click="navigateTo('/home')" src="/images/logo/eventador-light.png" class="w-10 h-10 cursor-pointer" />
             <h2 class="hidden md:block md:text-xl font-bold tracking-widest">Eventador</h2>
         </div>
         <div class="flex-center space-x-4">
