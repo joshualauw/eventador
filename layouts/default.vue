@@ -1,5 +1,5 @@
 <template>
-    <Html :data-theme="loggedUser?.preferences.theme || 'light'">
+    <Html :data-theme="theme">
         <main class="min-h-screen bg-backgroundPrimary">
             <slot />
         </main>
@@ -8,6 +8,5 @@
 
 <script setup lang="ts">
 const { loggedUser } = useAuthStore();
-const token = useCookie("token");
-console.log(token.value)
+const theme = computed(() => loggedUser.value?.preferences.theme || "light");
 </script>

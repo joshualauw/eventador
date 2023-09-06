@@ -28,11 +28,14 @@ export default function useAuthStore() {
     async function login(body: ILogin.Body) {
         const res = await executeRequest<ILogin.Data>("/auth/login", { method: "POST", body });
         if (res.status && res.data) {
+            //save user data in cookie
             loggedUser.value = res.data.data;
             const token = useCookie("token", { maxAge: 24 * 60 * 60 });
             token.value = res.data.data.token;
+            //subscribe to pusher channel
+            const { $pusher } = useNuxtApp();
             const { subscribe } = usePusher();
-            subscribe();
+            subscribe($pusher);
         }
         return res;
     }

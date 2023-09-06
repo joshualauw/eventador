@@ -35,12 +35,13 @@ definePageMeta({
 });
 const { loggedUser } = useAuthStore();
 const { loggedParticipant } = useParticipantStore();
+const { $pusher } = useNuxtApp();
 const { unsubscribe } = usePusher();
 
 function logout() {
     const token = useCookie("token");
     const eventId = useCookie("eventId");
-    unsubscribe(loggedUser.value!._id);
+    if (loggedUser.value) unsubscribe($pusher, loggedUser.value._id);
 
     token.value = null;
     eventId.value = null;
