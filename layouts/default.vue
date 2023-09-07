@@ -16,13 +16,13 @@
 <script setup lang="ts">
 const { loggedUser } = useAuthStore();
 const theme = computed(() => loggedUser.value?.preferences.theme || "light");
-const serverReady = useCookie("serverReady");
+const serverReady = useCookie("serverReady", { maxAge: 12 * 60 });
 
 async function healthcheck() {
     const res = await executeRequest("/healthcheck");
     if (res.data && res.status) {
         serverReady.value = "yes";
-        console.log(res.data);
+        console.log(`(server) ${res.data}`);
     }
 }
 
