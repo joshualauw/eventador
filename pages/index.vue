@@ -16,7 +16,7 @@
                     <p class="my-6 text-content2 text-lg">
                         The best event platform for hybrid and event meeting, we will wait for your arrivance!
                     </p>
-                    <button class="btn btn-success self-center" @click="navigateTo('/home')">Get Started</button>
+                    <NuxtLink to="/home" class="btn btn-success self-center">Get Started</NuxtLink>
                 </div>
             </div>
         </div>
