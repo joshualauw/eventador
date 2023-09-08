@@ -21,6 +21,11 @@
                                 :class="getBordered(menu.link)"
                                 class="menu-item text-gray-100 text-base hover:bg-green-700"
                             >
+                                <Icon
+                                    v-if="stream && menu.name == 'Livestream'"
+                                    name="fluent:live-20-filled"
+                                    class="text-red-400 w-6 h-6"
+                                />
                                 <Icon :name="menu.icon" /><span class="ml-2">{{ menu.name }}</span>
                             </li>
                         </ul>
@@ -56,6 +61,7 @@ const router = useRouter();
 const eventId = computed(() => router.currentRoute.value.params.id as string);
 
 const { loggedUser } = useAuthStore();
+const { stream } = useStreamStore();
 
 function getBordered(link: string) {
     const splitLink = route.path.split("/");

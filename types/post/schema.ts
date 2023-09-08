@@ -17,12 +17,12 @@ namespace IGetTags {
 }
 
 namespace ICreatePost {
-    export type Body = { tags: string[]; content: string; image: File | null };
+    export type Body = { tags: string[]; content: string; link?: IPostLink; image: File | null };
     export type Data = ApiResponse<IPost>;
 }
 
 namespace IUpdatePost {
-    export type Body = { tags: string[]; content: string; image: File | null };
+    export type Body = { tags: string[]; content: string; link?: IPostLink; image: File | null };
     export type Data = ApiResponse<IPost>;
 }
 

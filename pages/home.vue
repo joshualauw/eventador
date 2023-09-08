@@ -28,6 +28,7 @@
                         :comments="post.comments.length"
                         :created-at="post.createdAt"
                         :is_liked="post.is_liked"
+                        :link="post.link"
                         hide-edit
                         class="py-4 border-b-2 border-gray-6"
                     />

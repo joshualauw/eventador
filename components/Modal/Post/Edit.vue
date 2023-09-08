@@ -26,24 +26,75 @@
                 </div>
             </div>
             <div class="form-field">
+                <label class="form-label">Link to Event (optional)</label>
+                <div class="form-control popover flex-col w-full">
+                    <input
+                        @keyup="debounceSearchEvent"
+                        v-model="searchTerm"
+                        type="text"
+                        placeholder="event name.."
+                        class="input max-w-full popover-trigger"
+                        tabindex="0"
+                    />
+                    <div class="popover-content w-full mt-2" tabindex="0">
+                        <div v-if="pending" class="flex w-full flex-box">
+                            <svg class="animate-spin h-4 w-4 mr-3 bg-gray-200" viewBox="0 0 24 24"></svg>
+                            <p class="text-mute">Please Wait...</p>
+                        </div>
+                        <div v-if="eventSuggestions.length == 0 && !pending" class="text-mute text-center">
+                            --Search event--
+                        </div>
+                        <div class="max-h-56 overflow-y-auto">
+                            <p
+                                v-for="suggest in eventSuggestions"
+                                @click="selectEvent(suggest)"
+                                class="hover:bg-border p-2 cursor-pointer"
+                            >
+                                {{ suggest.name }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="postState.link" class="card-body flex-row items-center mt-4 p-4 relative flex-wrap">
+                    <Icon
+                        @click="clearEventLink"
+                        name="fa6-solid:xmark"
+                        class="text-error absolute top-3 right-3 cursor-pointer"
+                    />
+                    <img
+                        :src="postState.link.banner || '/images/default-event.jpg'"
+                        class="rounded-md w-11 h-8 md:w-24 md:h-14 mr-1 md:mr-2"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm md:text-base">{{ postState.link.name }}</p>
+                        <p
+                            @click="goToEvent(postState.link)"
+                            class="text-xs md:text-sm text-primary hover:underline cursor-pointer"
+                        >
+                            {{ postState.link.url }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-field">
                 <label class="form-label">Post Tags</label>
                 <div>
                     <span
                         v-for="tag in postState.tags"
                         @click="removeTag(tag.key)"
-                        class="badge badge-lg badge-flat-secondary inline-flex w-fit m-1.5 cursor-pointer hover:opacity-80"
+                        class="badge badge-md md:badge-lg badge-flat-secondary inline-flex w-fit m-1.5 cursor-pointer hover:opacity-80"
                     >
                         #{{ tag.val }}
                     </span>
-                    <span class="badge badge-lg badge-outline relative h-full w-40">
+                    <span class="badge badge-md md:badge-lg badge-outline relative h-full w-32 md:w-40 m-1.5">
                         <input
                             @keydown.enter="addTag"
                             v-model="newTag"
                             type="text"
-                            class="outline-none text-sm bg-backgroundPrimary"
+                            class="outline-none text-xs md:text-sm bg-backgroundPrimary"
                             placeholder="tag.."
                         />
-                        <button @click="addTag" class="btn btn-sm btn-solid-secondary btn-rounded absolute right-2">
+                        <button @click="addTag" class="btn btn-xs md:btn-sm btn-solid-secondary absolute right-2">
                             <Icon name="material-symbols:add" />
                         </button>
                     </span>
@@ -74,16 +125,23 @@ const emits = defineEmits<{ (e: "saved"): void }>();
 
 const newTag = ref("");
 const preview = ref("");
+const searchTerm = ref("");
+const eventSuggestions = ref<IPostLink[]>([]);
 
 const { value: postState, reset } = useStateHandler({
     tags: [] as { key: string; val: string }[],
     content: "",
+    link: null as IPostLink | null,
     image: null as File | null,
 });
 
+const config = useRuntimeConfig();
+const { getExploreEvents } = useEventStore();
 const { createPost, updatePost, getOnePost } = usePostStore();
 const { mutate: createMutate, error, errors, pending } = useMutate(createPost);
 const { mutate: updateMutate } = useMutate(updatePost);
+
+onMounted(async () => await searchEvent());
 
 watch(
     () => props.updateId,
@@ -96,6 +154,9 @@ watch(
             if (res) {
                 postState.content = res.data.content.replaceAll("<br/>", "\n");
                 postState.tags = [];
+                if (res.data.link) {
+                    postState.link = res.data.link;
+                }
                 postState.tags.push(...res.data.tags.map((tag) => ({ key: genId(), val: tag })));
                 if (res.data.image) preview.value = res.data.image;
             }
@@ -106,13 +167,52 @@ watch(
     }
 );
 
+const debounceSearchEvent = useDebounce(searchEvent, 800);
+
+function clearEventLink() {
+    postState.link = null;
+    searchTerm.value = "";
+}
+
+function goToEvent(event: IPostLink) {
+    window.open(config.public.baseURL + `/event/${event.id}`, "_blank");
+}
+
+function selectEvent(event: IPostLink) {
+    postState.link = event;
+    searchTerm.value = event.name;
+}
+
+async function searchEvent() {
+    pending.value = true;
+    const res = await getExploreEvents({ keyword: searchTerm.value });
+    if (res) {
+        eventSuggestions.value = [];
+        eventSuggestions.value.push(
+            ...res.data.map((ev) => ({
+                id: ev._id,
+                name: ev.name,
+                url: config.public.baseURL + `/event/${ev._id}`,
+                banner: ev.banner || "/images/default-event.jpg",
+            }))
+        );
+    }
+    pending.value = false;
+}
+
 async function savePost(setOpen: (state: boolean) => void) {
+    const newPost = {
+        image: postState.image,
+        tags: postState.tags.map((tag) => tag.val),
+        content: formattedText.value,
+    };
+    if (postState.link) {
+        Object.assign(newPost, { link: { ...postState.link } });
+    }
+    console.log(newPost);
+
     if (props.context == "create") {
-        const res = await createMutate({
-            ...postState,
-            tags: postState.tags.map((tag) => tag.val),
-            content: formattedText.value,
-        });
+        const res = await createMutate(newPost);
         if (res.status) {
             emits("saved");
             reset();
@@ -126,11 +226,7 @@ async function savePost(setOpen: (state: boolean) => void) {
         error.value = null;
         errors.value = [];
 
-        const res = await updateMutate(props.updateId, {
-            ...postState,
-            tags: postState.tags.map((tag) => tag.val),
-            content: formattedText.value,
-        });
+        const res = await updateMutate(props.updateId, newPost);
 
         pending.value = false;
         if (res.status) {

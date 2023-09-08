@@ -21,6 +21,7 @@
                     :comments="post.data.comments.length"
                     :created-at="post.data.createdAt"
                     :is_liked="post.data.is_liked"
+                    :link="post.data.link"
                     class="py-4 border-b-2 border-gray-6"
                 />
                 <div class="w-full md:w-[calc(100%-3rem)] md:ml-[2rem] mt-8">

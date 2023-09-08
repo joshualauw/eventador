@@ -3,9 +3,17 @@ interface IPost extends BaseModel {
     image?: string;
     content: string;
     likes: string[];
+    link?: IPostLink;
     comments: DetailComment[];
     reports: IReport[];
     tags: string[];
+}
+
+interface IPostLink {
+    id: string;
+    banner: string;
+    name: string;
+    url: string;
 }
 
 interface IComment extends BaseModel {

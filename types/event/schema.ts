@@ -1,13 +1,13 @@
 namespace IExploreEvent {
     export interface Query {
-        keyword: string;
-        location: string;
-        category: string;
-        start_price: number;
-        end_price: number;
-        start_date: Date | null;
-        end_date: Date | null;
-        wishlist: boolean;
+        keyword?: string;
+        location?: string;
+        category?: string;
+        start_price?: number;
+        end_price?: number;
+        start_date?: Date | null;
+        end_date?: Date | null;
+        wishlist?: boolean;
     }
 
     export type Data = ApiResponse<

@@ -5,7 +5,7 @@
                 <img :src="author.avatar ?? '/images/default-user.png'" alt="avatar" />
             </div>
         </div>
-        <div class="w-full">
+        <div class="w-full space-y-4 md:space-y-6">
             <div class="flex-between w-full">
                 <div @click="navigateTo(`/profile/${author.id}`)" class="cursor-pointer flex-center">
                     <div class="md:hidden avatar avatar-sm mr-2">
@@ -48,11 +48,23 @@
                     </div>
                 </div>
             </div>
-            <div @click="navigateTo(`/post/${id}`)" class="my-4 space-y-6 cursor-pointer">
+            <div @click="navigateTo(`/post/${id}`)" class="space-y-6 cursor-pointer">
                 <div v-if="image" class="max-w-full h-60 rounded-xl bg-backgroundSecondary flex-center">
                     <img :src="image" class="mx-auto max-w-full max-h-full" />
                 </div>
                 <p v-html="content"></p>
+            </div>
+            <div v-if="link" class="card-body flex-row items-center p-4 relative flex-wrap">
+                <img
+                    :src="link.banner || '/images/default-event.jpg'"
+                    class="rounded-md w-11 h-8 md:w-24 md:h-14 mr-1 md:mr-2"
+                />
+                <div>
+                    <p class="font-semibold text-sm md:text-base">{{ link.name }}</p>
+                    <p @click="goToLink" class="text-xs md:text-sm text-primary hover:underline cursor-pointer">
+                        {{ link.url }}
+                    </p>
+                </div>
             </div>
             <div>
                 <span
@@ -63,7 +75,7 @@
                     #{{ tag }}
                 </span>
             </div>
-            <div v-if="!hideLikes" class="mt-5 flex w-full justify-end">
+            <div v-if="!hideLikes" class="flex w-full justify-end">
                 <button @click="doLikePost" class="btn btn-ghost text-secondary text-base">
                     <Icon :name="is_liked ? 'mdi:thumb-up' : 'mdi:thumb-up-outline'" class="mr-2" /> {{ likes }}
                 </button>
@@ -96,6 +108,7 @@ const props = defineProps<{
     image?: string;
     createdAt: string;
     tags: string[];
+    link?: IPostLink;
     hideLikes?: boolean;
     hideEdit?: boolean;
     is_liked?: boolean;
@@ -110,6 +123,10 @@ const emits = defineEmits<{
 const { loggedUser } = useAuthStore();
 const { likePost } = usePostStore();
 const { mutate } = useMutate(likePost);
+
+function goToLink() {
+    window.open(props.link?.url, "_blank");
+}
 
 async function doLikePost() {
     if (loggedUser.value) {

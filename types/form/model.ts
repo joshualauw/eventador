@@ -12,6 +12,8 @@ interface IFormField {
     options: string[];
 }
 
+type IFormFieldExtra = IFormField & { key: string };
+
 interface IFormResponse {
     email: string;
     answers: string[];

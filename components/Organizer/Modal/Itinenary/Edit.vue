@@ -18,8 +18,8 @@
                 <div v-for="(schedule, i) in schedules" :key="i" class="flex-center space-x-1">
                     <input v-model="schedule.name" type="text" class="input input-sm w-1/2" placeholder="Name.." />
                     <div class="flex w-1/2">
-                        <input v-model="schedule.start_time" type="text" class="input input-sm" placeholder="06:00.." />
-                        <input v-model="schedule.end_time" type="text" class="input input-sm" placeholder="12:00.." />
+                        <input v-model="schedule.start_time" type="time" class="input input-sm" />
+                        <input v-model="schedule.end_time" type="time" class="input input-sm" />
                     </div>
                     <span @click="deleteSchedule(schedule.key)"
                         ><Icon name="fa6-solid:xmark" class="text-red-500 cursor-pointer"
@@ -50,15 +50,15 @@ import dayjs from "dayjs";
 const props = defineProps<{ context: "update" | "create"; updateId: string }>();
 const emits = defineEmits<{ (e: "saved"): void }>();
 
-const { value: itinenaryState, reset } = useStateHandler({
-    day: dayjs().format("YYYY-MM-DD"),
-});
-const schedules = ref([{ key: genId(4), name: "", start_time: "", end_time: "" }]);
-
 const route = useRoute();
 const { getOneItinenary, createItinenary, updateItinenary } = useItinenaryStore();
 const { mutate: createMutate, error, errors, pending } = useMutate(createItinenary);
 const { mutate: updateMutate } = useMutate(updateItinenary);
+
+const { value: itinenaryState, reset } = useStateHandler({
+    day: dayjs().format("YYYY-MM-DD"),
+});
+const schedules = ref([{ key: genId(4), name: "", start_time: "", end_time: "" }]);
 
 watch(
     () => props.updateId,

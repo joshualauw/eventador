@@ -10,9 +10,7 @@
                     class="max-h-72 lg:max-h-[525px] w-full rounded-lg border border-backgroundSecondary"
                 />
             </div>
-
             <h1 class="text-xl lg:text-3xl font-extrabold mt-8">{{ eventDetail.data.event.name }}</h1>
-
             <div class="mt-8 flex flex-col lg:flex-row w-full lg:space-x-16">
                 <div class="w-full lg:w-[60%] space-y-8 lg:space-y-10 lg:border-r-2 border-gray-4 lg:pr-16">
                     <div class="card hover:scale-100">
@@ -83,7 +81,14 @@
                     />
                     <h2 class="text-xl font-semibold">Image Gallery</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <img v-for="img in eventDetail.data.event.gallery" :src="img" class="rounded-lg" />
+                        <label
+                            v-for="img in eventDetail.data.event.gallery"
+                            @click="galleryPreview = img"
+                            class="cursor-pointer hover:brightness-50 flex-center"
+                            for="modal-gallery-preview"
+                        >
+                            <img :src="img" class="rounded-lg bg-border" />
+                        </label>
                     </div>
                 </div>
 
@@ -95,9 +100,9 @@
                             </p>
                             <p>{{ eventDetail.data.event.slotLeft }} Slots Left</p>
                             <div v-if="loggedUser">
-                                <label for="payment-modal-register" class="btn w-full btn-primary mt-3"
-                                    >Register Now</label
-                                >
+                                <label for="payment-modal-register" class="btn w-full btn-primary mt-3">
+                                    Register Now
+                                </label>
                                 <div class="divider">-or-</div>
                                 <div class="flex">
                                     <input
@@ -146,12 +151,19 @@
                         />
                     </div>
                     <h2 class="text-xl font-semibold">Share Now</h2>
-                    <div class="flex space-x-3">
-                        <div v-for="link in socialMediaLinks" :content="link.tooltip" placement="top">
-                            <button @click="link.callback" class="btn btn-circle btn-solid-secondary">
+                    <div class="flex space-x-5">
+                        <div v-for="link in socialMediaLinks">
+                            <button
+                                @click="link.callback"
+                                class="btn btn-circle btn-solid-secondary tooltip tooltip-top"
+                                :data-tooltip="link.tooltip"
+                            >
                                 <icon :name="link.icon" size="24" />
                             </button>
                         </div>
+                    </div>
+                    <div ref="capture" class="w-40 h-40">
+                        <UIQrCode :link="linkUrl" />
                     </div>
                 </div>
             </div>
@@ -191,27 +203,22 @@
         </ModalPayment>
 
         <ModalReportEvent v-if="eventDetail" :id="($route.params.id as string)" :label="eventDetail?.data.event.name" />
+        <ModalEventGallery :preview="galleryPreview" />
     </div>
 </template>
 
 <script setup lang="ts">
 import dayjs from "dayjs";
 import { TYPE } from "vue-toastification";
-
-const socialMediaLinks = [
-    {
-        tooltip: "Copy Link",
-        icon: "material-symbols:share",
-        callback: () => {
-            navigator.clipboard.writeText(linkUrl);
-            createToast("event URL copied", TYPE.SUCCESS);
-        },
-    },
-];
+import { toPng } from "html-to-image";
+import { saveAs } from "@/assets/js/filesaver";
 
 const code = ref("");
+const galleryPreview = ref("");
+const capture = ref();
 
 const route = useRoute();
+const config = useRuntimeConfig();
 const { loggedUser, getMe } = useAuthStore();
 const { getEventDetail, refundEvent } = useEventStore();
 const { registerParticipant, applyInvite } = useParticipantStore();
@@ -223,7 +230,7 @@ const { mutate: refundMutate } = useMutate(refundEvent);
 const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =>
     getEventDetail(route.params.id as string)
 );
-const linkUrl = useRuntimeConfig().public.baseURL + "/event/" + route.params.id;
+const linkUrl = config.public.baseURL + "/event/" + route.params.id;
 
 useHead({
     meta: [
@@ -234,11 +241,33 @@ useHead({
     ],
 });
 
+const socialMediaLinks = [
+    {
+        tooltip: "Copy Link",
+        icon: "material-symbols:share",
+        callback: () => {
+            navigator.clipboard.writeText(linkUrl);
+            createToast("event URL copied", TYPE.SUCCESS);
+        },
+    },
+    {
+        tooltip: "Download QR",
+        icon: "material-symbols:qr-code",
+        callback: async () => {
+            toPng(capture.value, { height: 200, width: 200 }).then(function (dataUrl) {
+                saveAs(dataUrl, `qrcode_${genId()}`);
+                createToast("QR Code downloaded", TYPE.SUCCESS);
+            });
+        },
+    },
+];
+
 async function doRegisterParticipant() {
     const res = await registerMutate(route.params.id as string);
-    if (res.status) {
+    if (res.status && res.data) {
         await getMe();
-        refresh();
+        await refresh();
+        navigateTo(`/attending/${res.data.data.event_id}`);
     }
 }
 
@@ -246,9 +275,10 @@ async function doApplyInvite() {
     pending.value = true;
 
     const res = await inviteMutate(route.params.id as string, { code: code.value });
-    if (res.status) {
+    if (res.status && res.data) {
         await getMe();
-        refresh();
+        await refresh();
+        navigateTo(`/attending/${res.data.data.event_id}`);
     }
     pending.value = false;
 }

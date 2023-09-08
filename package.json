@@ -27,9 +27,11 @@
         "html2canvas": "^1.4.1",
         "leaflet": "^1.9.4",
         "pusher-js": "^8.3.0",
+        "qrcode-vue3": "^1.6.8",
         "rippleui": "^1.12.1",
         "sass": "^1.62.1",
         "vue-chart-3": "^3.1.8",
-        "vue-toastification": "^2.0.0-rc.5"
+        "vue-toastification": "^2.0.0-rc.5",
+        "vue3-draggable": "^2.0.9"
     }
 }

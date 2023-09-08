@@ -25,7 +25,7 @@ async function doDeletePost(setOpen: (state: boolean) => void) {
     const res = await mutate(props.id);
     if (res.status) {
         setOpen(false);
-        navigateTo("/");
+        navigateTo("/home");
     }
 }
 </script>

@@ -19,6 +19,12 @@ export default function usePostStore() {
         formData.append("content", body.content);
         body.tags.forEach((tag) => formData.append("tags[]", tag));
         if (body.image) formData.append("image", body.image);
+        if (body.link) {
+            formData.append("link.id", body.link.id);
+            formData.append("link.name", body.link.name);
+            formData.append("link.banner", body.link.banner);
+            formData.append("link.url", body.link.url);
+        }
 
         const res = await executeRequest<ICreatePost.Data>(`/post`, { method: "POST", body: formData });
         return res;
@@ -29,6 +35,12 @@ export default function usePostStore() {
         formData.append("content", body.content);
         body.tags.forEach((tag) => formData.append("tags[]", tag));
         if (body.image) formData.append("image", body.image);
+        if (body.link) {
+            formData.append("link.id", body.link.id);
+            formData.append("link.name", body.link.name);
+            formData.append("link.banner", body.link.banner);
+            formData.append("link.url", body.link.url);
+        }
 
         const res = await executeRequest<IUpdatePost.Data>(`/post/${id}`, { method: "PUT", body: formData });
         return res;

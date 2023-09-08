@@ -12,17 +12,18 @@
         </div>
         <div v-if="!isResponse">
             <p v-if="fields.length == 0" class="text-center font-semibold text-lg text-content2 mt-8">-no fields-</p>
-            <OrganizerFormField
-                v-for="(field, i) in fields"
-                :key="field.key"
-                :id="field.key"
-                :name="field.name"
-                :type="field.type"
-                :options="field.options"
-                @updated="(val) => handleUpdating(i, val)"
-                @deleting="handleDeleting"
-                class="mb-12"
-            />
+            <UIDraggable @dragged="handleReordered" :items="fields" v-slot="{ item: field }">
+                <OrganizerFormField
+                    :key="field.key"
+                    :id="field.key"
+                    :name="field.name"
+                    :type="field.type"
+                    :options="field.options"
+                    @updated="handleUpdating"
+                    @deleting="handleDeleting"
+                    class="mb-8 md:mb-12"
+                />
+            </UIDraggable>
         </div>
         <div v-else>
             <p v-if="_fields?.data.responses.length == 0" class="text-center font-semibold text-lg text-content2 mt-8">
@@ -67,12 +68,17 @@ const { getOneForm, saveForm } = useFormStore();
 const { mutate, pending, error, errors } = useMutate(saveForm);
 
 const name = ref("");
-const fields = ref<(IFormField & { key: string })[]>([]);
+const fields = ref<IFormFieldExtra[]>([]);
 
 const { data: _fields } = await useAsyncData("getOneForm", () => getOneForm(route.params.fid as string));
 if (_fields.value) {
     fields.value = [..._fields.value.data.fields.map((field) => ({ ...field, key: genId(4) }))];
     name.value = _fields.value.data.name;
+}
+
+function handleReordered(ordered: IFormFieldExtra[]) {
+    fields.value = [];
+    fields.value.push(...ordered);
 }
 
 function addField() {
@@ -92,11 +98,13 @@ function deleteField() {
     }
 }
 
-function handleUpdating(idx: number, val: IFormField) {
-    const formField = fields.value[idx];
-    formField.name = val.name;
-    formField.type = val.type;
-    formField.options = [...val.options];
+function handleUpdating(id: string, val: IFormField) {
+    const formField = fields.value.find((f) => f.key == id);
+    if (formField) {
+        formField.name = val.name;
+        formField.type = val.type;
+        formField.options = [...val.options];
+    }
 }
 
 async function doSaveForm() {
