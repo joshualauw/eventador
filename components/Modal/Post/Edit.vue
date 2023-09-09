@@ -63,7 +63,7 @@
                     />
                     <img
                         :src="postState.link.banner || '/images/default-event.jpg'"
-                        class="rounded-md w-11 h-8 md:w-24 md:h-14 mr-1 md:mr-2"
+                        class="rounded-md hidden md:block w-20 h-12 md:mr-2"
                     />
                     <div>
                         <p class="font-semibold text-sm md:text-base">{{ postState.link.name }}</p>

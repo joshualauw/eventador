@@ -1,10 +1,10 @@
 <template>
     <div class="card max-h-fit w-full lg:w-3/4 mx-auto hover:scale-100">
         <div class="card-body items-center flex-row p-6 relative">
-            <div class="cursor-pointer">
+            <div class="cursor-pointer handle">
                 <Icon name="akar-icons:drag-horizontal-fill" class="w-4 h-4 mr-2" />
             </div>
-            <div class="w-full space-y-2">
+            <div @touchmove="() => console.log('cok a')" class="w-full space-y-2">
                 <div class="form-group">
                     <label class="form-label">Field Name</label>
                     <input v-model="name" @input="emitUpdate" class="input max-w-full" placeholder="field name.." />

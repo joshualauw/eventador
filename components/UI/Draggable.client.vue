@@ -1,19 +1,19 @@
 <template>
-    <Draggable v-model="theItems">
-        <template #item="{ item }">
-            <slot :item="(item as T)"></slot>
+    <Draggable @sort="emits('dragged', myItems)" v-model="myItems" item-key="key" handle=".handle">
+        <template #item="{ element }">
+            <div>
+                <slot :item="(element as T)"></slot>
+            </div>
         </template>
     </Draggable>
 </template>
 
 <script setup lang="ts" generic="T">
-//@ts-ignore
-import Draggable from "vue3-draggable";
+import Draggable from "vuedraggable";
 
 const emits = defineEmits<{ (e: "dragged", items: T[]): void }>();
 const props = defineProps<{ items: T[] }>();
-const theItems = ref(props.items);
+const myItems = ref<T[]>(props.items) as Ref<T[]>;
 
-//@ts-ignore
-watch(theItems, (val) => emits("dragged", val));
+watchEffect(() => (myItems.value = props.items));
 </script>

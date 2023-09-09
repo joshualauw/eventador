@@ -14,7 +14,6 @@
             <p v-if="fields.length == 0" class="text-center font-semibold text-lg text-content2 mt-8">-no fields-</p>
             <UIDraggable @dragged="handleReordered" :items="fields" v-slot="{ item: field }">
                 <OrganizerFormField
-                    :key="field.key"
                     :id="field.key"
                     :name="field.name"
                     :type="field.type"
@@ -56,6 +55,8 @@
 </template>
 
 <script setup lang="ts">
+import Draggable from "vuedraggable";
+
 definePageMeta({
     layout: "dashboard",
     middleware: ["auth", "participant"],
@@ -91,11 +92,7 @@ function addField() {
 }
 
 function deleteField() {
-    const fieldIdx = fields.value.findIndex((f) => f.key == actionId.value);
-    if (fieldIdx != -1) {
-        fields.value.splice(fieldIdx, 1);
-        console.log(fields.value);
-    }
+    fields.value = fields.value.filter((f) => f.key !== actionId.value);
 }
 
 function handleUpdating(id: string, val: IFormField) {

@@ -104,6 +104,7 @@
                                     avatar: post.user_id.profile,
                                 }"
                                 :likes="post.likes.length"
+                                :link="post.link"
                                 :comments="post.comments.length"
                                 :created-at="post.createdAt"
                                 hide-likes

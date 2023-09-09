@@ -21,14 +21,19 @@
                 <label class="form-label">Expenses</label>
                 <form>
                     <div v-for="(expense, i) in expenses" :key="i" class="flex-center space-x-1 mb-2">
-                        <input v-model="expense.name" type="text" class="input input-sm" placeholder="Name.." />
-                        <input v-model="expense.amount" type="number" class="input input-sm" placeholder="Amount.." />
+                        <input v-model="expense.name" type="text" class="input input-sm w-[60%]" placeholder="Name.." />
+                        <input
+                            v-model="expense.amount"
+                            type="number"
+                            class="input input-sm w-[40%]"
+                            placeholder="Amount.."
+                        />
                         <span @click="deleteExpense(expense.key)"
                             ><Icon name="fa6-solid:xmark" class="text-red-500 cursor-pointer"
                         /></span>
                     </div>
                     <div class="flex-between mt-4 space-x-2">
-                        <span class="font-semibold text-secondary">Total: Rp. {{ total }}</span>
+                        <span class="font-semibold text-secondary">Total: Rp. {{ formatNumber(total) }}</span>
                         <button @click="addExpense" type="button" class="btn btn-sm">+Add Expense</button>
                     </div>
                 </form>

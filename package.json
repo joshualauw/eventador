@@ -32,6 +32,7 @@
         "sass": "^1.62.1",
         "vue-chart-3": "^3.1.8",
         "vue-toastification": "^2.0.0-rc.5",
-        "vue3-draggable": "^2.0.9"
+        "vue3-draggable": "^2.0.9",
+        "vuedraggable": "^4.1.0"
     }
 }

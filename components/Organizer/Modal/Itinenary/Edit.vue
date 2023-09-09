@@ -15,15 +15,22 @@
             </div>
             <div v-if="context == 'update'" class="form-group mt-4">
                 <label class="form-label">Schedules</label>
-                <div v-for="(schedule, i) in schedules" :key="i" class="flex-center space-x-1">
-                    <input v-model="schedule.name" type="text" class="input input-sm w-1/2" placeholder="Name.." />
-                    <div class="flex w-1/2">
+                <div v-for="(schedule, i) in schedules" :key="i">
+                    <div class="flex-center space-x-1.5">
+                        <input
+                            v-model="schedule.name"
+                            type="text"
+                            class="input input-sm max-w-full"
+                            placeholder="Name.."
+                        />
+                        <span @click="deleteSchedule(schedule.key)">
+                            <Icon name="fa6-solid:xmark" class="text-red-500 cursor-pointer" />
+                        </span>
+                    </div>
+                    <div class="flex mt-2 border-b border-border pb-4">
                         <input v-model="schedule.start_time" type="time" class="input input-sm" />
                         <input v-model="schedule.end_time" type="time" class="input input-sm" />
                     </div>
-                    <span @click="deleteSchedule(schedule.key)"
-                        ><Icon name="fa6-solid:xmark" class="text-red-500 cursor-pointer"
-                    /></span>
                 </div>
                 <div class="flex-end mt-4">
                     <button @click="addSchedule" type="button" class="btn btn-sm">+Add Schedule</button>
