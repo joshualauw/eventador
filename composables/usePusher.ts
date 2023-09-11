@@ -19,7 +19,7 @@ export default function usePusher() {
                                 navigateTo("/notification");
                             },
                         });
-                        if (pref == "user:transaction") await getMe();
+                        await getMe();
                     });
                 });
             }

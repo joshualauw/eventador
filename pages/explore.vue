@@ -12,7 +12,7 @@
                     />
                     <span class="text-sm md:text-base">Wishlisted</span>
                 </div>
-                <ExploreFilter @filtered="refresh" />
+                <ExploreFilter @cleared="resetFilter" @filtered="refresh" />
             </div>
         </div>
         <p v-if="pending" class="text-center font-semibold mt-8 text-xl">Loading...</p>
@@ -52,5 +52,19 @@ function updateWishlist(id: string) {
         const idx = events.value.data.findIndex((ev) => ev._id == id);
         events.value.data[idx].is_wishlist = !events.value.data[idx].is_wishlist;
     }
+}
+
+function resetFilter() {
+    query.value = {
+        keyword: "",
+        location: "",
+        category: "",
+        start_price: 0,
+        end_price: 500000,
+        start_date: null,
+        end_date: null,
+        wishlist: false,
+    };
+    refresh();
 }
 </script>

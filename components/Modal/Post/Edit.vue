@@ -13,7 +13,12 @@
                     <input @change="handleFileChange" type="file" class="input-file max-w-full" />
                 </div>
             </div>
-            <img v-if="preview" :src="preview" class="mx-auto max-h-48 rounded-md" />
+            <img
+                v-if="preview"
+                :src="preview"
+                @click="removeImage"
+                class="mx-auto max-h-48 rounded-md cursor-pointer hover:brightness-75"
+            />
             <div class="form-field">
                 <label class="form-label">Post Content</label>
                 <div class="form-control flex-col">
@@ -248,6 +253,11 @@ const handleFileChange = (event: any) => {
         createToast("file should be an image!", TYPE.ERROR);
     }
 };
+
+function removeImage() {
+    postState.image = null;
+    preview.value = "";
+}
 
 function addTag() {
     if (newTag.value && !postState.tags.map((tag) => tag.val).includes(newTag.value)) {

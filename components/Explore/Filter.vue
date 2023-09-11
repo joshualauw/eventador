@@ -65,9 +65,12 @@
                         placeholder="End date.."
                     />
                 </div>
-                <button @click="emits('filtered')" class="btn btn-sm lg:btn-md btn-solid-primary float-right">
-                    Apply
-                </button>
+                <div class="flex w-full justify-end space-x-1.5">
+                    <button @click="emits('cleared')" class="btn btn-sm lg:btn-md btn-solid-error flex-center">
+                        Clear <Icon name="heroicons:x-mark" class="ml-1 w-4 h-4" />
+                    </button>
+                    <button @click="emits('filtered')" class="btn btn-sm lg:btn-md btn-solid-primary">Apply</button>
+                </div>
             </div>
         </div>
     </div>
@@ -76,7 +79,7 @@
 <script setup lang="ts">
 import categories from "@/assets/json/categories.json";
 
-const emits = defineEmits<{ (e: "filtered"): void }>();
+const emits = defineEmits<{ (e: "filtered"): void; (e: "cleared"): void }>();
 
 const { exploreEventQuery: query } = useEventStore();
 </script>
