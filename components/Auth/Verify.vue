@@ -60,7 +60,6 @@ watchEffect(() => (verifyState.email = registeredUser.value));
 async function doActivate() {
     const res = await mutate(verifyState);
     if (res.status) {
-        registeredUser.value = "";
         emits("switch", "login");
     }
 }

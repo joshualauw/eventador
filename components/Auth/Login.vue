@@ -70,8 +70,10 @@ const { value: loginState, reset } = useStateHandler({
     password: "",
 });
 
-const { login } = useAuthStore();
+const { login, registeredUser } = useAuthStore();
 const { mutate, error, errors, pending } = useMutate(login);
+
+watchEffect(() => (loginState.email = registeredUser.value));
 
 async function doLogin() {
     const res = await mutate(loginState);
