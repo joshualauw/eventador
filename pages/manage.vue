@@ -2,39 +2,32 @@
     <div>
         <div class="flex-between mb-8">
             <h2 class="font-bold text-lg md:text-xl">
-                Managed Events <span v-if="!loggedUser?.is_premium">({{ events?.data.events_count }}/{{ 3 }})</span>
+                Your Events <span v-if="!loggedUser?.is_premium">({{ events?.data.events_count }}/{{ 3 }})</span>
             </h2>
-            <label for="create-event-modal" class="btn btn-primary">+ Create Event</label>
+            <div class="flex-center space-x-4">
+                <select v-model="filter" class="select select-sm md:select-md w-36">
+                    <option value="all">All</option>
+                    <option value="owned">Owned</option>
+                    <option value="organized">Organized</option>
+                    <option value="attended">Attended</option>
+                </select>
+                <label for="create-event-modal" class="btn btn-sm md:btn-md btn-primary">
+                    + <span class="hidden md:block ml-1.5">Create Event</span>
+                </label>
+            </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <ManageItem
-                v-for="managed in events?.data.managed"
+                v-for="managed in events?.data.userEvents"
                 :id="managed._id"
                 :name="managed.name"
+                :banner="managed.banner"
                 :publicity="managed.publicity"
-                :total_participants="managed.total_participants"
-                :capacity="managed.capacity"
+                :start_date="managed.start_date"
                 :type="managed.type"
-                context="managed"
             />
         </div>
-        <p v-if="events && events.data.managed.length == 0" class="text-content2">-no managed events-</p>
-        <div class="flex-between my-8">
-            <h2 class="font-bold text-xl">Attended Events</h2>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            <ManageItem
-                v-for="attended in events?.data.attended"
-                :id="attended._id"
-                :name="attended.name"
-                :publicity="attended.publicity"
-                :total_participants="attended.total_participants"
-                :capacity="attended.capacity"
-                :type="attended.type"
-                context="attended"
-            />
-        </div>
-        <p v-if="events && events.data.attended.length == 0" class="text-content2">-no attended events-</p>
+        <p v-if="events && events.data.userEvents.length == 0" class="text-content2">-no events-</p>
         <ModalEventCreate />
     </div>
 </template>
@@ -45,7 +38,12 @@ definePageMeta({
     middleware: "auth",
 });
 
+const filter = ref("all");
 const { loggedUser } = useAuthStore();
 const { getUserEvents } = useEventStore();
-const { data: events } = await useAsyncData("getUserEvents", getUserEvents);
+const { data: events } = await useAsyncData("getUserEvents", () => getUserEvents({ filter: filter.value }), {
+    watch: [filter],
+});
+
+console.log(events.value?.data);
 </script>

@@ -21,8 +21,8 @@ export default function useEventStore() {
         return res.data;
     }
 
-    async function getUserEvents() {
-        const res = await executeRequest<IUserEvents.Data>("/event/user", { method: "GET" });
+    async function getUserEvents(query?: IUserEvents.Query) {
+        const res = await executeRequest<IUserEvents.Data>("/event/user", { method: "GET", query });
         return res.data;
     }
 

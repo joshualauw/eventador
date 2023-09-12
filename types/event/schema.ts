@@ -20,7 +20,7 @@ namespace IExploreEvent {
 namespace IGetEventDetail {
     export type Data = ApiResponse<{
         event: IEvent & {
-            slotLeft: number;
+            total_participants: number;
             owner: { _id: string; username: string; profile?: string; followers_count: number };
             is_joined: boolean;
         };
@@ -31,16 +31,14 @@ namespace IGetEventDetail {
 }
 
 namespace IUserEvents {
+    export type Query = {
+        filter?: string;
+    };
+
     export type Data = ApiResponse<{
         events_count: number;
-        managed: (Pick<IEvent, "_id" | "name" | "capacity"> & {
+        userEvents: (Pick<IEvent, "_id" | "name" | "banner" | "start_date"> & {
             publicity: string;
-            total_participants: number;
-            type: IParticipantType;
-        })[];
-        attended: (Pick<IEvent, "_id" | "name" | "capacity"> & {
-            publicity: string;
-            total_participants: number;
             type: IParticipantType;
         })[];
     }>;

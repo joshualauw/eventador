@@ -48,7 +48,7 @@ function logout() {
     loggedUser.value = null;
     loggedParticipant.value = null;
 
-    navigateTo("/");
+    navigateTo("/home");
     createToast("logout successful", TYPE.SUCCESS);
 }
 </script>

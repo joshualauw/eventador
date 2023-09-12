@@ -14,7 +14,6 @@
             <div class="space-y-0.5 text-sm font-semibold">
                 <p class="text-secondary">{{ dayjs(date).format("ddd, DD MMM YYYY") }}</p>
                 <p class="text-gray-500">{{ location_name }}</p>
-                <p class="text-primary">{{ slot }} Max Participants</p>
             </div>
             <div class="badge badge-primary w-fit">{{ category }}</div>
             <div class="card-footer justify-end space-x-2 mt-2">

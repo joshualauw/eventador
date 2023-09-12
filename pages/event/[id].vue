@@ -98,7 +98,10 @@
                             <p class="text-3xl text-success font-bold">
                                 Rp. {{ formatNumber(eventDetail.data.event.price) }}
                             </p>
-                            <p>{{ eventDetail.data.event.slotLeft }} Slots Left</p>
+                            <p>
+                                {{ eventDetail.data.event.capacity - eventDetail.data.event.total_participants }} /
+                                {{ eventDetail.data.event.capacity }} slots remaining
+                            </p>
                             <div v-if="loggedUser">
                                 <label for="payment-modal-register" class="btn w-full btn-primary mt-3">
                                     Register Now
