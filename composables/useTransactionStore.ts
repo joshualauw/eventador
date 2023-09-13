@@ -11,5 +11,14 @@ export default function useTransactionStore() {
         return res.data;
     }
 
-    return { getAllTransaction, getTransactionReport };
+    async function getTimeRangedReport(event_id: string, query: IGetTimeRangedReport.Query) {
+        const res = await executeRequest<IGetTimeRangedReport.Data>(`/transaction/${event_id}/time`, {
+            method: "GET",
+            query,
+            toast: true,
+        });
+        return res.data;
+    }
+
+    return { getAllTransaction, getTransactionReport, getTimeRangedReport };
 }

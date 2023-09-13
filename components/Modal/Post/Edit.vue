@@ -68,12 +68,12 @@
                     />
                     <img
                         :src="postState.link.banner || '/images/default-event.jpg'"
-                        class="rounded-md hidden md:block w-20 h-12 md:mr-2"
+                        class="rounded-md w-12 h-7 md:w-20 md:h-12 md:mr-2"
                     />
                     <div>
                         <p class="font-semibold text-sm md:text-base">{{ postState.link.name }}</p>
                         <p
-                            @click="goToEvent(postState.link)"
+                            @click="goToLink(postState.link)"
                             class="text-xs md:text-sm text-primary hover:underline cursor-pointer"
                         >
                             {{ postState.link.url }}
@@ -179,8 +179,8 @@ function clearEventLink() {
     searchTerm.value = "";
 }
 
-function goToEvent(event: IPostLink) {
-    window.open(config.public.baseURL + `/event/${event.id}`, "_blank");
+function goToLink(event: IPostLink) {
+    window.open(config.public.baseURL + event.url, "_blank");
 }
 
 function selectEvent(event: IPostLink) {
@@ -197,7 +197,7 @@ async function searchEvent() {
             ...res.data.map((ev) => ({
                 id: ev._id,
                 name: ev.name,
-                url: config.public.baseURL + `/event/${ev._id}`,
+                url: `/event/${ev._id}`,
                 banner: ev.banner || "/images/default-event.jpg",
             }))
         );
@@ -214,7 +214,6 @@ async function savePost(setOpen: (state: boolean) => void) {
     if (postState.link) {
         Object.assign(newPost, { link: { ...postState.link } });
     }
-    console.log(newPost);
 
     if (props.context == "create") {
         const res = await createMutate(newPost);

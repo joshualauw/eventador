@@ -89,16 +89,13 @@ const { mutate, pending } = useMutate(saveCertificate);
 const { data: certificate } = await useAsyncData("getCertificate", () => getCertificate(route.params.id as string));
 
 if (certificate.value) {
-    //using base template
     if (certificate.value.data.template.includes(",")) {
         const template = certificate.value.data.template.split(",");
         activeTemplate.value = {
             file: certificate.value.data.template,
             preview: base64ToBlobUrl(template[1], template[0]),
         };
-    }
-    //using custom template
-    else {
+    } else {
         activeTemplate.value = {
             file: certificate.value.data.template,
             preview: certificate.value.data.template,

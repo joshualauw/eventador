@@ -15,3 +15,11 @@ namespace IGetTransactionReport {
         weekly_transactions: ITransaction[];
     }>;
 }
+
+namespace IGetTimeRangedReport {
+    export type Query = {
+        start_date: string;
+        end_date: string;
+    };
+    export type Data = ApiResponse<ITransaction[]>;
+}

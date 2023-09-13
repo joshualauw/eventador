@@ -3,6 +3,7 @@ interface FetchOptions {
     body?: any;
     query?: any;
     headers?: any;
+    toast?: boolean;
 }
 
 interface ApiResponse<T> {

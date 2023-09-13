@@ -22,7 +22,7 @@
                     </p>
                 </div>
                 <p class="text-sm text-success font-semibold" v-if="role">As {{ role }}</p>
-                <p class="text-xs">at {{ dayjs(createdAt).format("DD/MM/YY, HH:mm") }}</p>
+                <p class="text-xs">{{ dayjs(createdAt).fromNow() }}</p>
                 <p class="text-content2 text-sm mt-2">{{ content }}</p>
                 <div v-if="isEditable" class="flex mt-6 space-x-3">
                     <label

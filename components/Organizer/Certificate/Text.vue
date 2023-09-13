@@ -1,16 +1,24 @@
 <template>
-    <div @click="emits('selected', text)" class="absolute group select-none flex-box z-30" :style="styles">
-        <div
-            @mousedown="dragMouseDown"
-            class="hidden group-hover:flex absolute -top-2 -left-2 h-6 w-6 cursor-move items-center justify-center rounded-full btn-solid-primary text-sm"
-        >
-            <Icon name="material-symbols:drag-pan" />
-        </div>
+    <Vue3DraggableResizable
+        :initW="text.state.width"
+        :initH="text.state.height"
+        v-model:x="text.state.x"
+        v-model:y="text.state.y"
+        v-model:w="text.state.width"
+        v-model:h="text.state.height"
+        :draggable="true"
+        :resizable="true"
+        @activated="emits('selected', text)"
+        class="absolute group select-none flex-box z-30"
+        :style="styles"
+    >
         {{ text.content }}
-    </div>
+    </Vue3DraggableResizable>
 </template>
 
 <script setup lang="ts">
+import Vue3DraggableResizable from "vue3-draggable-resizable";
+
 const props = defineProps<{ text: ICertificateTextExtra }>();
 const emits = defineEmits<{ (e: "selected", text: ICertificateTextExtra): void }>();
 
@@ -38,22 +46,4 @@ const styles = computed(() => {
     }
     return styleString;
 });
-
-function dragMouseDown(e: MouseEvent) {
-    e.preventDefault();
-    document.onmousemove = dragMouseMove;
-    document.onmouseup = dragMouseUp;
-}
-
-function dragMouseMove(e: MouseEvent) {
-    e.preventDefault();
-    props.text.state.x = e.x;
-    props.text.state.y = e.y;
-}
-
-function dragMouseUp(e: MouseEvent) {
-    e.preventDefault();
-    document.onmousemove = null;
-    document.onmouseup = null;
-}
 </script>

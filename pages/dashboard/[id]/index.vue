@@ -14,35 +14,45 @@
                 </div>
             </div>
         </div>
-        <div v-if="report && loggedUser?.is_premium" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-            <OrganizerOverviewMonthly :trans="report.data.monthly_transactions" />
-            <OrganizerOverviewWeekly :trans="report.data.weekly_transactions" />
-            <OrganizerOverviewDaily :trans="report.data.today_transactions" />
-            <div>
-                <p class="font-semibold mb-4 text-lg">Highest Record</p>
-                <div v-if="report.data.highest_transaction" class="card max-h-full">
-                    <div class="card-body">
-                        <p class="text-xl text-success">
-                            Rp. {{ formatNumber(report.data.highest_transaction.revenue) }}
-                        </p>
-                        <p class="text-content-2">
-                            {{ dayjs(report.data.highest_transaction._id).format("DD-MM-YYYY") }}
-                        </p>
-                    </div>
+        <div v-if="loggedUser?.is_premium">
+            <div class="my-8">
+                <div class="flex-center space-x-4 mb-6">
+                    <input v-model="timeRange.start_date" type="date" class="input input-sm md:input-md" />
+                    <input v-model="timeRange.end_date" type="date" class="input input-sm md:input-md" />
+                    <button @click="applyTimeRangedReport" class="btn btn-sm md:btn-md btn-primary">Apply</button>
                 </div>
-                <p v-else>-no transactions recorded-</p>
-                <p class="font-semibold my-4 text-lg">Latest Transaction</p>
-                <div v-if="report.data.latest_transaction" class="card max-h-full">
-                    <div class="card-body">
-                        <p class="text-xl text-success">
-                            Rp. {{ formatNumber(report.data.latest_transaction.amount) }}
-                        </p>
-                        <p class="text-content-2">
-                            {{ dayjs(report.data.latest_transaction.trans_date).format("DD-MM-YYYY") }}
-                        </p>
+                <OrganizerOverviewTimed :days="timeRange.days" :trans="timeReport?.data || []" />
+            </div>
+            <div v-if="report" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                <OrganizerOverviewMonthly :trans="report.data.monthly_transactions" />
+                <OrganizerOverviewWeekly :trans="report.data.weekly_transactions" />
+                <OrganizerOverviewDaily :trans="report.data.today_transactions" />
+                <div>
+                    <p class="font-semibold mb-4 text-lg">Highest Record</p>
+                    <div v-if="report.data.highest_transaction" class="card max-h-full">
+                        <div class="card-body">
+                            <p class="text-xl text-success">
+                                Rp. {{ formatNumber(report.data.highest_transaction.revenue) }}
+                            </p>
+                            <p class="text-content-2">
+                                {{ dayjs(report.data.highest_transaction._id).format("DD-MM-YYYY") }}
+                            </p>
+                        </div>
                     </div>
+                    <p v-else>-no transactions recorded-</p>
+                    <p class="font-semibold my-4 text-lg">Latest Transaction</p>
+                    <div v-if="report.data.latest_transaction" class="card max-h-full">
+                        <div class="card-body">
+                            <p class="text-xl text-success">
+                                Rp. {{ formatNumber(report.data.latest_transaction.amount) }}
+                            </p>
+                            <p class="text-content-2">
+                                {{ dayjs(report.data.latest_transaction.trans_date).format("DD-MM-YYYY") }}
+                            </p>
+                        </div>
+                    </div>
+                    <p v-else>-no transactions recorded-</p>
                 </div>
-                <p v-else>-no transactions recorded-</p>
             </div>
         </div>
         <p v-else class="text-xl font-bold mb-4">
@@ -53,6 +63,7 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import { TYPE } from "vue-toastification";
 
 definePageMeta({
     layout: "dashboard",
@@ -61,10 +72,44 @@ definePageMeta({
 
 const route = useRoute();
 const { loggedUser } = useAuthStore();
-const { getTransactionReport } = useTransactionStore();
+const { getTransactionReport, getTimeRangedReport } = useTransactionStore();
+const timeRange = reactive({
+    start_date: dayjs().startOf("month").format("YYYY-MM-DD"),
+    end_date: dayjs().endOf("month").format("YYYY-MM-DD"),
+    days: [] as string[],
+});
+
 const { data: report } = await useAsyncData("getTransactionReport", () =>
     getTransactionReport(route.params.id as string)
 );
+const { data: timeReport } = await useAsyncData("getTimeRangedReport", () => applyTimeRangedReport());
+
+async function applyTimeRangedReport() {
+    let start = dayjs(timeRange.start_date);
+    const end = dayjs(timeRange.end_date);
+    const dayDiff = end.diff(start, "day");
+
+    if (dayDiff > 31) {
+        createToast("maximum range cannot exceed 1 month!", TYPE.ERROR);
+        return;
+    }
+    if (!start.isSameOrBefore(end)) {
+        createToast("start date cannot be greater than end date!", TYPE.ERROR);
+        return;
+    }
+
+    const res = await getTimeRangedReport(route.params.id as string, {
+        start_date: timeRange.start_date,
+        end_date: timeRange.end_date,
+    });
+    timeRange.days = [];
+    while (start.isSameOrBefore(end)) {
+        timeRange.days.push(start.format("DD-MMM"));
+        start = start.add(1, "day");
+    }
+
+    return res;
+}
 
 const stats = [
     {

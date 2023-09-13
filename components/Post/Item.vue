@@ -13,9 +13,7 @@
                     </div>
                     <div>
                         <p class="font-semibold text-sm md:text-base">{{ author.name }}</p>
-                        <p class="text-xs md:text-sm text-content2">
-                            posted at {{ dayjs(createdAt).format("DD/MM/YY, HH:mm") }}
-                        </p>
+                        <p class="text-xs md:text-sm text-content2">posted {{ dayjs(createdAt).fromNow() }}</p>
                     </div>
                 </div>
                 <div>
@@ -57,7 +55,7 @@
             <div v-if="link" class="card-body flex-row items-center p-4 relative flex-wrap">
                 <img
                     :src="link.banner || '/images/default-event.jpg'"
-                    class="rounded-md hidden md:block w-20 h-12 md:mr-2"
+                    class="rounded-md w-12 h-7 md:w-20 md:h-12 md:mr-2"
                 />
                 <div>
                     <p class="font-semibold text-sm md:text-base">{{ link.name }}</p>
@@ -123,9 +121,12 @@ const emits = defineEmits<{
 const { loggedUser } = useAuthStore();
 const { likePost } = usePostStore();
 const { mutate } = useMutate(likePost);
+const config = useRuntimeConfig();
 
 function goToLink() {
-    window.open(props.link?.url, "_blank");
+    if (props.link) {
+        window.open(config.public.baseURL + props.link.url, "_blank");
+    }
 }
 
 async function doLikePost() {

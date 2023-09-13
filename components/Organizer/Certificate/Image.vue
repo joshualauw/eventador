@@ -1,16 +1,25 @@
 <template>
-    <div @click="emits('selected', image)" class="absolute group select-none flex-box z-30" :style="styles">
+    <Vue3DraggableResizable
+        :initW="image.state.width"
+        :initH="image.state.height"
+        v-model:x="image.state.x"
+        v-model:y="image.state.y"
+        v-model:w="image.state.width"
+        v-model:h="image.state.height"
+        :draggable="true"
+        :resizable="true"
+        @activated="emits('selected', image)"
+        @click="emits('selected', image)"
+        class="absolute group select-none flex-box z-30"
+        :style="styles"
+    >
         <img :src="image.preview" class="w-full h-full" />
-        <div
-            @mousedown="dragMouseDown"
-            class="hidden group-hover:flex absolute -top-2 -left-2 h-6 w-6 cursor-move items-center justify-center rounded-full btn-solid-primary text-sm"
-        >
-            <Icon name="material-symbols:drag-pan" />
-        </div>
-    </div>
+    </Vue3DraggableResizable>
 </template>
 
 <script setup lang="ts">
+import Vue3DraggableResizable from "vue3-draggable-resizable";
+
 const props = defineProps<{ image: ICertificateImageExtra }>();
 const emits = defineEmits<{ (e: "selected", image: ICertificateImageExtra): void }>();
 
@@ -25,22 +34,4 @@ const styles = computed(() => {
 
     return styleString;
 });
-
-function dragMouseDown(e: MouseEvent) {
-    e.preventDefault();
-    document.onmousemove = dragMouseMove;
-    document.onmouseup = dragMouseUp;
-}
-
-function dragMouseMove(e: MouseEvent) {
-    e.preventDefault();
-    props.image.state.x = e.x;
-    props.image.state.y = e.y;
-}
-
-function dragMouseUp(e: MouseEvent) {
-    e.preventDefault();
-    document.onmousemove = null;
-    document.onmouseup = null;
-}
 </script>

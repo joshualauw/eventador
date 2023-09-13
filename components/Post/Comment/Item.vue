@@ -9,9 +9,7 @@
             <div class="w-full flex-between">
                 <div>
                     <p class="font-semibold text-sm md:text-base">{{ commenter.name }}</p>
-                    <p class="text-xs md:text-sm text-content2">
-                        commented at {{ dayjs(createdAt).format("DD/MM/YY, HH:mm") }}
-                    </p>
+                    <p class="text-xs md:text-sm text-content2">commented {{ dayjs(createdAt).fromNow() }}</p>
                 </div>
                 <div class="flex-center space-x-2">
                     <div v-if="commenter.id == loggedUser?._id && !hide_edit" class="dropdown">
