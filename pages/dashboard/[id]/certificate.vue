@@ -182,7 +182,7 @@ function addText() {
         options: {
             fontStyle: "",
             fontSize: 16,
-            fontColor: "black",
+            fontColor: "#000000",
         },
     });
 }
