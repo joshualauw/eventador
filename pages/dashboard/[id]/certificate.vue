@@ -1,7 +1,12 @@
 <template>
     <div>
         <UILoader v-if="pending" />
-        <p class="text-xl text-center block xl:hidden">Cannot open in small screen, desktop only</p>
+        <p
+            class="text-2xl font-semibold text-center absolute w-screen h-screen flex-center xl:hidden flex-col justify-center"
+        >
+            Cannot open in small screen, desktop only
+            <Icon name="ph:smiley" class="mt-4 h-14 w-14 text-content2" />
+        </p>
         <div class="relative w-screen h-screen hidden xl:block">
             <div class="flex flex-col gap-4 flex-center absolute top-2 left-2 p-2 z-50">
                 <label v-if="!isPreview" @click="$router.go(-1)" class="btn btn-neutral w-12 h-12 btn-circle">

@@ -56,14 +56,14 @@
                         class="grid grid-cols-3"
                     >
                         <div class="col-span-1">Role</div>
-                        <div class="col-span-2 flex-center space-x-2">
+                        <div class="col-span-2 flex-center flex-col md:flex-row gap-4 md:gap-1.5">
                             <input
                                 v-model="role"
                                 type="text"
-                                class="input input-sm max-w-[12rem] w-fit"
+                                class="input input-sm max-w-full md:max-w-[12rem]"
                                 placeholder="custom role.."
                             />
-                            <button @click="doApplyRole" class="btn btn-primary btn-sm">Save</button>
+                            <button @click="doApplyRole" class="btn btn-primary btn-sm w-full md:w-fit">Save</button>
                         </div>
                     </div>
                 </div>

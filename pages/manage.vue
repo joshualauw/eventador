@@ -4,8 +4,8 @@
             <h2 class="font-bold text-lg md:text-xl">
                 Your Events <span v-if="!loggedUser?.is_premium">({{ events?.data.events_count }}/{{ 3 }})</span>
             </h2>
-            <div class="flex-center space-x-4">
-                <select v-model="filter" class="select select-sm md:select-md w-36">
+            <div class="flex-center space-x-2 md:space-x-4">
+                <select v-model="filter" class="select select-sm md:select-md w-28 md:w-36">
                     <option value="all">All</option>
                     <option value="owned">Owned</option>
                     <option value="organized">Organized</option>

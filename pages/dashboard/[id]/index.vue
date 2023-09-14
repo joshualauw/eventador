@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <p v-else class="text-xl font-bold mb-4">
+        <p v-else @click="navigateTo('/premium')" class="text-xl font-bold mb-4 cursor-pointer">
             <Icon name="material-symbols:lock" class="mr-2" /> Unlock premium to view more statistic and report
         </p>
     </div>

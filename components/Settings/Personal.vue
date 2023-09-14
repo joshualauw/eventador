@@ -43,10 +43,10 @@
                 />
             </div>
             <div class="form-field">
-                <label class="form-label">Phone Number</label>
+                <label class="form-label">Bank Account</label>
                 <input
                     v-model="personalState.phone_number"
-                    placeholder="phone number.."
+                    placeholder="account number.."
                     type="text"
                     class="input max-w-full"
                 />

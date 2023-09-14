@@ -26,8 +26,8 @@
             <div class="form-field">
                 <div class="form-control justify-between">
                     <div>
-                        <input type="checkbox" class="checkbox mr-2" />
-                        <span class="text-content2">Remember me</span>
+                        <input v-model="rememberMe" type="checkbox" class="checkbox mr-2" />
+                        <span class="text-content2">Remember me </span>
                     </div>
                     <label class="form-label">
                         <a @click="emits('switch', 'forgot')" class="link link-underline-hover link-primary text-xs">
@@ -70,13 +70,14 @@ const { value: loginState, reset } = useStateHandler({
     password: "",
 });
 
+const rememberMe = ref(false);
 const { login, registeredUser } = useAuthStore();
 const { mutate, error, errors, pending } = useMutate(login);
 
 watchEffect(() => (loginState.email = registeredUser.value));
 
 async function doLogin() {
-    const res = await mutate(loginState);
+    const res = await mutate(loginState, rememberMe.value);
     if (res.status) {
         emits("saved");
         reset();

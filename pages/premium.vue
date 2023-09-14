@@ -41,7 +41,7 @@ async function doBecomePremium() {
             loggedUser.value.is_premium = true;
             loggedUser.value.balance -= 59000;
         }
-        navigateTo("/");
+        navigateTo("/home");
     }
 }
 </script>

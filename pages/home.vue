@@ -4,7 +4,12 @@
             <div class="flex-between">
                 <div class="flex-center space-x-4">
                     <h2 class="md:text-xl text-lg font-semibold">All Posts</h2>
-                    <label @click="handleCreating" for="edit-post-modal" class="btn btn-sm md:btn-md btn-primary">
+                    <label
+                        v-if="loggedUser"
+                        @click="handleCreating"
+                        for="edit-post-modal"
+                        class="btn btn-sm md:btn-md btn-primary"
+                    >
                         <span class="hidden sm:inline mr-2">Create</span>
                         <Icon name="material-symbols:add" class="w-5 h-5" />
                     </label>
@@ -49,11 +54,13 @@ definePageMeta({
 const sortBy = ref("latest");
 const comments = ref<DetailComment[]>([]);
 
+const { loggedUser } = useAuthStore();
 const { getAllPosts } = usePostStore();
+const { handleCreating, actionContext, actionId } = useCrudManager();
+
 const { data: posts, refresh } = await useAsyncData("getAllPosts", () => getAllPosts({ sortBy: sortBy.value }), {
     watch: [sortBy],
 });
-const { handleCreating, actionContext, actionId } = useCrudManager();
 
 function openComments(id: string) {
     comments.value = [];

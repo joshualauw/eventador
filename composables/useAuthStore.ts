@@ -25,14 +25,18 @@ export default function useAuthStore() {
         return res;
     }
 
-    async function login(body: ILogin.Body) {
+    async function login(body: ILogin.Body, rememberMe?: boolean) {
         const res = await executeRequest<ILogin.Data>("/auth/login", { method: "POST", body });
         if (res.status && res.data) {
-            //save user data in cookie
-            loggedUser.value = res.data.data;
-            const token = useCookie("token", { maxAge: 24 * 60 * 60 });
+            let token;
+            if (rememberMe) {
+                token = useCookie("token", { maxAge: 48 * 60 * 60 }); //2 days
+            } else {
+                token = useCookie("token"); //session
+            }
             token.value = res.data.data.token;
-            //subscribe to pusher channel
+            loggedUser.value = res.data.data;
+
             const { $pusher } = useNuxtApp();
             const { subscribe } = usePusher();
             subscribe($pusher);
