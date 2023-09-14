@@ -9,7 +9,9 @@
                     </div>
                     <div>
                         <p class="font-bold lg:text-lg">{{ userDetail?.data.user.username }}</p>
-                        <p class="text-xs md:text-sm lg:text-base text-content2">{{ userDetail?.data.user.email }}</p>
+                        <p class="text-xs md:text-sm lg:text-base text-content2">
+                            {{ emailCensor(userDetail?.data.user.email || "") }}
+                        </p>
                     </div>
                 </div>
                 <span class="font-semibold hidden xl:inline lg:text-lg">

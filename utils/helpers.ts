@@ -90,12 +90,23 @@ String.prototype.replaceAt = function (index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 };
 
-export function emailCensor(str: string) {
-    let ctr = 0;
-    for (let i = 0; i < str.length; i++) {
-        ctr++;
-        //@ts-ignore
-        if (ctr % 4 == 0) str = str.replaceAt(ctr, "*");
+export function emailCensor(email: string): string {
+    const parts = email.split("@");
+    if (parts.length !== 2) {
+        return email;
     }
-    return str;
+
+    const [username, domain] = parts;
+    const usernameLength = username.length;
+
+    if (usernameLength <= 2) {
+        return email;
+    }
+
+    const firstChar = username[0];
+    const lastChar = username[usernameLength - 1];
+    const middleChars = "*".repeat(usernameLength - 2);
+
+    const censoredUsername = `${firstChar}${middleChars}${lastChar}`;
+    return `${censoredUsername}@${domain}`;
 }

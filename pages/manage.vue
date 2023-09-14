@@ -44,6 +44,4 @@ const { getUserEvents } = useEventStore();
 const { data: events } = await useAsyncData("getUserEvents", () => getUserEvents({ filter: filter.value }), {
     watch: [filter],
 });
-
-console.log(events.value?.data);
 </script>
