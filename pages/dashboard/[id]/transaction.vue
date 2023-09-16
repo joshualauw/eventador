@@ -4,13 +4,14 @@
             <div class="flex-center space-x-2">
                 <h1 class="font-semibold text-lg">All Transactions</h1>
             </div>
-            <div class="flex-center space-x-3">
-                <select v-model="status" class="select w-28">
-                    <option value="">All</option>
-                    <option value="success">Success</option>
-                    <option value="refunded">Refunded</option>
-                </select>
-            </div>
+        </div>
+        <div class="flex flex-center flex-col md:flex-row gap-3 mb-8">
+            <input v-model="searchTerm" type="text" class="input max-w-full md:w-56" placeholder="Search by name.." />
+            <select v-model="status" class="select w-full md:w-36">
+                <option value="">All</option>
+                <option value="success">Success</option>
+                <option value="refunded">Refunded</option>
+            </select>
         </div>
         <p v-if="filteredTransactions?.length == 0" class="text-center font-semibold text-lg text-content2 mt-8">
             -no transactions-
@@ -20,7 +21,10 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Transaction Date</th>
+                        <th @click="sortAscending = !sortAscending" class="cursor-pointer">
+                            Transaction Date
+                            <Icon :name="sortIcon" class="w-5 h-5" />
+                        </th>
                         <th>Buyer Name</th>
                         <th>Amount</th>
                         <th>Status</th>
@@ -56,8 +60,20 @@ const { data: transactions } = await useAsyncData("getAllTransaction", () =>
     getAllTransaction(route.params.id as string)
 );
 const status = ref("");
+const searchTerm = ref("");
+const sortAscending = ref(false);
+
+const sortIcon = computed(() =>
+    sortAscending.value ? "material-symbols:arrow-drop-up-rounded" : "material-symbols:arrow-drop-down-rounded"
+);
 
 const filteredTransactions = computed(() => {
-    return transactions.value?.data.filter((tr) => (status.value ? tr.status == status.value : true));
+    return transactions.value?.data
+        .filter((p) => p.user_id.username.toLowerCase().includes(searchTerm.value.toLowerCase()))
+        .filter((tr) => (status.value ? tr.status == status.value : true))
+        .sort((a, b) => {
+            if (sortAscending.value) return dateSort(new Date(a.trans_date), new Date(b.trans_date));
+            else return dateSort(new Date(b.trans_date), new Date(a.trans_date));
+        });
 });
 </script>

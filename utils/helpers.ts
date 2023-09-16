@@ -110,3 +110,9 @@ export function emailCensor(email: string): string {
     const censoredUsername = `${firstChar}${middleChars}${lastChar}`;
     return `${censoredUsername}@${domain}`;
 }
+
+export function dateSort(a: Date, b: Date) {
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+}
