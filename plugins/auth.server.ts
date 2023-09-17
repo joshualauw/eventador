@@ -3,6 +3,10 @@ export default defineNuxtPlugin(async () => {
     const token = useCookie("token");
 
     if (token.value) {
-        await getMe();
+        try {
+            await getMe();
+        } catch (error) {
+            console.error(error);
+        }
     }
 });
