@@ -55,8 +55,6 @@
 </template>
 
 <script setup lang="ts">
-import Draggable from "vuedraggable";
-
 definePageMeta({
     layout: "dashboard",
     middleware: ["auth", "participant"],

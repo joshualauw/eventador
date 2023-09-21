@@ -85,11 +85,6 @@ export function exclude<T, Key extends keyof T>(obj: T, keys: Key[]): Omit<T, Ke
     return newObj;
 }
 
-//@ts-ignore
-String.prototype.replaceAt = function (index, replacement) {
-    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
-};
-
 export function emailCensor(email: string): string {
     const parts = email.split("@");
     if (parts.length !== 2) {
@@ -115,4 +110,15 @@ export function dateSort(a: Date, b: Date) {
     if (a < b) return -1;
     if (a > b) return 1;
     return 0;
+}
+
+export async function urlToFile(imageUrl: string, fileName: string): Promise<File> {
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+        throw new Error("Failed to fetch image");
+    }
+
+    const blob = await response.blob();
+    const file = new File([blob], fileName, { type: blob.type });
+    return file;
 }

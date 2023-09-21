@@ -4,15 +4,17 @@
             <p class="text-content2">Respondent:</p>
             <p class="font-semibold mb-2">{{ email }}</p>
             <p class="text-content2">Answers:</p>
-            <div v-for="(answer, i) in answers">
-                <span class="mr-2"> {{ i + 1 }}.</span>
-                <span v-if="typeof answer == 'string'">{{ answer }}</span>
-                <span v-else>{{ answer.join(", ") }}</span>
+            <div v-for="(answer, i) in answers" class="mb-2">
+                <p class="font-semibold">
+                    {{ i + 1 }}. <span class="ml-1 mb-1">{{ answer.name }}</span>
+                </p>
+                <p v-if="typeof answer.value == 'string'" class="text-content2">{{ answer.value }}</p>
+                <p v-else class="text-content2">{{ answer.value.join(", ") }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ email: string; answers: any[] }>();
+defineProps<{ email: string; answers: IFormResponseAnswer[] }>();
 </script>

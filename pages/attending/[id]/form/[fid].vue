@@ -63,7 +63,7 @@ const { mutate, pending } = useMutate(submitResponse);
 
 const name = ref("");
 const fields = ref<(IFormField & { key: string })[]>([]);
-const response = ref<IFormResponse>({ email: loggedUser.value?.email || "", answers: [] as any[] });
+const response = ref<IFormResponse>({ email: loggedUser.value?.email || "", answers: [] });
 
 const { data: _fields } = await useAsyncData("getOneForm", () => getOneForm(route.params.fid as string));
 if (_fields.value) {
@@ -72,8 +72,10 @@ if (_fields.value) {
 }
 
 function handleUpdating(idx: number, val: any) {
-    response.value.answers[idx] = val;
-    console.log(response.value.answers);
+    response.value.answers[idx] = {
+        name: fields.value[idx].name,
+        value: val,
+    };
 }
 
 async function doSubmitResponse(setOpen: (state: boolean) => void) {

@@ -41,9 +41,18 @@ const route = useRoute();
 const { eventDetail, updateEventGallery } = useEventStore();
 const { error, errors, pending, mutate } = useMutate(updateEventGallery);
 
-const gallery = ref<{ key: string; file?: File; preview: string }[]>(
-    eventDetail.value?.gallery.map((gal) => ({ key: genId(4), preview: gal })) || []
-);
+const gallery = ref<{ key: string; file?: File; preview: string }[]>([]);
+if (eventDetail.value) {
+    for (let i = 0; i < eventDetail.value.gallery.length; i++) {
+        const image = eventDetail.value.gallery[i];
+        const uniqueId = genId(4);
+        gallery.value.push({
+            key: uniqueId,
+            file: await urlToFile(image, uniqueId),
+            preview: image,
+        });
+    }
+}
 
 const handleFileChange = (event: any) => {
     const files = event.target.files;

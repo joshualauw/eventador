@@ -38,6 +38,6 @@ namespace IDeleteForm {
 }
 
 namespace ISubmitResponse {
-    export type Body = { email: string; answers: any[] };
+    export type Body = { email: string; answers: { name: string; value: any }[] };
     export type Data = ApiResponse<IForm>;
 }

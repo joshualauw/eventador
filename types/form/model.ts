@@ -16,5 +16,10 @@ type IFormFieldExtra = IFormField & { key: string };
 
 interface IFormResponse {
     email: string;
-    answers: string[];
+    answers: IFormResponseAnswer[];
+}
+
+interface IFormResponseAnswer {
+    name: string;
+    value: any;
 }
