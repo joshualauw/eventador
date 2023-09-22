@@ -3,12 +3,12 @@
         <div
             v-show="options.role == 'audience'"
             id="remotePlayerContainer"
-            class="bg-border shadow-md w-full h-[300px] lg:h-[500px] flex-box rounded-xl"
+            class="bg-border shadow-md w-full h-[300px] lg:h-[500px] flex-box rounded-xl -scale-x-100"
         ></div>
         <div
             v-show="options.role == 'host'"
             id="localPlayerContainer"
-            class="bg-border shadow-md w-full h-[300px] lg:h-[500px] flex-box rounded-xl"
+            class="bg-border shadow-md w-full h-[300px] lg:h-[500px] flex-box rounded-xl -scale-x-100"
         ></div>
         <div class="mt-8 w-full flex-between">
             <div class="space-x-3">
