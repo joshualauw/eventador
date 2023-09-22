@@ -102,6 +102,7 @@
                                 {{ eventDetail.data.event.capacity - eventDetail.data.event.total_participants }} /
                                 {{ eventDetail.data.event.capacity }} slots remaining
                             </p>
+                            <p v-if="!loggedUser" class="text-error">Sign in to Register!</p>
                             <div v-if="loggedUser">
                                 <label for="payment-modal-register" class="btn w-full btn-primary mt-3">
                                     Register Now
