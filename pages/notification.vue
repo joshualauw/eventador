@@ -28,6 +28,7 @@
                 :type="notf.type"
                 :callback-url="notf.callbackUrl"
             />
+            <p v-if="notificationsData?.length == 0" class="text-content2 text-lg text-center">-no notifications-</p>
         </div>
         <UIModal v-slot="{ setOpen }" modal-id="delete-notification-modal">
             <div class="flex flex-col text-center gap-2">

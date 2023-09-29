@@ -236,13 +236,11 @@ const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =
 );
 const linkUrl = config.public.baseURL + "/event/" + route.params.id;
 
-useHead({
-    meta: [
-        { property: "og:title", content: eventDetail.value?.data.event.name },
-        { property: "og:description", content: "Join to our event!" },
-        { property: "og:image", content: eventDetail.value?.data.event.banner || "" },
-        { property: "og:url", content: linkUrl },
-    ],
+useSeoMeta({
+    ogTitle: eventDetail.value?.data.event.name || "",
+    ogDescription: "click this link to view the event page!",
+    ogImage: eventDetail.value?.data.event.banner || "",
+    ogUrl: linkUrl,
 });
 
 const socialMediaLinks = [

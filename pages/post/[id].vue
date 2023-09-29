@@ -1,10 +1,9 @@
 <template>
     <div>
         <UILoader v-if="pending" />
-        <div class="w-full flex space-x-12 mb-12">
+        <div v-if="post" class="w-full flex space-x-12 mb-12">
             <div class="w-full">
                 <PostItem
-                    v-if="post"
                     @liked="refresh"
                     @editing="handleUpdating"
                     @deleting="handleDeleting"
@@ -43,6 +42,7 @@
                 </div>
             </div>
         </div>
+        <p v-else class="text-content2 text-lg text-center">-post not found-</p>
         <ModalPostEdit @saved="refresh" :context="actionContext" :update-id="actionId" />
         <ModalPostDelete :label="actionLabel" :id="actionId" />
         <ModalReportPost :id="($route.params.id as string)" />

@@ -35,6 +35,7 @@
                 :date="event.start_date"
             />
         </div>
+        <p v-if="events?.data.length == 0" class="text-content2 text-lg text-center">-no events-</p>
     </div>
 </template>
 

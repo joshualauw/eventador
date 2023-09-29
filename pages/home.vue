@@ -38,6 +38,7 @@
                         class="py-4 border-b-2 border-gray-6"
                     />
                 </div>
+                <p v-if="posts?.data.length == 0" class="text-content2 text-lg text-center">-no posts-</p>
             </div>
             <ModalPostComment :comments="comments" />
             <ModalPostEdit @saved="refresh" :context="actionContext" :update-id="actionId" />
