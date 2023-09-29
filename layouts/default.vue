@@ -16,7 +16,7 @@
 <script setup lang="ts">
 const { loggedUser } = useAuthStore();
 const theme = computed(() => loggedUser.value?.preferences.theme || "light");
-const serverReady = useCookie("serverReady", { maxAge: 12 * 60 });
+const serverReady = useCookie("serverReady", { maxAge: 14 * 60 });
 
 async function healthcheck() {
     const res = await executeRequest("/healthcheck");
