@@ -237,9 +237,9 @@ const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =
 const linkUrl = config.public.baseURL + "/event/" + route.params.id;
 
 useServerSeoMeta({
-    ogTitle: eventDetail.value?.data.event.name || "",
-    ogDescription: "click this link to view the event page!",
-    ogImage: eventDetail.value?.data.event.banner || "",
+    ogTitle: () => eventDetail.value?.data.event.name || "Eventador",
+    ogDescription: () => eventDetail.value?.data.event.description.slice(0, 150) + "..." || "click this event!",
+    ogImage: () => eventDetail.value?.data.event.banner || "/images/default-event.jpg",
     ogUrl: linkUrl,
 });
 
