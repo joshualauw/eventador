@@ -3,12 +3,14 @@
         <div
             v-show="options.role == 'audience'"
             id="remotePlayerContainer"
-            class="bg-border shadow-md w-full h-[300px] lg:h-[500px] flex-box rounded-xl -scale-x-100"
+            class="bg-border shadow-md w-full h-[300px] lg:h-[500px] flex-box rounded-xl"
+            :class="{ '-scale-x-100': flipped }"
         ></div>
         <div
             v-show="options.role == 'host'"
             id="localPlayerContainer"
-            class="bg-border shadow-md w-full h-[300px] lg:h-[500px] flex-box rounded-xl -scale-x-100"
+            class="bg-border shadow-md w-full h-[300px] lg:h-[500px] flex-box rounded-xl"
+            :class="{ '-scale-x-100': flipped }"
         ></div>
         <div class="mt-8 w-full flex-between">
             <div class="space-x-3">
@@ -20,6 +22,9 @@
                     :class="btn.state ? 'btn-solid-error' : 'btn-solid-secondary'"
                 >
                     <Icon :name="btn.state ? btn.iconOff : btn.iconOn" class="w-6 h-6" />
+                </button>
+                <button @click="flipped = !flipped" class="btn btn-circle btn-solid-warning w-12 h-12 p-2">
+                    <Icon name="ic:outline-swap-horiz" class="w-6 h-6" />
                 </button>
                 <label for="leave-stream-modal" class="btn btn-circle btn-solid-error w-12 h-12 p-2">
                     <Icon name="material-symbols:call-end" class="w-6 h-6" />
@@ -76,6 +81,7 @@ const localScreenTrack = ref<ILocalVideoTrack>(); //for share screen
 
 const remoteUid = ref("");
 const shareScreen = ref(false);
+const flipped = ref(false);
 const toogleButtons = computed(() => [
     {
         state: localAudioTrack.value?.muted,
