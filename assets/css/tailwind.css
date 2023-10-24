@@ -30,7 +30,7 @@
     .form-label {
         @apply font-semibold
     }
-    .btn {
+    /* .btn {
       @apply rounded-lg
     }
     .input {
@@ -38,7 +38,7 @@
     }
     .dropdown {
       @apply rounded-lg
-    }
+    } */
     .btn-squared {
       @apply rounded-none
     }

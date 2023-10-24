@@ -12,7 +12,10 @@
                 {{ name }}
             </NuxtLink>
             <div class="space-y-0.5 text-sm font-semibold">
-                <p class="text-secondary">{{ dayjs(date).format("ddd, DD MMM YYYY") }}</p>
+                <div class="text-secondary flex-center space-x-2">
+                    <span>{{ dayjs(date).format("ddd, DD MMM YYYY") }}</span>
+                    <span v-if="isPassed(date)" class="badge badge-xs badge-error">registration closed!</span>
+                </div>
                 <p class="text-gray-500">{{ location_name }}</p>
             </div>
             <div class="badge badge-primary w-fit">{{ category }}</div>
@@ -45,6 +48,13 @@ const emits = defineEmits<{ (e: "wishlisted", id: string): void }>();
 const { wishlistEvent } = useEventStore();
 const { loggedUser } = useAuthStore();
 const { mutate, pending } = useMutate(wishlistEvent);
+
+const isPassed = (startDate: string) => {
+    const currentDate = new Date();
+    const startDateDate = new Date(startDate);
+
+    return currentDate.getTime() > startDateDate.getTime();
+};
 
 async function addToWishlist() {
     const res = await mutate(props.id);

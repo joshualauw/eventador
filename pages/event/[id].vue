@@ -95,39 +95,44 @@
                 <div class="w-full lg:w-[40%] space-y-8 mt-8 lg:mt-0">
                     <div class="card hover:scale-100 text-center">
                         <div v-if="!eventDetail.data.event.is_joined" class="card-body">
-                            <p class="text-3xl text-success font-bold">
-                                Rp. {{ formatNumber(eventDetail.data.event.price) }}
-                            </p>
-                            <p>
-                                {{ eventDetail.data.event.capacity - eventDetail.data.event.total_participants }} /
-                                {{ eventDetail.data.event.capacity }} slots remaining
-                            </p>
-                            <p v-if="!loggedUser" class="text-error">Sign in to Register!</p>
-                            <div v-if="loggedUser">
-                                <label for="payment-modal-register" class="btn w-full btn-primary mt-3">
-                                    Register Now
-                                </label>
-                                <div class="divider">-or-</div>
-                                <div class="flex">
-                                    <input
-                                        v-model="code"
-                                        class="input max-w-full rounded-r-none"
-                                        placeholder="invitation code.."
+                            <div v-if="isPassed(eventDetail.data.event.start_date)" class="text-error text-lg">
+                                Registration closed
+                            </div>
+                            <div v-else class="space-y-3">
+                                <p class="text-3xl text-success font-bold">
+                                    Rp. {{ formatNumber(eventDetail.data.event.price) }}
+                                </p>
+                                <p>
+                                    {{ eventDetail.data.event.capacity - eventDetail.data.event.total_participants }} /
+                                    {{ eventDetail.data.event.capacity }} slots remaining
+                                </p>
+                                <p v-if="!loggedUser" class="text-error">Sign in to Register!</p>
+                                <div v-if="loggedUser">
+                                    <label for="payment-modal-register" class="btn w-full btn-primary mt-3">
+                                        Register Now
+                                    </label>
+                                    <div class="divider">-or-</div>
+                                    <div class="flex">
+                                        <input
+                                            v-model="code"
+                                            class="input max-w-full rounded-r-none"
+                                            placeholder="invitation code.."
+                                        />
+                                        <button
+                                            @click="doApplyInvite"
+                                            type="button"
+                                            class="btn btn-solid-primary rounded-l-none"
+                                        >
+                                            Apply
+                                        </button>
+                                    </div>
+                                    <UIErrors
+                                        v-if="inviteError"
+                                        :errors="inviteErrors"
+                                        :message="inviteError.message"
+                                        class="my-4"
                                     />
-                                    <button
-                                        @click="doApplyInvite"
-                                        type="button"
-                                        class="btn btn-solid-primary rounded-l-none"
-                                    >
-                                        Apply
-                                    </button>
                                 </div>
-                                <UIErrors
-                                    v-if="inviteError"
-                                    :errors="inviteErrors"
-                                    :message="inviteError.message"
-                                    class="my-4"
-                                />
                             </div>
                         </div>
                         <div v-else class="card-body space-y-3">
@@ -242,6 +247,13 @@ useServerSeoMeta({
     ogImage: eventDetail.value?.data.event.banner || "/images/default-event.jpg",
     ogUrl: linkUrl,
 });
+
+const isPassed = (startDate: string) => {
+    const currentDate = new Date();
+    const startDateDate = new Date(startDate);
+
+    return currentDate.getTime() > startDateDate.getTime();
+};
 
 const socialMediaLinks = [
     {
