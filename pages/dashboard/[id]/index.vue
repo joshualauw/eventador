@@ -14,8 +14,8 @@
                 </div>
             </div>
         </div>
-        <div v-if="loggedUser?.is_premium">
-            <div class="my-8">
+        <div v-if="loggedUser?.is_premium && report" class="space-y-8">
+            <div>
                 <div class="flex-center space-x-4 mb-6">
                     <input v-model="timeRange.start_date" type="date" class="input input-sm md:input-md" />
                     <input v-model="timeRange.end_date" type="date" class="input input-sm md:input-md" />
@@ -23,37 +23,17 @@
                 </div>
                 <OrganizerOverviewTimed :days="timeRange.days" :trans="timeReport?.data || []" />
             </div>
-            <div v-if="report" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+            <hr />
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
                 <OrganizerOverviewMonthly :trans="report.data.monthly_transactions" />
                 <OrganizerOverviewWeekly :trans="report.data.weekly_transactions" />
-                <OrganizerOverviewDaily :trans="report.data.today_transactions" />
-                <div>
-                    <p class="font-semibold mb-4 text-lg">Highest Record</p>
-                    <div v-if="report.data.highest_transaction" class="card max-h-full">
-                        <div class="card-body">
-                            <p class="text-xl text-success">
-                                Rp. {{ formatNumber(report.data.highest_transaction.revenue) }}
-                            </p>
-                            <p class="text-content-2">
-                                {{ dayjs(report.data.highest_transaction._id).format("DD-MM-YYYY") }}
-                            </p>
-                        </div>
-                    </div>
-                    <p v-else>-no transactions recorded-</p>
-                    <p class="font-semibold my-4 text-lg">Latest Transaction</p>
-                    <div v-if="report.data.latest_transaction" class="card max-h-full">
-                        <div class="card-body">
-                            <p class="text-xl text-success">
-                                Rp. {{ formatNumber(report.data.latest_transaction.amount) }}
-                            </p>
-                            <p class="text-content-2">
-                                {{ dayjs(report.data.latest_transaction.trans_date).format("DD-MM-YYYY") }}
-                            </p>
-                        </div>
-                    </div>
-                    <p v-else>-no transactions recorded-</p>
-                </div>
             </div>
+            <hr />
+            <OrganizerOverviewBudget :report="report.data.budget_transactions" />
+            <hr />
+            <OrganizerOverviewSponsor :report="report.data.sponsor_transactions" />
+            <hr />
+            <OrganizerOverviewRevenue :total_revenue="total_revenue" />
         </div>
         <p v-else @click="navigateTo('/premium')" class="text-xl font-bold mb-4 cursor-pointer">
             <Icon name="material-symbols:lock" class="mr-2" /> Unlock premium to view more statistic and report
@@ -83,6 +63,14 @@ const { data: report } = await useAsyncData("getTransactionReport", () =>
     getTransactionReport(route.params.id as string)
 );
 const { data: timeReport } = await useAsyncData("getTimeRangedReport", () => applyTimeRangedReport());
+
+const total_revenue = computed(() => {
+    const gross_profit = report.value?.data.revenue || 0;
+    const total_expense = report.value?.data.budget_transactions.total_spent || 0;
+    const total_funds = report.value?.data.sponsor_transactions.total_funds || 0;
+
+    return { gross_profit, total_expense, total_funds, net_profit: gross_profit - total_expense + total_funds };
+});
 
 async function applyTimeRangedReport() {
     let start = dayjs(timeRange.start_date);
@@ -135,7 +123,7 @@ const stats = [
     },
     {
         name: "Revenue",
-        data: `Rp, ${formatNumber(report.value?.data.revenue || 0)}`,
+        data: `Rp, ${formatNumber(total_revenue.value.net_profit)}`,
         icon: "material-symbols:money",
         theme: "btn-solid-success",
         callback: () => navigateTo(`/dashboard/${route.params.id}/transaction`),

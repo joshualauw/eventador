@@ -7,12 +7,12 @@ namespace IGetOneSponsor {
 }
 
 namespace ICreateSponsor {
-    export type Body = { name: string; description: string; logo: File | null };
+    export type Body = { name: string; description: string; funds: number; logo: File | null };
     export type Data = ApiResponse<ISponsor>;
 }
 
 namespace IUpdateSponsor {
-    export type Body = { name: string; description: string; logo: File | null };
+    export type Body = { name: string; description: string; funds: number; logo: File | null };
     export type Data = ApiResponse<ISponsor>;
 }
 

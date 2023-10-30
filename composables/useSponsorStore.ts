@@ -8,6 +8,7 @@ export default function useSponsorStore() {
         const formData = new FormData();
         formData.append("name", body.name);
         formData.append("description", body.description);
+        formData.append("funds", body.funds.toString());
         if (body.logo) formData.append("logo", body.logo);
 
         const res = await executeRequest<ICreateSponsor.Data>(`/sponsor/${event_id}`, {
@@ -21,6 +22,7 @@ export default function useSponsorStore() {
         const formData = new FormData();
         formData.append("name", body.name);
         formData.append("description", body.description);
+        formData.append("funds", body.funds.toString());
         if (body.logo) formData.append("logo", body.logo);
 
         const res = await executeRequest<IUpdateSponsor.Data>(`/sponsor/${id}`, { method: "PUT", body: formData });

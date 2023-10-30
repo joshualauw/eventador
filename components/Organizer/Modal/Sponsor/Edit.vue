@@ -13,6 +13,15 @@
                 <input v-model="sponsorState.name" type="text" class="input max-w-full" placeholder="sponsor name.." />
             </div>
             <div class="form-group">
+                <label class="form-label">Sponsor Funds (Rp.)</label>
+                <input
+                    v-model="sponsorState.funds"
+                    type="number"
+                    class="input max-w-full"
+                    placeholder="sponsor funds.."
+                />
+            </div>
+            <div class="form-group">
                 <label class="form-label">Sponsor Description</label>
                 <textarea
                     v-model="sponsorState.description"
@@ -50,6 +59,7 @@ const { value: sponsorState, reset } = useStateHandler({
     logo: null as File | null,
     name: "",
     description: "",
+    funds: 0,
 });
 
 watch(
@@ -63,6 +73,7 @@ watch(
             if (res) {
                 sponsorState.name = res.data.name;
                 sponsorState.description = res.data.description;
+                sponsorState.funds = res.data.funds;
             }
         } else {
             reset();

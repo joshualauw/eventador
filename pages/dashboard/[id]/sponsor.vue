@@ -17,6 +17,7 @@
                 :id="sponsor._id"
                 :name="sponsor.name"
                 :logo="sponsor.logo"
+                :funds="sponsor.funds"
             />
         </div>
         <OrganizerModalSponsorEdit @saved="refresh" :context="actionContext" :update-id="actionId" />
