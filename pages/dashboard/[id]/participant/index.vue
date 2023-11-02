@@ -1,8 +1,18 @@
 <template>
     <div>
-        <div class="flex-between mb-8">
+        <div class="flex-between flex-col md:flex-row mb-8">
             <h1 class="font-semibold text-lg">Participants</h1>
-            <label v-if="loggedParticipant?.type == 'owner'" for="invite-participant-modal" class="btn btn-primary">
+            <div class="mb-8 md:mb-0">
+                Share Link:
+                <span @click="copyLink" class="text-primary hover:underline cursor-pointer">
+                    {{ linkUrl }}
+                </span>
+            </div>
+            <label
+                v-if="loggedParticipant?.type == 'owner'"
+                for="invite-participant-modal"
+                class="btn btn-primary w-full md:w-fit"
+            >
                 + Invite Participant
             </label>
         </div>
@@ -34,14 +44,16 @@
 </template>
 
 <script setup lang="ts">
+import { TYPE } from "vue-toastification";
+
 definePageMeta({
     layout: "dashboard",
     middleware: ["auth", "participant"],
 });
 
 const route = useRoute();
-const { getAllParticipant } = useParticipantStore();
-const { loggedParticipant } = useParticipantStore();
+const config = useRuntimeConfig();
+const { getAllParticipant, loggedParticipant } = useParticipantStore();
 const participantData = ref<(IParticipant & { user_id: IUser })[]>([]);
 const searchTerm = ref("");
 const typeTerm = ref("");
@@ -52,10 +64,16 @@ const { data: participants } = await useAsyncData("getAllParticipant", () =>
 if (participants.value) {
     participantData.value = [...participants.value.data];
 }
+const linkUrl = config.public.baseURL + "/event/" + route.params.id;
 
 const filteredParticipants = computed(() => {
     return participantData.value
         .filter((p) => p.user_id.username.toLowerCase().includes(searchTerm.value.toLowerCase()))
         .filter((p) => (typeTerm.value == "" ? true : p.type == typeTerm.value));
 });
+
+function copyLink() {
+    navigator.clipboard.writeText(linkUrl);
+    createToast("event URL copied", TYPE.SUCCESS);
+}
 </script>
