@@ -3,12 +3,19 @@
         <UILoader v-if="pending" />
         <div class="flex-between flex-col md:flex-row mb-12 text-base md:text-lg">
             <h1 class="font-semibold">Settings {{ !isOwner ? `(View Only)` : "" }}</h1>
-            <p>
+            <p v-if="!isOwner">
                 Your Role: <span class="text-success">{{ loggedParticipant?.role || "-no role-" }}</span>
             </p>
-            <p>Owner: {{ event?.data.event.owner.username }}</p>
+            <p v-if="!isOwner">
+                Owner:
+                <span
+                    class="cursor-pointer text-success"
+                    @click="navigateTo(`/profile/${event?.data.event.owner._id}`)"
+                >
+                    {{ event?.data.event.owner.username }}
+                </span>
+            </p>
         </div>
-        <div v-if="!isOwner"></div>
         <div class="space-y-12">
             <OrganizerSettingsDetail :is_owner="isOwner" />
             <div class="divider"></div>
@@ -47,12 +54,13 @@ definePageMeta({
 
 const route = useRoute();
 const { loggedParticipant } = useParticipantStore();
+const { loggedUser } = useAuthStore();
 const { eventDetail, getEventDetail, toogleEventPublicity } = useEventStore();
 const { pending, mutate } = useMutate(toogleEventPublicity);
 
 const { data: event } = await useAsyncData("getEventDetail", () => getEventDetail(route.params.id as string));
-console.log(event.value);
-const isOwner = computed(() => loggedParticipant.value?._id == eventDetail.value?.user_id);
+
+const isOwner = computed(() => loggedUser.value?._id == event.value?.data.event.owner._id);
 if (event.value) {
     eventDetail.value = event.value.data.event;
 }
