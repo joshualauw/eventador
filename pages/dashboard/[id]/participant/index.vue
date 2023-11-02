@@ -2,13 +2,6 @@
     <div>
         <div class="flex-between flex-col md:flex-row mb-8">
             <h1 class="font-semibold text-lg">Participants</h1>
-            <div class="mb-8 md:mb-0">
-                Share Link:
-                <a :href="linkUrl" class="text-primary hover:underline cursor-pointer">
-                    {{ linkUrl }}
-                </a>
-                <button @click="copyLink" class="btn btn-sm ml-2">copy</button>
-            </div>
             <label
                 v-if="loggedParticipant?.type == 'owner'"
                 for="invite-participant-modal"
@@ -45,15 +38,12 @@
 </template>
 
 <script setup lang="ts">
-import { TYPE } from "vue-toastification";
-
 definePageMeta({
     layout: "dashboard",
     middleware: ["auth", "participant"],
 });
 
 const route = useRoute();
-const config = useRuntimeConfig();
 const { getAllParticipant, loggedParticipant } = useParticipantStore();
 const participantData = ref<(IParticipant & { user_id: IUser })[]>([]);
 const searchTerm = ref("");
@@ -65,16 +55,10 @@ const { data: participants } = await useAsyncData("getAllParticipant", () =>
 if (participants.value) {
     participantData.value = [...participants.value.data];
 }
-const linkUrl = config.public.baseURL + "/event/" + route.params.id;
 
 const filteredParticipants = computed(() => {
     return participantData.value
         .filter((p) => p.user_id.username.toLowerCase().includes(searchTerm.value.toLowerCase()))
         .filter((p) => (typeTerm.value == "" ? true : p.type == typeTerm.value));
 });
-
-function copyLink() {
-    navigator.clipboard.writeText(linkUrl);
-    createToast("event URL copied", TYPE.SUCCESS);
-}
 </script>

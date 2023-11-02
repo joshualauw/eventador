@@ -6,7 +6,7 @@
                     <img
                         alt="Party"
                         src="https://storage.googleapis.com/ekrutassets/blogs/images/000/003/446/original/virtual-event-adalah-EKRUT.jpg"
-                        class="absolute inset-0 h-full w-full object-cover"
+                        class="absolute inset-0 h-full max-w-full object-cover"
                     />
                 </div>
                 <div class="lg:py-24">

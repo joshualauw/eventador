@@ -2,7 +2,16 @@
     <div>
         <UILoader v-if="pending" />
         <div class="flex-between flex-col md:flex-row mb-12 text-base md:text-lg">
-            <h1 class="font-semibold">Settings {{ !isOwner ? `(View Only)` : "" }}</h1>
+            <div class="flex-between flex-col md:flex-row mb-8 w-full">
+                <h1 class="font-semibold">Settings {{ !isOwner ? `(View Only)` : "" }}</h1>
+                <div class="text-base">
+                    Event Link:
+                    <a :href="linkUrl" class="text-primary hover:underline cursor-pointer">
+                        {{ linkUrl }}
+                    </a>
+                    <button @click="copyLink" class="btn btn-sm ml-2">copy</button>
+                </div>
+            </div>
             <p v-if="!isOwner">
                 Your Role: <span class="text-success">{{ loggedParticipant?.role || "-no role-" }}</span>
             </p>
@@ -47,12 +56,15 @@
 </template>
 
 <script setup lang="ts">
+import { TYPE } from "vue-toastification";
+
 definePageMeta({
     layout: "dashboard",
     middleware: ["auth", "participant"],
 });
 
 const route = useRoute();
+const config = useRuntimeConfig();
 const { loggedParticipant } = useParticipantStore();
 const { loggedUser } = useAuthStore();
 const { eventDetail, getEventDetail, toogleEventPublicity } = useEventStore();
@@ -63,6 +75,20 @@ const { data: event } = await useAsyncData("getEventDetail", () => getEventDetai
 const isOwner = computed(() => loggedUser.value?._id == event.value?.data.event.owner._id);
 if (event.value) {
     eventDetail.value = event.value.data.event;
+}
+
+const linkUrl = config.public.baseURL + "/event/" + route.params.id;
+
+useServerSeoMeta({
+    ogTitle: eventDetail.value?.name || "Eventador",
+    ogDescription: eventDetail.value?.description.slice(0, 150) + "..." || "click this link to join event",
+    ogImage: eventDetail.value?.banner || "/images/default-event.jpg",
+    ogUrl: linkUrl,
+});
+
+function copyLink() {
+    navigator.clipboard.writeText(linkUrl);
+    createToast("event URL copied", TYPE.SUCCESS);
 }
 
 async function tooglePublicity() {

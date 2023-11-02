@@ -18,7 +18,7 @@
         <p v-if="pending" class="text-center font-semibold mt-8 text-xl">Loading...</p>
         <div
             v-if="events && !pending"
-            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 max-w-full"
         >
             <ExploreItem
                 v-for="event in events.data"

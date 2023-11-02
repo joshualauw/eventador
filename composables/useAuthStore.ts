@@ -30,7 +30,7 @@ export default function useAuthStore() {
         if (res.status && res.data) {
             let token;
             if (rememberMe) {
-                token = useCookie("token", { maxAge: 48 * 60 * 60 }); //2 days
+                token = useCookie("token", { maxAge: 7 * (24 * 3600) }); //7 days
             } else {
                 token = useCookie("token"); //session
             }

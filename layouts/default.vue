@@ -1,6 +1,6 @@
 <template>
     <Html :data-theme="theme">
-        <main class="min-h-screen bg-backgroundPrimary">
+        <main class="min-h-screen max-w-full bg-backgroundPrimary">
             <slot />
         </main>
     </Html>

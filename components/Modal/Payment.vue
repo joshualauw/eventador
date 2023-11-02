@@ -31,6 +31,10 @@
             <button @click="doPay(setOpen)" :disabled="afterBalance < 0" class="btn btn-primary mt-4">
                 <Icon name="fa:lock" class="mr-2" /> Confirm
             </button>
+            -or-
+            <button @click="navigateTo('/settings')" :disabled="afterBalance < 0" class="btn btn-solid-success mt-2">
+                Top Up
+            </button>
         </div>
     </UIModal>
 </template>
