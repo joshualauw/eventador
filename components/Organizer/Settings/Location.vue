@@ -71,7 +71,7 @@
                 </div>
             </div>
             <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />
-            <button @click="saveLocation" type="button" class="btn btn-primary w-fit">Save</button>
+            <button v-if="is_owner" @click="saveLocation" type="button" class="btn btn-primary w-fit">Save</button>
         </form>
     </div>
 </template>
@@ -81,6 +81,8 @@ interface Suggestion {
     name: string;
     coordinate: [number, number];
 }
+
+defineProps<{ is_owner: boolean }>();
 
 const route = useRoute();
 const { eventDetail, updateEventLocation } = useEventStore();

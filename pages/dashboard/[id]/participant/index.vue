@@ -4,9 +4,10 @@
             <h1 class="font-semibold text-lg">Participants</h1>
             <div class="mb-8 md:mb-0">
                 Share Link:
-                <span @click="copyLink" class="text-primary hover:underline cursor-pointer">
+                <a :href="linkUrl" class="text-primary hover:underline cursor-pointer">
                     {{ linkUrl }}
-                </span>
+                </a>
+                <button @click="copyLink" class="btn btn-sm ml-2">copy</button>
             </div>
             <label
                 v-if="loggedParticipant?.type == 'owner'"

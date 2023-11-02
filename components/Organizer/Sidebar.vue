@@ -125,7 +125,7 @@ const menus = [
         icon: "material-symbols:settings",
         name: "Settings",
         link: `/dashboard/${eventId.value}/settings`,
-        show: loggedParticipant.value?.type == "owner",
+        show: true,
     },
 ];
 </script>

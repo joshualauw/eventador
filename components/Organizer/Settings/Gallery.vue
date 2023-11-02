@@ -29,13 +29,15 @@
                 />
             </div>
             <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />
-            <button @click="saveGallery" type="button" class="btn btn-primary w-fit">Save</button>
+            <button v-if="is_owner" @click="saveGallery" type="button" class="btn btn-primary w-fit">Save</button>
         </form>
     </div>
 </template>
 
 <script setup lang="ts">
 import { TYPE } from "vue-toastification";
+
+defineProps<{ is_owner: boolean }>();
 
 const route = useRoute();
 const { eventDetail, updateEventGallery } = useEventStore();

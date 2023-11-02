@@ -72,7 +72,7 @@
                 />
             </div>
             <UIErrors v-if="error" :errors="errors" :message="error.message" class="my-8" />
-            <button @click="saveDetail" type="button" class="btn btn-primary w-fit">Save</button>
+            <button v-if="is_owner" @click="saveDetail" type="button" class="btn btn-primary w-fit">Save</button>
         </form>
     </div>
 </template>
@@ -81,6 +81,8 @@
 import categories from "@/assets/json/categories.json";
 import dayjs from "dayjs";
 import { TYPE } from "vue-toastification";
+
+defineProps<{ is_owner: boolean }>();
 
 const route = useRoute();
 const { eventDetail, updateEventDetail } = useEventStore();
