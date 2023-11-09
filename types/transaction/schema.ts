@@ -8,10 +8,12 @@ namespace IGetTransactionReport {
         itinenary_count: number;
         budget_count: number;
         revenue?: number;
+        page_views: IPageView[];
         budget_transactions: IBudgetTransaction;
         sponsor_transactions: ISponsorTransaction;
         monthly_transactions: IMonthlyTransaction[];
         weekly_transactions: ITransaction[];
+        transactions: ITransaction[];
     }>;
 }
 

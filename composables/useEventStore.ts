@@ -95,6 +95,11 @@ export default function useEventStore() {
         return res;
     }
 
+    async function viewEvent(id: string, body: IViewEvent.Body) {
+        const res = await executeRequest<IViewEvent.Data>(`/event/${id}/view`, { method: "PUT", body, toast: false });
+        return res;
+    }
+
     return {
         eventDetail,
         exploreEventQuery,
@@ -110,5 +115,6 @@ export default function useEventStore() {
         wishlistEvent,
         refundEvent,
         reportEvent,
+        viewEvent,
     };
 }

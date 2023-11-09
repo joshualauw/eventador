@@ -122,3 +122,19 @@ export async function urlToFile(imageUrl: string, fileName: string): Promise<Fil
     const file = new File([blob], fileName, { type: blob.type });
     return file;
 }
+
+export function numberToColorGradient(value: number, minValue: number, maxValue: number): string {
+    // Define the start color (green)
+    const startColor = [219, 13, 13]; // Green
+
+    // Calculate the interpolation factor between 0 and 1
+    const factor = (value - minValue) / (maxValue - minValue);
+
+    // Interpolate the color components
+    const interpolatedColor = startColor.map((start) => Math.round(start + factor * (255 - start)));
+
+    // Convert the color components to a hex color code
+    const hexColor = `#${interpolatedColor.map((color) => color.toString(16).padStart(2, "0")).join("")}`;
+
+    return hexColor;
+}

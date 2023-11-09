@@ -15,6 +15,8 @@
             </div>
         </div>
         <div v-if="loggedUser?.is_premium && report" class="space-y-8">
+            <OrganizerOverviewPopularity :report="report.data.page_views" />
+            <hr />
             <div>
                 <div class="flex-center space-x-4 mb-6">
                     <input v-model="timeRange.start_date" type="date" class="input input-sm md:input-md" />

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="font-semibold mb-4 text-lg">This week Report</p>
+        <p class="font-semibold mb-4 text-lg">This Week Income</p>
         <UIChart :labels="weekDays" name="total transactions" :datasets="weeklyData" />
     </div>
 </template>

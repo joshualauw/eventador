@@ -229,7 +229,7 @@ const capture = ref();
 const route = useRoute();
 const config = useRuntimeConfig();
 const { loggedUser, getMe } = useAuthStore();
-const { getEventDetail, refundEvent } = useEventStore();
+const { getEventDetail, refundEvent, viewEvent } = useEventStore();
 const { registerParticipant, applyInvite } = useParticipantStore();
 
 const { pending, error, errors, mutate: registerMutate } = useMutate(registerParticipant);
@@ -239,6 +239,10 @@ const { mutate: refundMutate } = useMutate(refundEvent);
 const { data: eventDetail, refresh } = await useAsyncData("getEventDetail", () =>
     getEventDetail(route.params.id as string)
 );
+await useAsyncData("viewEvent", async () => {
+    const clientIp = await getClientIp();
+    viewEvent(route.params.id as string, { label: loggedUser.value ? loggedUser.value._id : clientIp });
+});
 const linkUrl = config.public.baseURL + "/event/" + route.params.id;
 
 useServerSeoMeta({
@@ -248,12 +252,10 @@ useServerSeoMeta({
     ogUrl: linkUrl,
 });
 
-const isPassed = (startDate: string) => {
-    const currentDate = new Date();
-    const startDateDate = new Date(startDate);
-
-    return currentDate.getTime() > startDateDate.getTime();
-};
+async function getClientIp() {
+    const clientIp = await $fetch<string>("https://api.ipify.org/");
+    return clientIp;
+}
 
 const socialMediaLinks = [
     {
@@ -275,6 +277,13 @@ const socialMediaLinks = [
         },
     },
 ];
+
+const isPassed = (startDate: string) => {
+    const currentDate = new Date();
+    const startDateDate = new Date(startDate);
+
+    return currentDate.getTime() > startDateDate.getTime();
+};
 
 async function doRegisterParticipant() {
     const res = await registerMutate(route.params.id as string);

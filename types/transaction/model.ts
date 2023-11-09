@@ -36,3 +36,9 @@ interface IMonthlyTransaction {
     };
     monthly_transactions: ITransaction[];
 }
+
+interface IPageView {
+    _id: string;
+    label: string;
+    time: string;
+}

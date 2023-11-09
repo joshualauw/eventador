@@ -105,3 +105,8 @@ namespace IReportEvent {
     export type Body = { content: string };
     export type Data = ApiResponse<IReport>;
 }
+
+namespace IViewEvent {
+    export type Body = { label: string };
+    export type Data = ApiResponse<number>;
+}

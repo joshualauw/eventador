@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="font-semibold mb-4 text-lg">Time Period Report</p>
+        <p class="font-semibold mb-4 text-lg">Time Period Income</p>
         <UIChart :labels="days" name="total transactions" :datasets="timesData" />
     </div>
 </template>

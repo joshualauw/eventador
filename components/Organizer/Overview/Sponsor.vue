@@ -1,34 +1,34 @@
 <template>
     <div>
         <p class="font-semibold mb-4 text-lg">Sponsor & Funds Report</p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Funds</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(sponsor, i) in report.sponsor_details">
-                    <th>{{ i + 1 }}</th>
-                    <td>{{ sponsor.name }}</td>
-                    <td>Rp. {{ formatNumber(sponsor.funds) }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="mt-4 font-semibold flex items-center justify-between w-full">
-            <p>
-                Total Funds: <span class="md:text-lg">Rp. {{ formatNumber(report.total_funds) }}</span>
-            </p>
-            <p>
-                Profit before Funds:
-                <span class="md:text-lg">Rp. {{ formatNumber(report.gross_profit) }}</span>
-            </p>
-            <p>
-                Profit after Funds:
-                <span class="md:text-lg text-primary">Rp. {{ formatNumber(report.net_profit) }}</span>
-            </p>
+        <div class="flex space-x-5 max-w-full">
+            <div class="w-1/2 text-center">
+                <p class="text-lg font-semibold text-primary mb-4">Rp. {{ formatNumber(report.total_funds) }}</p>
+                <UIBar name="All Funds" :labels="labels" :datasets="data" />
+            </div>
+            <table class="table table-compact w-1/2">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Funds</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(sponsor, i) in report.sponsor_details">
+                        <th>{{ i + 1 }}</th>
+                        <td>{{ sponsor.name }}</td>
+                        <td>Rp. {{ formatNumber(sponsor.funds) }}</td>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <td>Sum</td>
+                        <td>
+                            <span class="text-primary">Rp. {{ formatNumber(report.total_funds) }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
@@ -37,4 +37,6 @@
 const props = defineProps<{
     report: ISponsorTransaction;
 }>();
+const labels = props.report.sponsor_details.map((s) => s.name);
+const data = props.report.sponsor_details.map((s) => s.funds);
 </script>
