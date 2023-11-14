@@ -7,23 +7,25 @@ interface ITransaction extends BaseModel {
     event_id: string;
 }
 
+interface IBudgetDetail {
+    name: string;
+    limit: number;
+    spent: number;
+    remaining: number;
+}
 interface IBudgetTransaction {
-    budget_details: {
-        name: string;
-        limit: number;
-        spent: number;
-        remaining: number;
-    }[];
+    budget_details: IBudgetDetail[];
     total_spent: number;
     gross_profit: number;
     net_profit: number;
 }
+interface ISponsorDetail {
+    name: string;
+    funds: number;
+}
 
 interface ISponsorTransaction {
-    sponsor_details: {
-        name: string;
-        funds: number;
-    }[];
+    sponsor_details: ISponsorDetail[];
     total_funds: number;
     gross_profit: number;
     net_profit: number;

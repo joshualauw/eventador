@@ -4,26 +4,22 @@
         <div class="flex-between flex-col md:flex-row mb-12 text-base md:text-lg">
             <div class="flex-between flex-col md:flex-row mb-8 w-full">
                 <h1 class="font-semibold">Settings {{ !isOwner ? `(View Only)` : "" }}</h1>
-                <div class="text-base">
-                    Event Link:
-                    <a :href="linkUrl" class="text-primary hover:underline cursor-pointer">
-                        {{ linkUrl }}
-                    </a>
-                    <button @click="copyLink" class="btn btn-sm ml-2">copy</button>
+                <div v-if="!isOwner" class="border-2 p-2 rounded-md">
+                    <p>
+                        Your Role:
+                        <span class="text-success font-semibold">{{ loggedParticipant?.role || "co-organizer" }}</span>
+                    </p>
+                    <p>
+                        Owner:
+                        <span
+                            class="cursor-pointer text-success font-semibold"
+                            @click="navigateTo(`/profile/${event?.data.event.owner._id}`)"
+                        >
+                            {{ event?.data.event.owner.username }}
+                        </span>
+                    </p>
                 </div>
             </div>
-            <p v-if="!isOwner">
-                Your Role: <span class="text-success">{{ loggedParticipant?.role || "-no role-" }}</span>
-            </p>
-            <p v-if="!isOwner">
-                Owner:
-                <span
-                    class="cursor-pointer text-success"
-                    @click="navigateTo(`/profile/${event?.data.event.owner._id}`)"
-                >
-                    {{ event?.data.event.owner.username }}
-                </span>
-            </p>
         </div>
         <div class="space-y-12">
             <OrganizerSettingsDetail :is_owner="isOwner" />

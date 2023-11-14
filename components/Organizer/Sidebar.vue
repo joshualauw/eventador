@@ -117,7 +117,7 @@ const menus = [
     },
     {
         icon: "material-symbols:account-balance",
-        name: "Transactions",
+        name: "Transaction",
         link: `/dashboard/${eventId.value}/transaction`,
         show: loggedParticipant.value?.type == "owner",
     },
